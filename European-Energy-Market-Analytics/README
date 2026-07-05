@@ -1,0 +1,225 @@
+European Energy Market Analytics Dashboard
+
+## Project Overview
+
+This project presents an end-to-end analytics pipeline for analyzing European energy markets, combining Python-based data engineering and KPI construction with Power BI interactive dashboards.
+
+The objective was to explore the European energy transition by analyzing energy consumption patterns, renewable energy penetration, fossil fuel dependency, and structural energy efficiency across European countries.
+
+---
+
+## Project Objectives
+
+The project aims to answer the following questions:
+
+- How has European energy consumption evolved over time?
+- Which countries are leading the energy transition?
+- Which countries remain highly dependent on fossil fuels?
+- How can we quantify transition risk across European energy systems?
+- Which countries exhibit higher structural energy inefficiencies?
+
+---
+
+## Dataset
+
+The analysis uses publicly available European energy statistics, including:
+
+- Electricity generation
+- Electricity demand
+- Renewable energy consumption
+- Fossil fuel consumption
+- Primary energy consumption
+
+Countries analyzed include major European economies and EU member states.
+
+---
+
+## Technology Stack
+
+### Data Engineering & Analytics
+- Python
+- Pandas
+- NumPy
+- Google Colab
+
+### Business Intelligence
+- Power BI
+- DAX
+- Star Schema Modeling
+
+---
+
+## Data Pipeline
+
+```text
+Raw Energy Data
+        ↓
+Python Data Cleaning
+        ↓
+Feature Engineering
+        ↓
+KPI Construction
+        ↓
+CSV Export
+        ↓
+Power BI Data Model
+        ↓
+Interactive Dashboards
+```
+
+---
+
+## Feature Engineering
+
+Several analytical indicators were engineered using Python:
+
+### Renewable Share
+
+```text
+Renewable Share =
+Renewable Consumption /
+Primary Energy Consumption
+```
+
+Measures the level of renewable energy penetration.
+
+---
+
+### Fossil Dependency
+
+```text
+Fossil Dependency =
+Fossil Fuel Consumption /
+Primary Energy Consumption
+```
+
+Measures dependency on fossil fuels.
+
+---
+
+### Energy Intensity Proxy
+
+```text
+Energy Intensity =
+Primary Energy Consumption /
+Electricity Generation
+```
+
+Used as a proxy for structural energy efficiency.
+
+---
+
+### Consumption Growth
+
+```text
+YoY Change =
+(Current Consumption - Previous Consumption)
+/
+Previous Consumption
+```
+
+Measures annual changes in energy demand.
+
+---
+
+### Transition Gap
+
+```text
+Transition Gap =
+Fossil Dependency - Renewable Share
+```
+
+A custom metric developed to quantify energy transition risk.
+
+---
+
+## Power BI Data Model
+
+The dashboard follows a star schema architecture:
+
+```text
+                dim_country
+                     |
+                     |
+dim_date ---- fact_energy
+```
+
+### Fact Table
+- fact_energy
+
+### Dimension Tables
+- dim_country
+- dim_date
+
+---
+
+# Dashboard Structure
+
+## Page 1 — European Energy Market Overview
+
+Provides a macro-level view of European energy markets:
+
+- Total energy consumption
+- Renewable energy share
+- Fossil fuel dependency
+- Historical consumption trends
+- Country-level comparisons
+
+---
+
+## Page 2 — Energy Transition Analysis
+
+Focuses on the transition towards cleaner energy systems:
+
+- Renewable energy ranking
+- Fossil dependency ranking
+- Transition gap analysis
+- Energy transition positioning scatter plot
+
+---
+
+## Page 3 — Energy Efficiency & Risk Analysis
+
+Analyzes structural energy risks and efficiency:
+
+- Energy intensity benchmarking
+- Consumption volatility analysis
+- Energy risk segmentation
+- Transition risk ranking
+
+---
+
+## Key Insights
+
+The analysis reveals substantial differences among European countries regarding:
+
+- Renewable energy adoption
+- Fossil fuel dependency
+- Structural energy efficiency
+- Transition risk exposure
+
+Countries with high renewable penetration and low fossil dependency demonstrate lower transition risk and greater resilience.
+
+---
+
+## Skills Demonstrated
+
+### Python
+- Data cleaning
+- Feature engineering
+- Exploratory data analysis
+- KPI development
+
+### Power BI
+- Data modeling
+- Star schema design
+- DAX measures
+- Interactive dashboard development
+
+### Energy Analytics
+- Energy transition analysis
+- Risk assessment
+- Efficiency benchmarking
+- Time-series analysis
+
+---
