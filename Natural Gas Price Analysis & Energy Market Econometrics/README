@@ -1,120 +1,205 @@
-⚡ European Energy Market Dynamics: Gas–Electricity Relationship Analysis
+# Natural Gas Price Analysis & Energy Market Econometrics
 
-## 📌 Project Overview
+An empirical analysis of the dynamic relationships between natural gas and crude oil markets using modern time series econometrics.
 
-This project investigates the dynamic relationship between natural gas (TTF proxy) and electricity prices in European energy markets.
-
-Using econometric techniques (VAR, Granger causality, and Impulse Response Functions), the study aims to understand how shocks in gas prices propagate to electricity prices under the marginal pricing mechanism.
+This project investigates the interactions between US natural gas prices (Henry Hub) and global oil benchmarks (Brent and WTI), applying econometric techniques commonly used in energy economics, commodity research, and energy market analysis.
 
 ---
 
-## 🎯 Objective
+## Project Objective
 
-To analyze and quantify the relationship between natural gas and electricity prices by:
+The objective of this project is to examine:
 
-- Measuring correlation and co-movement
-- Testing predictive causality (Granger causality)
-- Modeling dynamic interactions using VAR
-- Estimating shock transmission via Impulse Response Functions (IRF)
+- whether natural gas and crude oil prices share long-run equilibrium relationships,
+- whether oil markets influence natural gas prices,
+- how these relationships changed following major structural events,
+- how volatility behaves in energy markets.
 
----
-
-## 📊 Data Description
-
-The dataset includes:
-
-### Electricity Market Data (Greece)
-- Day-ahead electricity prices (€/MWh)
-- Load (actual and forecast)
-- Timestamped hourly data aggregated to daily frequency for econometric modeling
-
-### Natural Gas Data (TTF proxy)
-- European natural gas price index
-- Daily frequency time series
+The analysis combines traditional econometric techniques with extensions frequently used in professional energy market research.
 
 ---
 
-## ⚙️ Methodology
+## Data Sources
 
-### 1. Data Preprocessing
-- Time alignment of electricity and gas series
-- Aggregation to daily frequency
-- Construction of return series to ensure stationarity
+All data were obtained from publicly available sources.
 
-### 2. Correlation Analysis
-- Pearson correlation between gas and electricity prices
-- Scatter plot analysis of co-movement patterns
+| Variable | Description | Source |
+|----------|-------------|---------|
+| Henry Hub | US Natural Gas Spot Price | EIA |
+| Brent | Brent Crude Oil Spot Price | EIA |
+| WTI | West Texas Intermediate Spot Price | EIA |
 
-### 3. VAR (Vector Auto Regression)
-- Multivariate time-series modeling
-- Captures interdependencies between gas and electricity prices
+### Sample Period
 
-### 4. Granger Causality Tests
-- Tests whether gas prices contain predictive information for electricity prices
-- Evaluates directionality of relationships
-
-### 5. Impulse Response Functions (IRF)
-- Measures the effect of a gas price shock on electricity prices over time
-- Captures dynamic transmission and decay effects
+1997–2025
 
 ---
 
-## 📈 Key Findings
+## Methodology
 
-- Strong statistical relationship between natural gas and electricity prices
-- Gas prices exhibit significant predictive power over electricity prices
-- Granger causality tests confirm directional influence from gas to electricity
-- IRF analysis shows immediate and persistent pass-through of gas price shocks to electricity prices
-- Effects gradually decay over time, consistent with market adjustment dynamics
+The following econometric methods were implemented:
 
----
+### 1. Exploratory Data Analysis
+- Price visualization
+- Log transformation
+- Return calculation
 
-## 🧠 Economic Interpretation
+### 2. Stationarity Tests
+- Augmented Dickey-Fuller (ADF)
+- KPSS test
 
-Results are consistent with the European marginal pricing mechanism, where natural gas often acts as the marginal fuel in electricity generation.
+### 3. Cointegration Analysis
+- Johansen Cointegration Test
 
-This leads to direct and time-lagged transmission of gas price shocks into electricity prices.
+### 4. Dynamic Modeling
+- Vector Autoregression (VAR)
+- Vector Error Correction Model (VECM)
 
----
+### 5. Causality Analysis
+- Granger Causality Tests
 
-## 🛠️ Tools & Libraries
+### 6. Dynamic Shock Analysis
+- Impulse Response Functions (IRFs)
 
-- Python
-- Pandas & NumPy
-- Matplotlib
-- Statsmodels (VAR, Granger causality, IRF)
+### 7. Structural Break Analysis
+- Pre-COVID vs Post-COVID cointegration analysis
+- Investigation of structural changes following:
+  - COVID-19 pandemic
+  - Russia–Ukraine energy crisis
 
----
+### 8. Time-Varying Relationships
+- Rolling correlation analysis
 
-## 📊 Visual Outputs
-
-The project includes:
-
-- Time series plots for gas and electricity prices
-- Correlation scatter plots
-- VAR model summaries
-- Granger causality test results
-- Impulse Response Function visualizations
-
----
-
-## 📌 Key Takeaway
-
-European electricity markets are structurally linked to natural gas prices, with strong evidence of directional causality and measurable shock transmission dynamics.
-
-This highlights the importance of gas markets as a leading indicator for electricity price formation.
+### 9. Volatility Modeling
+- GARCH(1,1)
 
 ---
 
-## 🚀 Future Work
+## Main Findings
 
-- Incorporate carbon pricing (EUA allowances)
-- Extend to multi-country electricity markets
-- Build spillover index (Diebold-Yilmaz framework)
-- Develop trading strategy based on gas-electricity spreads
+### Stationarity
+
+- Henry Hub, Brent and WTI prices are non-stationary in levels.
+- Stationarity is achieved after first differencing.
 
 ---
 
-## 👤 Author
+### Cointegration
 
-Panagiotis Karampoulis
+Johansen tests indicate the existence of long-run equilibrium relationships between natural gas and oil prices.
+
+---
+
+### Granger Causality
+
+The analysis suggests that:
+
+- Brent does not significantly Granger-cause Henry Hub.
+- WTI significantly Granger-causes Henry Hub.
+
+This highlights the stronger influence of the US crude oil market on US natural gas prices.
+
+---
+
+### Structural Breaks
+
+The analysis reveals evidence of changing market relationships following major global events:
+
+- COVID-19 pandemic (2020)
+- Russia–Ukraine energy crisis (2022)
+
+Post-COVID energy markets appear significantly more integrated than in the pre-COVID period.
+
+---
+
+### Rolling Correlations
+
+Rolling correlation analysis demonstrates that the relationship between Henry Hub and WTI is highly time-varying:
+
+- strong correlation during some periods,
+- decoupling during the shale revolution,
+- re-coupling during the recent energy crisis.
+
+---
+
+### Volatility Analysis
+
+A GARCH(1,1) model was estimated for Henry Hub returns.
+
+Estimated parameters:
+
+
+α = 0.210
+β = 0.790
+α + β ≈ 1.00
+
+
+The results indicate strong volatility persistence and volatility clustering, which are typical characteristics of energy commodity markets.
+
+---
+
+## Repository Structure
+
+
+Natural-Gas-Price-Econometrics/
+
+├── data/
+├── notebooks/
+│ ├── 01_Data_Collection.ipynb
+│ ├── 02_Exploratory_Analysis.ipynb
+│ ├── 03_Stationarity_ADF_KPSS.ipynb
+│ ├── 04_Johansen_Cointegration.ipynb
+│ ├── 05_VAR_VECM.ipynb
+│ ├── 06_Granger_IRF.ipynb
+│ ├── 07_Structural_Breaks.ipynb
+│ ├── 08_Rolling_Relationships.ipynb
+│ └── 09_GARCH_Volatility.ipynb
+│
+├── figures/
+├── report/
+└── README.md
+
+
+---
+
+## Python Libraries
+
+- pandas
+- numpy
+- matplotlib
+- statsmodels
+- arch
+
+---
+
+## Skills Demonstrated
+
+This project demonstrates practical experience in:
+
+- Energy Market Analysis
+- Commodity Markets
+- Natural Gas Economics
+- Oil Market Analysis
+- Time Series Econometrics
+- Stationarity Testing
+- Cointegration Analysis
+- VAR/VECM Modeling
+- Granger Causality
+- Impulse Response Analysis
+- Structural Break Analysis
+- Rolling Window Analysis
+- GARCH Volatility Modeling
+- Python Data Analysis
+
+---
+
+## Potential Extensions
+
+Future extensions may include:
+
+- Bai-Perron multiple structural break tests
+- Rolling VAR models
+- TVP-VAR models
+- Diebold-Yilmaz spillover index
+- Forecast Error Variance Decomposition (FEVD)
+- Multivariate GARCH models
