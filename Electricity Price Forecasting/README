@@ -1,0 +1,144 @@
+⚡ Greek Electricity Price Forecasting using Machine Learning
+
+## 📌 Project Overview
+
+This project focuses on forecasting day-ahead electricity prices in the Greek market using machine learning techniques and fundamental demand-side variables.
+
+The goal is to model and understand price dynamics in electricity markets, which are highly volatile and driven by both historical price behavior and demand-side fundamentals.
+
+---
+
+## 🎯 Objective
+
+To evaluate whether machine learning models can accurately forecast electricity prices using:
+
+- Historical price data
+- Electricity load (actual and forecasted)
+- Temporal features
+- Lagged market behavior
+
+---
+
+## 📊 Dataset
+
+The dataset is based on publicly available electricity market data and includes two bidding zones:
+
+- Greece (GR)
+- Czech Republic (CZ)
+
+For this project, only the Greek market data was used.
+
+### Features include:
+- `price_day_ahead_eur_mwh` (target variable)
+- `load_actual_mw`
+- `load_dayahead_mw`
+- Timestamp (`ts_local`)
+
+---
+
+## ⚙️ Feature Engineering
+
+To capture market dynamics, the following features were created:
+
+### Time-based features:
+- Hour of day
+- Day of week
+- Month
+- Weekend indicator
+
+### Lag features:
+- Price lag (1h, 24h, 48h, 168h)
+
+### Rolling statistics:
+- 24-hour rolling mean
+- 24-hour rolling standard deviation
+- 168-hour rolling mean
+
+### Market fundamentals:
+- Load deviation (actual vs forecast)
+- Load ratio
+
+---
+
+## 🤖 Models Used
+
+### Baseline Model:
+- Linear Regression
+
+### Advanced Model:
+- XGBoost Regressor
+
+Time-series split was used to avoid data leakage.
+
+---
+
+## 📈 Model Performance
+
+| Model | MAE (€/MWh) | RMSE (€/MWh) |
+|------|-------------|--------------|
+| Linear Regression | 17.45 | 34.58 |
+| XGBoost | **14.79** | **30.31** |
+
+---
+
+## 🔍 Key Insights
+
+- Electricity prices exhibit strong autoregressive behavior.
+- The most important predictor is the previous hour price (`lag_1`), accounting for ~70% of model importance.
+- Daily seasonality and rolling price trends also contribute significantly.
+- Load-based features provide additional explanatory power.
+
+---
+
+## 🧠 Explainability (SHAP Analysis)
+
+SHAP values were used to interpret the XGBoost model.
+
+### Key findings:
+- Short-term price memory dominates market behavior.
+- Lagged prices are the primary driver of price movements.
+- Market behavior is highly non-linear and regime-dependent.
+
+---
+
+## 📊 Visualizations
+
+The project includes:
+- Price time series plots
+- Distribution of electricity prices
+- Load vs price relationships
+- Feature importance (XGBoost)
+- SHAP summary plots
+
+---
+
+## 🛠️ Tech Stack
+
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Scikit-learn
+- XGBoost
+- SHAP
+
+---
+
+## 📌 Key Takeaway
+
+Electricity markets are highly dynamic systems dominated by short-term memory effects and demand fluctuations. Machine learning models, particularly tree-based methods, are effective in capturing these non-linear relationships.
+
+---
+
+## 🚀 Future Work
+
+- Incorporate fuel prices (TTF gas, EUA carbon)
+- Add renewable generation (wind, solar)
+- Extend to multi-country forecasting
+- Build real-time trading simulation strategy
+
+---
+
+## 👤 Author
+
+Panagiotis Karampoulis
