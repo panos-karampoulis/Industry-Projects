@@ -1,0 +1,120 @@
+⚡ European Energy Market Dynamics: Gas–Electricity Relationship Analysis
+
+## 📌 Project Overview
+
+This project investigates the dynamic relationship between natural gas (TTF proxy) and electricity prices in European energy markets.
+
+Using econometric techniques (VAR, Granger causality, and Impulse Response Functions), the study aims to understand how shocks in gas prices propagate to electricity prices under the marginal pricing mechanism.
+
+---
+
+## 🎯 Objective
+
+To analyze and quantify the relationship between natural gas and electricity prices by:
+
+- Measuring correlation and co-movement
+- Testing predictive causality (Granger causality)
+- Modeling dynamic interactions using VAR
+- Estimating shock transmission via Impulse Response Functions (IRF)
+
+---
+
+## 📊 Data Description
+
+The dataset includes:
+
+### Electricity Market Data (Greece)
+- Day-ahead electricity prices (€/MWh)
+- Load (actual and forecast)
+- Timestamped hourly data aggregated to daily frequency for econometric modeling
+
+### Natural Gas Data (TTF proxy)
+- European natural gas price index
+- Daily frequency time series
+
+---
+
+## ⚙️ Methodology
+
+### 1. Data Preprocessing
+- Time alignment of electricity and gas series
+- Aggregation to daily frequency
+- Construction of return series to ensure stationarity
+
+### 2. Correlation Analysis
+- Pearson correlation between gas and electricity prices
+- Scatter plot analysis of co-movement patterns
+
+### 3. VAR (Vector Auto Regression)
+- Multivariate time-series modeling
+- Captures interdependencies between gas and electricity prices
+
+### 4. Granger Causality Tests
+- Tests whether gas prices contain predictive information for electricity prices
+- Evaluates directionality of relationships
+
+### 5. Impulse Response Functions (IRF)
+- Measures the effect of a gas price shock on electricity prices over time
+- Captures dynamic transmission and decay effects
+
+---
+
+## 📈 Key Findings
+
+- Strong statistical relationship between natural gas and electricity prices
+- Gas prices exhibit significant predictive power over electricity prices
+- Granger causality tests confirm directional influence from gas to electricity
+- IRF analysis shows immediate and persistent pass-through of gas price shocks to electricity prices
+- Effects gradually decay over time, consistent with market adjustment dynamics
+
+---
+
+## 🧠 Economic Interpretation
+
+Results are consistent with the European marginal pricing mechanism, where natural gas often acts as the marginal fuel in electricity generation.
+
+This leads to direct and time-lagged transmission of gas price shocks into electricity prices.
+
+---
+
+## 🛠️ Tools & Libraries
+
+- Python
+- Pandas & NumPy
+- Matplotlib
+- Statsmodels (VAR, Granger causality, IRF)
+
+---
+
+## 📊 Visual Outputs
+
+The project includes:
+
+- Time series plots for gas and electricity prices
+- Correlation scatter plots
+- VAR model summaries
+- Granger causality test results
+- Impulse Response Function visualizations
+
+---
+
+## 📌 Key Takeaway
+
+European electricity markets are structurally linked to natural gas prices, with strong evidence of directional causality and measurable shock transmission dynamics.
+
+This highlights the importance of gas markets as a leading indicator for electricity price formation.
+
+---
+
+## 🚀 Future Work
+
+- Incorporate carbon pricing (EUA allowances)
+- Extend to multi-country electricity markets
+- Build spillover index (Diebold-Yilmaz framework)
+- Develop trading strategy based on gas-electricity spreads
+
+---
+
+## 👤 Author
+
+Panagiotis Karampoulis
