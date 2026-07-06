@@ -1,0 +1,301 @@
+European Energy Trading Analytics Dashboard (DAX Version)
+Project Overview
+
+This project presents an interactive Energy Trading Analytics Dashboard developed using Microsoft Power BI and Advanced DAX, focusing on the analysis of European energy markets during the period 2022–2025.
+
+The dashboard was designed to simulate the analytical workflow of an Energy Market Analyst, Energy Trading Analyst, or Risk Analyst, combining market monitoring, quantitative analysis, and financial risk assessment techniques.
+
+The project investigates the relationships and risk dynamics between major European energy commodities, including:
+
+Brent Crude Oil
+Dutch TTF Natural Gas
+European Carbon Allowances (EUA)
+European Electricity Markets
+Project Objectives
+
+The primary objectives of this project were:
+
+Analyze the behavior of European energy markets during the 2022 energy crisis.
+Investigate cross-market correlations.
+Calculate financial returns and risk metrics using DAX.
+Build an interactive business intelligence dashboard for energy trading analysis.
+Demonstrate advanced Power BI and DAX analytical capabilities.
+Tools & Technologies
+Business Intelligence
+Microsoft Power BI
+Analytics Language
+DAX (Data Analysis Expressions)
+Data Processing
+Python (data cleaning and preparation only)
+Dataset
+
+The dashboard analyzes daily market data covering the period:
+
+January 2022 – December 2025
+Markets Included
+Market	Variable
+Oil	Brent Crude Prices
+Natural Gas	Dutch TTF Gas Prices
+Carbon	EU Carbon Allowances (EUA)
+Electricity	European Power Market Index
+Data Architecture
+Data Preparation
+
+Python was used exclusively for:
+
+Data acquisition
+Data cleaning
+Missing value treatment
+Dataset consolidation
+
+The analytical calculations were performed entirely within Power BI using DAX.
+
+Power BI Data Model
+
+The model consists of:
+
+Fact Table
+energy_prices_clean
+
+Containing:
+
+Date
+Brent_Price
+TTF_Price
+EUA_Price
+Power_Index
+Date Dimension
+
+A dedicated date table was created to support advanced time intelligence calculations.
+
+DateTable =
+CALENDAR(
+    MIN(energy_prices_clean[Date]),
+    MAX(energy_prices_clean[Date])
+)
+Analytical Methods
+Daily Returns Calculation
+
+Daily returns were implemented using calculated columns and advanced DAX functions:
+
+EARLIER()
+LOOKUPVALUE()
+CALCULATE()
+DIVIDE()
+
+Formula:
+
+Return
+t
+	​
+
+=
+P
+t−1
+	​
+
+P
+t
+	​
+
+−P
+t−1
+	​
+
+	​
+
+Rolling Volatility
+
+A 30-day rolling volatility measure was implemented using:
+
+CALCULATE()
+DATESINPERIOD()
+STDEV.P()
+
+Formula:
+
+σ
+t
+	​
+
+=STD(Return
+t−30:t
+	​
+
+)
+Correlation Analysis
+
+Pearson correlation coefficients were calculated directly in DAX using:
+
+SUMX()
+AVERAGE()
+SQRT()
+POWER()
+DIVIDE()
+
+Formula:
+
+ρ=
+∑(x−
+x
+ˉ
+)
+2
+∑(y−
+y
+ˉ
+	​
+
+)
+2
+	​
+
+∑(x−
+x
+ˉ
+)(y−
+y
+ˉ
+	​
+
+)
+	​
+
+Value at Risk (VaR)
+
+Historical 95% Value at Risk was calculated using:
+
+PERCENTILE.INC()
+
+Formula:
+
+VaR
+95
+	​
+
+=P
+5%
+	​
+
+(Returns)
+Dashboard Structure
+Page 1 — Market Overview
+
+Provides a high-level overview of European energy markets.
+
+Visualizations:
+Price trend analysis
+Monthly average prices
+Market KPIs
+Commodity comparisons
+Objectives:
+Monitor market behavior
+Identify structural breaks
+Analyze long-term trends
+Page 2 — Correlation Analysis
+
+Explores cross-market relationships.
+
+Metrics:
+Brent vs TTF correlation
+TTF vs Electricity correlation
+EUA vs Electricity correlation
+Visualizations:
+Correlation KPI cards
+Scatter plots
+Market dependency analysis
+Key Finding:
+
+European electricity markets exhibited strong dependence on natural gas markets during the energy crisis period.
+
+Page 3 — Risk Analytics
+
+Focuses on quantitative risk assessment.
+
+Metrics:
+Daily Returns
+Rolling 30-Day Volatility
+Historical Value at Risk (95%)
+Market risk comparisons
+Key Finding:
+
+TTF natural gas exhibited the highest volatility and downside risk among all analyzed markets.
+
+Page 4 — Trading Insights
+
+Provides business-oriented market interpretation.
+
+Topics Covered:
+European Energy Crisis (2022)
+Market contagion effects
+Cross-market dependencies
+Risk transmission mechanisms
+Trading implications
+Key Findings
+European Energy Crisis (2022)
+Natural gas markets experienced unprecedented volatility.
+Electricity prices strongly followed gas market movements.
+Carbon markets amplified energy market risk.
+Oil markets remained comparatively less volatile.
+Risk Analysis
+TTF exhibited the highest market volatility.
+Electricity markets showed strong spillover effects.
+Cross-market correlations increased during crisis periods.
+Market conditions gradually stabilized during 2023–2025.
+Advanced DAX Techniques Used
+Calculated Columns
+EARLIER()
+LOOKUPVALUE()
+DIVIDE()
+Measures
+CALCULATE()
+FILTER()
+SUMX()
+STDEV.P()
+DATESINPERIOD()
+PERCENTILE.INC()
+POWER()
+SQRT()
+AVERAGE()
+MAX()
+Time Intelligence
+Date Dimensions
+Rolling Window Analysis
+Time-Series Analytics
+Skills Demonstrated
+Energy Markets
+Electricity Markets
+Natural Gas Markets
+Carbon Markets
+Oil Markets
+Quantitative Analytics
+Time Series Analysis
+Correlation Analysis
+Volatility Analysis
+Value at Risk (VaR)
+Financial Returns
+Business Intelligence
+Power BI Dashboard Design
+Advanced DAX
+KPI Development
+Data Modeling
+Interactive Reporting
+Project Outcome
+
+This project demonstrates the ability to:
+
+Develop end-to-end analytical dashboards.
+Perform quantitative market analysis using DAX.
+Build financial risk analytics models.
+Analyze interconnected energy markets.
+Translate analytical findings into business insights.
+Future Improvements
+
+Potential future extensions include:
+
+Rolling correlations
+Sharpe Ratio
+Maximum Drawdown
+Portfolio optimization
+Monte Carlo simulations
+Energy trading strategy backtesting
