@@ -1,0 +1,223 @@
+European Energy Trading Analytics Dashboard (Version 2 — Python Quant Edition)
+Project Overview
+
+This project is an advanced Quantitative Energy Trading Analytics Dashboard built using Python (Pandas, NumPy) for data engineering and financial computations, and Power BI for interactive visualization.
+
+It extends a traditional BI dashboard into a quant finance-style analytics system, replicating workflows commonly used in:
+
+Energy trading desks
+Risk management teams
+Commodity hedge funds
+Quantitative analytics roles
+
+The analysis focuses on European energy markets during 2022–2025, covering:
+
+Brent Crude Oil
+TTF Natural Gas
+EUA Carbon Prices
+European Electricity Index
+🧠 Project Philosophy
+Version 1 (DAX-Based)
+Python → Data Cleaning
+Power BI → All calculations (DAX)
+Version 2 (This Project)
+Python → Full quantitative analytics engine
+Power BI → Visualization layer only
+
+This version represents a real-world quant workflow where heavy computations are done upstream.
+
+📊 Dataset
+Raw Data
+Daily energy prices (2022–2025)
+Features:
+Brent_Price
+TTF_Price
+EUA_Price
+Power_Index
+Engineered Quant Features (Python)
+
+The following financial indicators were generated in Python:
+
+Returns
+Brent_Return
+TTF_Return
+EUA_Return
+Power_Return
+Risk Metrics
+Rolling 30-Day Volatility (all assets)
+Historical Value at Risk (95%)
+Correlation Analysis
+Brent_TTF rolling correlation (30D)
+TTF_Power rolling correlation (30D)
+EUA_Power rolling correlation (30D)
+Performance Metrics
+Sharpe Ratios (252D rolling)
+Drawdowns (cumulative peak-to-trough decline)
+🛠️ Tools & Technologies
+Python Stack
+Pandas
+NumPy
+BI Layer
+Microsoft Power BI
+Data Format
+CSV-based pipeline
+🧮 Methodology
+Returns Calculation
+Return
+t
+	​
+
+=
+P
+t−1
+	​
+
+P
+t
+	​
+
+−P
+t−1
+	​
+
+	​
+
+
+Implemented using:
+
+pct_change()
+Rolling Volatility
+σ
+t
+	​
+
+=STD(Return
+t−30:t
+	​
+
+)
+
+Implemented using:
+
+rolling(window=30).std()
+Value at Risk (VaR 95%)
+VaR
+95
+	​
+
+=P
+5%
+	​
+
+(Returns)
+
+Computed using:
+
+quantile(0.05)
+Rolling Correlation
+ρ
+x,y
+	​
+
+=corr(x
+t−30:t
+	​
+
+,y
+t−30:t
+	​
+
+)
+Sharpe Ratio (Rolling)
+Sharpe=
+σ
+μ
+	​
+
+
+Using 252-day rolling window.
+
+Drawdown
+Drawdown=
+Peak
+t
+	📊 Power BI Dashboard Structure
+Page 1 — Market Overview
+Price trends
+Market comparisons
+Key KPIs
+
+Objective: Understand macro energy market evolution.
+
+Page 2 — Risk Analytics
+Daily returns
+Rolling volatility
+Value at Risk (VaR)
+
+Objective: Measure market risk and turbulence.
+
+Page 3 — Correlation Analysis
+Rolling correlations
+Scatter plots
+Cross-market dependencies
+
+Key Insight:
+
+Gas markets drive electricity price behavior in Europe.
+
+Page 4 — Performance Analytics
+Sharpe ratios (rolling)
+Drawdowns
+Maximum drawdown comparison
+
+Objective: Evaluate risk-adjusted performance.
+
+Page 5 — Trading Strategy Insights
+Crisis period analysis
+Market contagion effects
+Portfolio implications
+🔑 Key Findings
+TTF Natural Gas exhibited the highest volatility across all markets.
+Electricity prices strongly follow gas price dynamics.
+Correlations increase significantly during crisis periods (2022).
+Carbon markets act as volatility amplifiers.
+Oil markets remain comparatively stable.
+📈 Advanced Quant Techniques Used
+Time series returns modeling
+Rolling statistical analysis
+Risk modeling (VaR, volatility)
+Correlation dynamics
+Risk-adjusted performance (Sharpe ratio)
+Drawdown analysis
+💼 Skills Demonstrated
+Quant Finance
+Risk analysis
+Portfolio performance metrics
+Market correlation modeling
+Data Science
+Time series analysis
+Feature engineering
+Statistical modeling
+Engineering
+Python ETL pipeline
+Data transformation workflows
+Power BI integration
+🚀 Project Outcome
+
+This project demonstrates the ability to:
+
+Build a full quantitative analytics pipeline
+Engineer financial features using Python
+Perform advanced energy market analysis
+Translate quant outputs into executive dashboards
+Simulate real-world trading desk analytics workflows
+🔮 Future Improvements
+Monte Carlo simulations
+GARCH volatility models
+Portfolio optimization (Markowitz)
+Sharpe-maximizing allocation
+Backtesting trading strategies
+Macro regime detection (bull/bear energy cycles)
+
+Price
+t
