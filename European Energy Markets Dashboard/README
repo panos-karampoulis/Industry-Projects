@@ -1,0 +1,183 @@
+European Energy Markets Dashboard ⚡
+
+## Power BI | Python | Data Analysis
+
+## 📌 Project Overview
+
+This project analyzes the European electricity market with a focus on **Day-Ahead electricity prices, generation mix, renewable penetration, and cross-border energy flows**.
+
+The objective is to build an interactive Power BI dashboard that provides insights into how European electricity markets operate and how factors such as demand, generation sources, and energy dependency influence electricity prices.
+
+---
+
+# 🎯 Business Questions
+
+The dashboard aims to answer:
+
+* How do electricity prices vary across European countries?
+* How has renewable energy penetration evolved over time?
+* Which countries rely more on fossil fuel generation?
+* Which countries are net electricity importers or exporters?
+* Is there a relationship between electricity demand, generation mix, and prices?
+
+---
+
+# 🛠️ Tools Used
+
+## Data Processing
+
+* Python
+* Google Colab
+* Pandas
+* NumPy
+
+## Visualization & BI
+
+* Microsoft Power BI
+* DAX Measures
+* Power Query
+
+---
+
+# 📂 Data Sources
+
+The project uses publicly available energy datasets:
+
+* Ember European Electricity Data
+
+  * Electricity prices
+  * Electricity generation mix
+  * Renewable share
+  * Demand
+  * Net imports
+
+* Eurostat Energy Statistics (reference)
+
+The datasets are free and publicly available.
+
+The workflow follows a simple ETL process:
+
+```
+Raw CSV Data
+      |
+      ↓
+Google Colab (Python)
+      |
+      ↓
+Data Cleaning & Transformation
+      |
+      ↓
+Processed Energy Dataset
+      |
+      ↓
+Power BI Dashboard
+
+🧹 Data Preparation
+
+Data preparation steps performed in Python:
+
+* Loaded raw CSV datasets
+* Selected relevant European countries
+* Filtered analysis period (2022-2024)
+* Converted date formats
+* Cleaned missing values
+* Aggregated daily electricity prices into monthly averages
+* Restructured generation data for BI analysis
+* Created analytical dataset for Power BI
+
+---
+
+# 🌍 Countries Included
+
+The analysis focuses on:
+
+* Germany
+* France
+* Italy
+* Spain
+* Netherlands
+* Belgium
+* Poland
+* Greece
+
+---
+
+# 📊 Dashboard Pages
+
+## 1. Market Overview
+
+Provides a high-level view of:
+
+* Average electricity price (€ / MWh)
+* Electricity demand
+* Renewable energy share
+* Monthly price trends
+* Country comparison
+
+---
+
+## 2. Generation Mix
+
+Analyzes electricity production sources:
+
+* Renewable generation
+* Solar
+* Wind
+* Hydro
+* Nuclear
+* Gas
+* Coal
+
+Key visuals:
+
+* Generation mix evolution
+* Renewable energy trends
+* Country comparison
+
+---
+
+## 3. Cross-Border Flows
+
+Analyzes electricity dependency between countries:
+
+* Net imports
+* Net exports
+* Country energy position
+* Import/export trends
+
+---
+
+## 4. Price Drivers
+
+Explores relationships between:
+
+* Electricity demand and prices
+* Gas generation dependency and prices
+* Country price volatility
+
+---
+
+# 📈 Key Insights
+
+Examples of insights available from the dashboard:
+
+* Electricity prices increased significantly during the 2022 energy crisis.
+* Countries with higher renewable penetration show different price dynamics compared with fossil-dependent markets.
+* Gas generation dependency can influence electricity price levels.
+* European countries have different levels of electricity import dependency.
+
+🚀 Future Improvements
+
+Possible extensions:
+
+* Add natural gas prices
+* Add weather data (temperature, wind speed, solar radiation)
+* Include more European countries
+* Add hourly electricity market analysis
+* Build automated data refresh pipeline
+
+---
+
+---
+
+# 🔄 Data Pipeline
