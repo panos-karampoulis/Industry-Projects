@@ -1,0 +1,188 @@
+⚡ Energy Trading Analytics Dashboard
+Overview
+
+This project presents an end-to-end analytics solution for electricity market trading using hourly European day-ahead market data.
+
+The objective is to analyze trading strategy performance, market conditions, risk exposure, and price behavior through a complete data pipeline and interactive Power BI dashboard.
+
+The project combines:
+
+Market price analysis
+Trading strategy evaluation
+Risk management metrics
+Market regime detection
+Weather impact analysis
+Project Structure
+Energy-Trading-Analytics/
+│
+├── data/
+│   ├── market_data.csv
+│   ├── trades.csv
+│   ├── risk_metrics.csv
+│
+├── notebooks/
+│   ├── data_preparation.ipynb
+│   ├── strategy_analysis.ipynb
+│
+├── powerbi/
+│   └── Energy_Trading_Dashboard.pbix
+│
+├── README.md
+Data Sources
+Market Data
+
+Hourly electricity market prices including:
+
+Day-ahead electricity price
+Position signals
+Price volatility
+Negative price events
+Price spikes
+
+Resolution:
+
+Hourly data
+Full year analysis
+Weather Data
+
+Integrated weather variables:
+
+Temperature
+Humidity
+Wind speed
+Rain
+
+Used to investigate relationships between weather conditions and electricity prices.
+
+Data Model
+
+The Power BI model follows a star-schema approach.
+
+Fact Tables
+Fact_Market
+
+Contains hourly market observations:
+
+Datetime
+Price
+Position
+Volatility
+Negative price indicators
+Weather variables
+Fact_Trades
+
+Contains executed trades:
+
+Entry time
+Exit time
+Entry price
+Exit price
+PnL
+Holding period
+Fact_Risk
+
+Contains risk analytics:
+
+Daily PnL
+Cumulative PnL
+Drawdown
+Rolling volatility
+VaR metrics
+Dimension Tables
+Dim_Date
+
+Calendar dimension used for time intelligence.
+
+Dim_Strategy
+
+Strategy metadata and identification.
+
+Dashboard Pages
+1. Executive Overview
+
+Provides a high-level view of strategy performance:
+
+Total PnL
+Trade count
+Average trade performance
+Equity curve
+Electricity price evolution
+Monthly performance
+2. Trading Activity & Exposure
+
+Analyzes trading behavior:
+
+Number of trades
+Market exposure
+Long vs flat time
+Holding duration
+Trade history
+Best and worst trades
+3. Risk Dashboard
+
+Focuses on risk management:
+
+Sharpe ratio
+Value at Risk (VaR)
+Maximum drawdown
+Rolling volatility
+Drawdown profile
+Daily PnL distribution
+4. Market Intelligence
+
+Examines market conditions:
+
+Electricity price evolution
+Negative price events
+Temperature impact
+Wind speed impact
+Market regime classification
+
+Market regimes include:
+
+Normal Market
+High Volatility
+Price Spike
+Negative Price
+Key Findings
+
+The analysis identified:
+
+The strategy achieved positive cumulative performance.
+Market exposure was limited compared to total available hours.
+Negative price events represented a significant market condition.
+The strategy was active during a portion of negative price periods.
+Risk metrics provide visibility into drawdowns and volatility behavior.
+Tools Used
+Python
+
+Used for:
+
+Data acquisition
+Data cleaning
+Feature engineering
+Strategy evaluation
+
+Libraries:
+
+pandas
+numpy
+matplotlib
+meteostat
+Power BI
+
+Used for:
+
+Data modeling
+DAX calculations
+Interactive dashboards
+Performance visualization
+Future Improvements
+
+Possible extensions:
+
+Additional generation data (solar/wind/load)
+Intraday market analysis
+Multiple strategy comparison
+Machine learning price forecasting
+Automated reporting pipeline
