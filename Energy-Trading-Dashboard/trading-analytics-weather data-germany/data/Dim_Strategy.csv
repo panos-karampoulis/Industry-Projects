@@ -1,0 +1,2 @@
+Strategy_ID,Strategy_Name,Description
+1,Mean Reversion,Long strategy based on price deviation from 24h moving average
