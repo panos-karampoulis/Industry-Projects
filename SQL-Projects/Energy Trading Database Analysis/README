@@ -1,0 +1,223 @@
+Energy Trading Database Analysis (SQL)
+Project Overview
+
+This project simulates an energy trading analytics environment using MySQL.
+
+The objective is to design a relational database, generate realistic electricity market data, and perform SQL-based analysis to answer business questions related to:
+
+electricity market prices
+trading activity
+trader performance
+market positions
+profitability analysis
+
+The project focuses on SQL skills required for entry-level Energy Market Analyst, BI Analyst, and Data Analyst roles.
+
+Business Context
+
+Energy trading companies monitor electricity markets, trading activity, and portfolio performance to make data-driven decisions.
+
+This project represents a simplified trading environment where:
+
+traders execute BUY and SELL energy transactions
+different assets participate in electricity markets
+market prices fluctuate hourly
+trading performance is evaluated using SQL analytics
+Database Design
+
+The database follows a relational model consisting of dimension and fact tables.
+
+Dimension Tables
+traders
+
+Contains information about trading participants.
+
+Columns:
+
+trader_id
+trader_name
+desk
+country
+markets
+
+Contains electricity market information.
+
+Columns:
+
+market_id
+market_name
+market_type
+country
+assets
+
+Contains generation assets.
+
+Columns:
+
+asset_id
+asset_name
+asset_type
+capacity_mw
+renewable
+Fact Tables
+market_prices
+
+Hourly electricity market price data.
+
+Contains:
+
+market_id
+price_timestamp
+settlement_price
+hour
+peak_type
+
+Dataset size:
+
+8,760 hourly observations
+Full year of simulated market prices
+
+The dataset includes:
+
+peak/off-peak behavior
+seasonal effects
+price spikes
+negative price events
+trades
+
+Simulated energy trading transactions.
+
+Contains:
+
+trader_id
+market_id
+asset_id
+trade_date
+trade_timestamp
+trade_type (BUY/SELL)
+volume_mwh
+price
+
+Dataset size:
+
+50,000 trading transactions
+Data Generation
+
+Market and trading datasets were generated using Python and exported as CSV files.
+
+Python was used only for:
+
+synthetic data generation
+data preparation
+CSV creation
+
+The main analysis was performed using MySQL SQL queries.
+
+SQL Skills Demonstrated
+Data Manipulation
+SELECT statements
+Filtering
+Sorting
+Aggregations
+GROUP BY
+Database Analysis
+INNER JOIN
+Multiple table joins
+CTEs
+CASE WHEN logic
+Advanced SQL
+Window functions
+RANK()
+LAG()
+Rolling averages
+Moving windows
+Time Series Analytics
+Hourly price analysis
+Daily aggregation
+Monthly reporting
+Peak vs Off-Peak analysis
+Business Questions Answered
+Market Analysis
+What is the average electricity price by month?
+
+Used for understanding seasonal price behavior.
+
+Which hours have the highest electricity prices?
+
+Used for identifying peak demand periods.
+
+How different are peak and off-peak prices?
+
+Used for market behavior analysis.
+
+Trading Analysis
+Which traders manage the highest trading volume?
+
+Analyzed using:
+
+JOIN
+SUM aggregation
+Which traders generate the highest P&L?
+
+Calculated using:
+
+BUY/SELL logic
+CASE WHEN
+CTEs
+
+Formula:
+
+P&L = SELL Revenue - BUY Cost
+What are trader market positions?
+
+Analyzed through:
+
+net volume calculations
+market exposure analysis
+Example Advanced Query Topics
+Rolling 24-hour Average Price
+
+Used to identify short-term market trends.
+
+Techniques:
+
+AVG() OVER()
+Moving windows
+Price Change Detection
+
+Used to identify hourly volatility.
+
+Techniques:
+
+LAG()
+Trader Performance Ranking
+
+Used to rank trading opportunities.
+
+Techniques:
+
+RANK()
+PARTITION BY
+Tools Used
+MySQL 8.0
+MySQL Workbench
+Python (Pandas, NumPy)
+Google Colab
+Key Learning Outcomes
+
+Through this project I practiced:
+
+designing relational databases
+loading and validating datasets
+writing analytical SQL queries
+working with energy market concepts
+transforming raw data into business insights
+Future Improvements
+
+Possible extensions:
+
+Add renewable generation data
+Calculate asset profitability
+Connect SQL outputs with Power BI dashboards
+Create automated ETL pipelines
+Add real market data sources
