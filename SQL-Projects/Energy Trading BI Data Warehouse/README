@@ -1,0 +1,279 @@
+ Energy Trading BI Data Warehouse
+
+## Project Overview
+
+This project demonstrates the design and implementation of a small **Business Intelligence Data Warehouse** for an electricity trading environment.
+
+The goal was to transform operational trading data into an analytical structure optimized for reporting, KPI calculations, and future Power BI dashboards.
+
+The project simulates a real-world BI workflow:
+
+Operational Database → ETL Process → Data Warehouse → Reporting Layer → Dashboard
+
+---
+
+# Business Scenario
+
+The energy trading company stores daily operational data related to:
+
+- market transactions
+- traders
+- energy assets
+- electricity markets
+- hourly market prices
+
+As reporting requirements increase, analysts need a more efficient way to analyze business performance without querying transactional tables directly.
+
+A dedicated analytical warehouse was created to support:
+
+- trading performance analysis
+- profitability reporting
+- market monitoring
+- management dashboards
+
+---
+
+# Architecture
+
+The project follows a simplified BI architecture:
+The model separates:
+
+### Fact Table
+
+Contains measurable business events.
+
+### Dimension Tables
+
+Contain descriptive information used for filtering and analysis.
+
+---
+
+# Dimension Tables
+
+## dim_trader
+
+Stores trader information:
+
+- trader identifier
+- trader name
+- trading desk
+- country
+
+---
+
+## dim_market
+
+Stores market information:
+
+- market name
+- market type
+- country
+
+---
+
+## dim_asset
+
+Stores energy asset information:
+
+- asset name
+- asset type
+- renewable classification
+- capacity
+
+---
+
+## dim_date
+
+Calendar dimension used for:
+
+- yearly analysis
+- monthly reporting
+- quarterly trends
+- weekly analysis
+
+---
+
+# Fact Table
+
+## fact_trades
+
+Stores trading transactions including:
+
+- trading volume (MWh)
+- trade price
+- trade value
+- trade type
+- relationships with all dimension tables
+
+Example measures:
+# ETL Process
+
+The ETL pipeline was implemented using SQL.
+
+## Extract
+
+Data was extracted from the operational database:
+Sources included:
+
+- traders
+- markets
+- assets
+- trades
+
+---
+
+## Transform
+
+Data transformations included:
+
+- surrogate key mapping
+- dimension lookups
+- business calculations
+- trade value calculation
+
+---
+
+## Load
+
+Transformed data was loaded into: energy_dw
+Tables populated:
+
+- dim_trader
+- dim_market
+- dim_asset
+- dim_date
+- fact_trades
+
+---
+
+# Data Quality Checks
+
+After loading the warehouse, validation checks were performed:
+
+## Row Count Validation
+
+Compared operational tables with warehouse records.
+
+## Missing Key Validation
+
+Checked for missing foreign keys in the fact table.
+
+## Relationship Validation
+
+Verified that fact records correctly connected with dimension tables.
+
+---
+
+# KPI Reporting Layer
+
+SQL views were created to provide reporting-ready datasets.
+
+## Executive Dashboard KPIs
+
+Includes:
+
+- Total Trades
+- Total Trading Volume
+- Total Trading Value
+- Net P&L
+
+---
+
+## Trader Performance
+
+Metrics:
+
+- number of trades
+- traded volume
+- profitability by trader
+
+---
+
+## Market Performance
+
+Metrics:
+
+- trading activity by market
+- market contribution
+- volume distribution
+
+---
+
+## Renewable Energy Analysis
+
+Metrics:
+
+- renewable vs non-renewable trading volume
+- energy asset contribution
+
+---
+
+# SQL Skills Demonstrated
+
+## Database Design
+
+- Star Schema
+- Fact and Dimension Modeling
+- Primary Keys
+- Foreign Keys
+
+---
+
+## SQL Analytics
+
+- Complex JOINs
+- GROUP BY aggregations
+- CASE statements
+- CTEs
+- Window Functions
+
+---
+
+## Data Warehouse Development
+
+- ETL using SQL
+- Surrogate Keys
+- Data Quality Checks
+- Reporting Views
+
+---
+
+## Business Intelligence
+
+- KPI calculations
+- Analytical data modeling
+- Power BI ready datasets
+
+---
+
+# Tools Used
+
+- MySQL 8.0
+- MySQL Workbench
+- Python (data generation and preparation)
+- Google Colab
+- Power BI (planned reporting layer)
+
+---
+# Learning Outcomes
+
+Through this project I practiced:
+
+- designing a dimensional data warehouse
+- understanding OLTP vs OLAP systems
+- building SQL-based ETL processes
+- creating analytical KPI layers
+- preparing datasets for BI reporting tools
+
+---
+
+# Future Improvements
+
+Possible extensions:
+
+- Connect the warehouse directly to Power BI
+- Create interactive dashboards
+- Automate ETL refresh using Python
+- Add real electricity market datasets
+- Include demand and generation information
+- Add forecasting models using Python
