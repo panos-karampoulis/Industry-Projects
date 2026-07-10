@@ -1,0 +1,11 @@
+asset_id,asset_name,asset_type,capacity_mw,renewable
+1,Wind Farm Alpha,Wind,120,1
+2,Wind Farm Beta,Wind,80,1
+3,Solar Park Gamma,Solar,60,1
+4,Solar Park Delta,Solar,100,1
+5,Gas Plant Omega,Gas,300,0
+6,Gas Plant Sigma,Gas,250,0
+7,Hydro Plant A,Hydro,150,1
+8,Hydro Plant B,Hydro,90,1
+9,Battery Storage X,Storage,50,0
+10,Battery Storage Y,Storage,70,0
