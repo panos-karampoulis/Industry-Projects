@@ -1,0 +1,196 @@
+Time Series SQL Analytics
+Project Overview
+
+This project focuses on time series analysis using MySQL and realistic electricity market price data.
+
+The objective is to demonstrate SQL techniques commonly used in reporting, business intelligence, and energy market analytics, including:
+
+Daily, weekly, and monthly reporting
+Rolling averages
+Trend analysis
+Volatility measurement
+Peak vs Off-Peak analysis
+Window functions
+Market anomaly detection
+
+The project simulates the type of reporting and analytical tasks typically performed by Energy Market Analysts, BI Analysts, and Data Analysts.
+
+Business Scenario
+
+An electricity market analysis team monitors hourly market prices and prepares recurring reports for management.
+
+The reporting process requires:
+
+Daily market summaries
+Weekly trend monitoring
+Monthly performance reporting
+Identification of unusual market behavior
+Tracking of long-term price trends
+
+The goal is to transform raw hourly market prices into actionable business insights using SQL.
+
+Dataset
+
+The analysis uses hourly electricity market price data stored in MySQL.
+
+Dataset characteristics:
+
+8,760 hourly observations
+Full calendar year coverage
+Peak and Off-Peak classification
+Realistic seasonal behavior
+Price spikes and negative price events
+
+Main table used:
+
+market_prices
+Column	Description
+price_id	Unique record identifier
+market_id	Market identifier
+price_date	Observation date
+price_timestamp	Observation timestamp
+settlement_price	Electricity market price (€/MWh)
+hour	Hour of day
+peak_type	Peak / Off-Peak classification
+SQL Skills Demonstrated
+Aggregation & Reporting
+GROUP BY
+Aggregate Functions
+Daily Reporting
+Weekly Reporting
+Monthly Reporting
+Time Series Analysis
+Rolling Averages
+Running Averages
+Trend Detection
+Time-based Aggregation
+Window Functions
+LAG()
+RANK()
+AVG() OVER()
+MAX() OVER()
+MIN() OVER()
+Business Intelligence Techniques
+KPI Reporting
+Volatility Analysis
+Market Monitoring
+Anomaly Detection
+Business Questions Answered
+Daily Reporting
+What was the average electricity price each day?
+
+Used to monitor daily market performance.
+
+Which days experienced the highest volatility?
+
+Used to identify unstable market conditions.
+
+How different were Peak and Off-Peak prices?
+
+Used to evaluate demand-driven pricing behavior.
+
+Weekly Reporting
+Which weeks had the highest average prices?
+
+Used to identify sustained high-price periods.
+
+How did prices change week-over-week?
+
+Used to monitor market trends.
+
+Monthly Reporting
+Which month was the most expensive?
+
+Used for seasonal analysis.
+
+Which month showed the highest volatility?
+
+Used to evaluate market uncertainty.
+
+Advanced Time Series Analytics
+Rolling 7-Day Average
+
+Used to smooth short-term market fluctuations and identify trends.
+
+Rolling 30-Day Average
+
+Used to evaluate longer-term market behavior.
+
+Running Maximum
+
+Tracks the highest average market price observed up to each point in time.
+
+Running Minimum
+
+Tracks the lowest average market price observed up to each point in time.
+
+Market Monitoring
+Price Spike Detection
+
+Market prices were categorized into:
+
+Normal
+High
+Extreme
+
+Used to identify unusual market events.
+
+Price Distribution Analysis
+
+Market observations were grouped into price bands to understand market behavior and frequency of price events.
+
+Volatility Analysis
+
+Daily and monthly volatility were calculated using:
+
+STDDEV(settlement_price)
+
+Volatility is commonly used in energy markets to measure price uncertainty and market risk.
+
+SQL Objects Created
+Views
+
+Created reusable reporting layers:
+
+vw_daily_market_summary
+vw_monthly_market_summary
+vw_trader_performance
+Stored Procedures
+
+Created reusable reporting procedures:
+
+sp_daily_market_summary()
+sp_monthly_market_summary()
+sp_trader_ranking()
+Functions
+
+Created custom SQL functions:
+
+fn_trade_value()
+Tools Used
+MySQL 8.0
+MySQL Workbench
+Python (for data generation)
+Google Colab
+GitHub
+Key Learning Outcomes
+
+Through this project I practiced:
+
+Time series analysis using SQL
+Advanced window functions
+Business reporting techniques
+Electricity market analytics
+Volatility and trend analysis
+Creating reusable SQL objects
+Translating raw market data into business insights
+Future Improvements
+
+Potential extensions include:
+
+Forecasting models using Python
+Integration with Power BI dashboards
+Automated reporting pipelines
+Multi-market analysis
+Real electricity market datasets
+Weather and demand correlation analysis
