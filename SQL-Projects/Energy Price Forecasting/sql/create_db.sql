@@ -1,0 +1,3 @@
+CREATE DATABASE EnergyMarketForecasting;
+
+USE EnergyMarketForecasting;
