@@ -1,0 +1,235 @@
+⚡ Energy Price Forecasting Dashboard
+
+A Machine Learning project for forecasting electricity market prices using energy demand, renewable generation, fuel prices, carbon emission costs, and weather conditions.
+
+The project combines:
+
+- 🐍 Python
+- 🤖 Machine Learning
+- 🗄️ SQL
+- 📊 Streamlit Dashboard
+- 📈 Energy Market Analytics
+
+---
+
+# 📌 Project Overview
+
+Electricity prices are influenced by multiple market and environmental factors, including:
+
+- Electricity demand
+- Wind generation
+- Solar generation
+- Natural gas prices
+- CO₂ emission prices
+- Temperature
+
+The objective of this project is to develop a machine learning model capable of predicting electricity prices and identifying the main factors affecting market behavior.
+
+---
+
+# 🏗️ Project Architecture
+
+```
+CSV Dataset
+      │
+      ▼
+SQL Database
+      │
+      ▼
+Data Cleaning & Analysis
+      │
+      ▼
+Machine Learning
+(Random Forest Regressor)
+      │
+      ▼
+Streamlit Dashboard
+```
+
+---
+
+# 📂 Project Structure
+
+```
+Energy-Price-Forecasting
+
+│
+├── charts/
+│   ├── actual_vs_predicted.png
+│   ├── demand_price.png
+│   ├── price_trend.png
+│   └── renewable_impact.png
+│
+├── data/
+│   └── energy_market_prices.csv
+│
+├── models/
+│   └── energy_price_model.pkl
+│
+├── python/
+│   ├── app.py
+│   ├── correlation_analysis.py
+│   ├── create_charts.py
+│   ├── eda_analysis.py
+│   ├── generate_dataset.py
+│   ├── load_database.py
+│   ├── predict_price.py
+│   └── train_model.py
+│
+├── sql/
+│   ├── create_db.sql
+│   ├── create_tables.sql
+│   └── create_views.sql
+│
+├── README.md
+└── requirements.txt
+```
+
+---
+
+# 🤖 Machine Learning Model
+
+**Algorithm**
+
+- Random Forest Regressor
+
+**Target Variable**
+
+- Electricity_Price_EUR
+
+**Input Features**
+
+- Demand_MWh
+- Wind_Generation_MWh
+- Solar_Generation_MWh
+- Gas_Price_EUR
+- CO2_Price_EUR
+- Temperature_C
+
+---
+
+# 📊 Model Performance
+
+| Metric | Value |
+|---------|------:|
+| MAE | 4.25 |
+| RMSE | 5.27 |
+| R² Score | 0.705 |
+
+The model explains approximately **70% of the variation** in electricity prices on the test dataset.
+
+---
+
+# 🧠 Feature Importance
+
+| Feature | Importance |
+|---------|-----------:|
+| Demand_MWh | 60.0% |
+| Gas_Price_EUR | 11.5% |
+| Solar_Generation_MWh | 11.0% |
+| CO2_Price_EUR | 7.6% |
+| Wind_Generation_MWh | 6.5% |
+| Temperature_C | 3.4% |
+
+The results indicate that electricity demand is the strongest driver of market prices, followed by gas prices and renewable energy generation.
+
+---
+
+# 📈 Streamlit Dashboard
+
+The interactive dashboard includes:
+
+- 📌 Market Overview KPIs
+- 📈 Electricity Price Trend
+- ⚡ Demand vs Electricity Price
+- 🌱 Renewable Generation Analysis
+- 🤖 Electricity Price Prediction
+- 📊 Model Performance
+- 🧠 Feature Importance
+
+---
+
+# ▶️ Running the Project
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate the environment (Windows):
+
+```bash
+.venv\Scripts\activate
+```
+
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the Streamlit dashboard:
+
+```bash
+streamlit run python/app.py
+```
+
+---
+
+# 🛠️ Technologies Used
+
+### Programming
+
+- Python
+- Pandas
+- NumPy
+
+### Machine Learning
+
+- Scikit-learn
+- Random Forest Regressor
+
+### Data Visualization
+
+- Plotly
+- Matplotlib
+
+### Database
+
+- SQL
+
+### Dashboard
+
+- Streamlit
+
+---
+
+# 📷 Dashboard Preview
+
+Add screenshots of the Streamlit dashboard here.
+
+Example:
+
+```
+dashboard_overview.png
+prediction_page.png
+model_performance.png
+```
+
+---
+
+# 🎯 Business Value
+
+This project demonstrates how Machine Learning can support electricity market analysis by:
+
+- Forecasting electricity prices
+- Identifying the key market drivers
+- Understanding the impact of renewable generation
+- Supporting data-driven decision making
