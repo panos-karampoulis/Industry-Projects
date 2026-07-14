@@ -1,0 +1,326 @@
+# ⚡ European Electricity Load Forecasting
+
+Machine Learning project for short-term electricity demand forecasting across European countries using weather data, time-series features, and XGBoost regression models.
+
+The project combines electricity load data with weather information to predict the next 24 hours of electricity demand and provides an interactive Streamlit dashboard for model visualization and comparison.
+
+---
+
+# 📌 Project Overview
+
+Electricity demand forecasting is a critical task for modern energy systems, helping grid operators optimize production, balance supply and demand, and improve renewable energy integration.
+
+This project implements an end-to-end forecasting pipeline:
+
+1. Data collection
+2. Data preprocessing
+3. Weather integration
+4. Feature engineering
+5. Machine learning training
+6. Model evaluation
+7. 24-hour recursive forecasting
+8. Interactive dashboard deployment
+
+
+---
+
+# 🌍 Supported Countries
+
+The system currently supports four European countries:
+
+- 🇩🇪 Germany
+- 🇫🇷 France
+- 🇪🇸 Spain
+- 🇳🇱 Netherlands
+
+
+Each country has its own trained XGBoost forecasting model.
+
+
+---
+
+# 🏗️ Project Architecture
+
+
+
+Energy-Load-Forecasting/
+
+│
+├── data/
+│ ├── raw/
+│ │ ├── energy datasets
+│ │ └── weather datasets
+│ │
+│ └── processed/
+│
+├── models/
+│ ├── Germany/
+│ ├── France/
+│ ├── Spain/
+│ └── Netherlands/
+│
+├── results/
+│ └── country_model_metrics.csv
+│
+├── src/
+│ ├── loader.py
+│ ├── features.py
+│ ├── train.py
+│ ├── evaluate.py
+│ └── predict.py
+│
+├── streamlit/
+│ └── app.py
+│
+├── notebooks/
+│ └── experimentation notebooks
+│
+├── requirements.txt
+│
+└── README.md
+
+
+
+---
+
+# 📊 Data Sources
+
+## Electricity Load Data
+
+Electricity demand data is based on ENTSO-E transparency datasets.
+
+Used variables include:
+
+- Actual electricity load
+- Generation information
+- Renewable energy indicators
+
+
+## Weather Data
+
+Weather information is collected from Open-Meteo historical weather API.
+
+Features include:
+
+- Temperature
+- Wind speed
+- Cloud cover
+- Solar radiation
+
+
+---
+
+# ⚙️ Feature Engineering
+
+The forecasting models use engineered time-series features:
+
+## Calendar Features
+
+- Hour
+- Month
+- Weekday
+- Weekend indicator
+
+
+## Lag Features
+
+Historical electricity demand:
+
+- Previous hour load
+- Previous day load
+- Previous week load
+
+
+## Rolling Statistics
+
+- 24-hour rolling mean
+- 24-hour rolling standard deviation
+
+
+## Cyclic Features
+
+Time encoding using:
+
+- Hour sine transformation
+- Hour cosine transformation
+
+
+These features allow the model to capture daily and weekly demand patterns.
+
+
+---
+
+# 🤖 Machine Learning Model
+
+The project uses:
+
+## XGBoost Regressor
+
+
+Main parameters:
+
+
+n_estimators = 500
+
+learning_rate = 0.05
+
+max_depth = 6
+
+random_state = 42
+
+
+
+The model is trained separately for each country.
+
+Training strategy:
+
+- 80% training data
+- 20% testing data
+- Time-series split without shuffling
+
+
+---
+
+# 📈 Model Performance
+
+
+| Country | MAE (MW) | RMSE (MW) | MAPE |
+|---|---:|---:|---:|
+| Germany | 355.81 | 488.25 | 0.66% |
+| France | 338.74 | 701.34 | 0.65% |
+| Spain | 174.31 | 267.52 | 0.64% |
+| Netherlands | 100.08 | 150.95 | 0.81% |
+
+
+Performance metrics:
+
+- MAE: Mean Absolute Error
+- RMSE: Root Mean Squared Error
+- MAPE: Mean Absolute Percentage Error
+
+
+---
+
+# 🔮 Forecasting Approach
+
+The application generates a 24-hour electricity demand forecast using recursive forecasting.
+
+Process:
+
+
+Historical Load
+
+  ↓
+
+Feature Generation
+
+  ↓
+
+XGBoost Prediction
+
+  ↓
+
+Prediction added to history
+
+  ↓
+
+Next hour forecast
+
+  ↓
+
+Repeat until 24 hours
+
+
+
+---
+
+# 🖥️ Streamlit Dashboard
+
+
+The interactive dashboard provides:
+
+
+## Forecast Dashboard
+
+Features:
+
+- Country selection
+- Historical electricity demand visualization
+- Current load KPI
+- Average load KPI
+- Peak demand KPI
+- Model performance metrics
+- 24-hour forecast generation
+- Actual vs Forecast comparison
+
+
+## Model Comparison
+
+Allows comparison between European countries:
+
+- MAE ranking
+- RMSE comparison
+- Performance table
+
+
+---
+
+# 🚀 Installation
+
+
+Clone the repository:
+
+
+```bash
+git clone <repository-url>
+
+cd Energy-Load-Forecasting
+
+Create virtual environment:
+
+python -m venv .venv
+
+Activate environment:
+
+Windows:
+
+.venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+▶️ Running the Application
+
+Start Streamlit:
+
+streamlit run streamlit/app.py
+
+The dashboard will open automatically in your browser.
+
+📚 Technologies Used
+Programming
+Python
+Data Processing
+Pandas
+NumPy
+Machine Learning
+XGBoost
+Scikit-learn
+Visualization
+Streamlit
+Plotly
+Data Sources
+ENTSO-E Transparency Platform
+Open-Meteo API
+🎯 Future Improvements
+
+Possible extensions:
+
+Add more European countries
+Integrate weather forecasts instead of historical weather
+Add probabilistic forecasting intervals
+Compare additional ML models:
+LightGBM
+Random Forest
+Neural Networks
+Deploy dashboard online
