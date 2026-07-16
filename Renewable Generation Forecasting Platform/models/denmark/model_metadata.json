@@ -1,0 +1,37 @@
+{
+    "model": "XGBoost",
+    "version": "1.0",
+    "country": "Denmark",
+    "training_date": "2026-07-15",
+    "train_period": "2020-01-15 00:00:00 to 2024-12-31 23:00:00",
+    "test_period": "2025-01-01 00:00:00 to 2025-12-31 23:00:00",
+
+    "MAE_MWh": 145.43958746946544,
+    "RMSE_MWh": 220.78511110305428,
+    "R2": 0.9680365442934965,
+
+    "forecast_horizon": "24 hours",
+
+    "weather_features": [
+        "temperature",
+        "humidity",
+        "pressure",
+        "cloud_cover",
+        "wind_speed",
+        "wind_direction",
+        "solar_radiation"
+    ],
+
+    "generation_sources": [
+        "solar",
+        "wind_onshore",
+        "wind_offshore"
+    ],
+
+    "target": "renewable_total_mwh",
+
+    "features_count": 94
+}
+
+
+
