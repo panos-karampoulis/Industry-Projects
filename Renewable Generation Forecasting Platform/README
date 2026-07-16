@@ -1,0 +1,371 @@
+# ⚡ Renewable Generation Forecasting Platform
+
+A machine learning platform for forecasting renewable energy generation using historical power generation and weather data.
+
+The project combines **solar and wind generation forecasting** with weather-driven machine learning models and provides an interactive **Streamlit dashboard** for visualization and forecasting.
+
+---
+
+# 📌 Project Overview
+
+Renewable energy production is strongly influenced by weather conditions.
+
+This project builds an end-to-end forecasting pipeline that:
+
+- Collects renewable generation data
+- Retrieves historical weather data
+- Creates time-series forecasting features
+- Trains XGBoost machine learning models
+- Predicts renewable energy generation
+- Visualizes results through an interactive dashboard
+
+The framework currently supports multiple European countries and can easily be extended.
+
+---
+
+# 🌍 Supported Countries
+
+- 🇩🇪 Germany
+- 🇩🇰 Denmark
+- 🇮🇹 Italy
+
+---
+
+# 🚀 Features
+
+## Renewable Energy Forecasting
+
+Forecasts:
+
+- Solar Generation
+- Wind Generation
+- Total Renewable Generation
+
+Target variable:
+
+```
+renewable_total_mwh
+```
+
+---
+
+## Weather Integration
+
+Historical weather variables:
+
+- Temperature
+- Humidity
+- Pressure
+- Cloud Cover
+- Wind Speed
+- Wind Direction
+- Solar Radiation
+
+Weather source:
+
+- Open-Meteo Historical Weather API
+
+---
+
+## Time-Series Feature Engineering
+
+The forecasting model uses:
+
+### Calendar Features
+
+- Hour
+- Day of Week
+- Month
+- Day of Year
+- Day of Month
+- Year
+
+### Cyclic Features
+
+- hour_sin
+- hour_cos
+- month_sin
+- month_cos
+
+### Lag Features
+
+Solar:
+
+- solar_lag_1
+- solar_lag_2
+- solar_lag_3
+- solar_lag_24
+- solar_lag_48
+- solar_lag_168
+
+Wind:
+
+- wind_lag_1
+- wind_lag_2
+- wind_lag_3
+- wind_lag_24
+- wind_lag_48
+- wind_lag_168
+
+### Rolling Statistics
+
+Rolling Mean
+
+Rolling Standard Deviation
+
+for:
+
+- 3 hours
+- 6 hours
+- 24 hours
+- 168 hours
+
+---
+
+# 🤖 Machine Learning Model
+
+Model:
+
+**XGBoost Regressor**
+
+Reasons for choosing XGBoost:
+
+- Excellent performance on structured data
+- Handles nonlinear relationships
+- Robust against overfitting
+- Fast training and inference
+- Feature importance analysis
+
+---
+
+# 📊 Model Evaluation
+
+Evaluation metrics:
+
+- MAE (Mean Absolute Error)
+- RMSE (Root Mean Squared Error)
+- R² Score
+
+Typical performance:
+
+| Metric | Value |
+|---------|--------|
+| MAE | ~950 MWh |
+| RMSE | ~1400 MWh |
+| R² | ~0.99 |
+
+---
+
+# 📈 Feature Importance
+
+The trained model automatically identifies the most important forecasting variables.
+
+Typical top features include:
+
+- solar_lag_24
+- wind_lag_1
+- solar_lag_1
+- solar_lag_48
+- wind_roll_mean_3
+- solar_roll_std_6
+- hour
+- solar_radiation
+
+---
+
+# 🖥️ Streamlit Dashboard
+
+The interactive dashboard includes:
+
+## Model Information
+
+- Model Version
+- Training Date
+- Forecast Horizon
+- Weather Features Used
+
+---
+
+## Forecast Explorer
+
+Users can:
+
+- Select country
+- Select date
+- Explore hourly renewable generation forecasts
+
+---
+
+## Weather Analytics
+
+Interactive charts:
+
+- Temperature
+- Solar Radiation
+- Wind Speed
+
+---
+
+## Weather Impact Analysis
+
+Scatter plots showing relationships between:
+
+- Solar Radiation vs Solar Generation
+- Wind Speed vs Wind Generation
+
+---
+
+## Forecast Generation
+
+Users can:
+
+1. Select country
+2. Select forecast date
+3. Generate hourly renewable forecasts
+4. Download forecast results as CSV
+
+Example output:
+
+```
+Germany_forecast_2025-12-31.csv
+```
+
+---
+
+# 🏗️ Project Architecture
+
+```
+Historical Generation Data
+            │
+            ▼
+Weather Data Collection
+            │
+            ▼
+Data Merge
+            │
+            ▼
+Feature Engineering
+            │
+            ▼
+XGBoost Training
+            │
+            ▼
+Forecast Generation
+            │
+            ▼
+Streamlit Dashboard
+```
+
+---
+
+# 📂 Project Structure
+
+```
+Renewable Generation Forecasting/
+
+│
+├── app.py
+│
+├── src/
+│   ├── predict.py
+│   ├── train.py
+│   ├── merged_generation_weather.py
+│   └── ...
+│
+├── configs/
+│   ├── germany.yaml
+│   ├── denmark.yaml
+│   └── italy.yaml
+│
+├── data/
+│   ├── weather/
+│   └── processed/
+│
+├── models/
+│
+├── reports/
+│
+├── requirements.txt
+│
+└── README.md
+```
+
+---
+
+# ⚙️ Installation
+
+Clone repository
+
+```bash
+git clone https://github.com/yourusername/renewable-generation-forecasting.git
+```
+
+Create virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate environment
+
+Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# ▶️ Running the Dashboard
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# 📦 Main Libraries
+
+- Python
+- Pandas
+- NumPy
+- XGBoost
+- Scikit-learn
+- Streamlit
+- Plotly
+- Requests
+- Joblib
+- PyYAML
+
+---
+
+# 🔮 Future Improvements
+
+Potential future extensions:
+
+- Additional European countries
+- Weather forecast integration for future prediction
+- Probabilistic forecasting
+- Deep Learning models (LSTM / Transformer)
+- Prediction intervals
+- Docker deployment
+- Cloud deployment
+
+---
+
+# 🎯 Project Goal
+
+Develop a scalable renewable energy forecasting platform combining:
+
+- Historical Generation Data
+- Weather Information
+- Machine Learning
+- Interactive Analytics
+
+into a complete forecasting solution suitable for energy analytics applications.
