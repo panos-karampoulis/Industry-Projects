@@ -1,0 +1,34 @@
+{
+    "model": "XGBoost",
+    "version": "1.0",
+    "country": "Germany",
+    "training_date": "2026-07-15",
+    "train_period": "2020-01-15 00:00:00 to 2024-12-31 23:00:00",
+    "test_period": "2025-01-01 00:00:00 to 2025-12-31 23:00:00",
+
+    "MAE_MWh": 949.45,
+    "RMSE_MWh": 1401.16,
+    "R2": 0.9903,
+
+    "forecast_horizon": "24 hours",
+
+    "weather_features": [
+        "temperature",
+        "humidity",
+        "pressure",
+        "cloud_cover",
+        "wind_speed",
+        "wind_direction",
+        "solar_radiation"
+    ],
+
+    "generation_sources": [
+        "solar",
+        "wind_onshore",
+        "wind_offshore"
+    ],
+
+    "target": "renewable_total_mwh",
+
+    "features_count": 94
+}
