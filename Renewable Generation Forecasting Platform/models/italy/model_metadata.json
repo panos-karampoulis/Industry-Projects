@@ -1,0 +1,8 @@
+{
+    "model": "XGBoost",
+    "country": "italy",
+    "test_period": "2025-01-01",
+    "MAE_MWh": 0.4433837010998516,
+    "RMSE_MWh": 0.755777795448888,
+    "R2": 0.9816
+}
