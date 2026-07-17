@@ -1,0 +1,355 @@
+# Volatility Forecasting Engine & Risk Analytics Dashboard
+
+An end-to-end quantitative finance project for volatility forecasting and market risk analysis.
+
+The project implements multiple volatility models, evaluates forecasting performance, estimates Value at Risk (VaR), performs backtesting, and provides an interactive Streamlit dashboard for model comparison and risk visualization.
+
+---
+
+# Project Overview
+
+Volatility is one of the most important concepts in quantitative finance, affecting:
+
+- portfolio risk management
+- derivatives pricing
+- asset allocation
+- trading strategies
+- capital requirements
+
+This project investigates whether more advanced volatility models provide better forecasting and risk estimation compared to simpler benchmarks.
+
+The workflow follows a realistic quantitative research pipeline:
+
+
+Market Data
+|
+v
+Returns Calculation
+|
+v
+Volatility Modelling
+|
++----------------+
+| |
+Historical EWMA
+Volatility Volatility
+|
+|
+GARCH(1,1)
+|
+v
+Forecast Evaluation
+|
+v
+Risk Analytics
+|
++----------------+
+| |
+Historical VaR Parametric VaR
+|
+GARCH-based VaR
+|
+v
+VaR Backtesting
+|
+v
+Streamlit Dashboard
+
+
+---
+
+# Objectives
+
+The main objectives of this project are:
+
+- Build volatility forecasting models using Python
+- Compare statistical volatility approaches
+- Evaluate forecasting accuracy
+- Implement market risk metrics
+- Test VaR model performance
+- Create an interactive analytics dashboard
+
+---
+
+# Technologies Used
+
+## Programming
+
+- Python
+
+## Data Analysis
+
+- pandas
+- numpy
+
+## Statistical Modelling
+
+- arch
+- scipy
+- scikit-learn
+
+## Visualization
+
+- matplotlib
+- plotly
+- streamlit
+
+---
+
+# Project Structure
+
+
+volatility-forecasting-engine/
+
+│
+├── app/
+│ └── streamlit_app.py
+│
+├── data/
+│ ├── SPY_processed_data.csv
+│ └── garch_rolling_forecast.csv
+│
+├── notebooks/
+│ ├── 01_data_pipeline.ipynb
+│ ├── 02_volatility_models.ipynb
+│ ├── 03_model_evaluation.ipynb
+│ └── 04_risk_analytics.ipynb
+│
+├── results/
+│ ├── volatility_model_results.csv
+│ ├── var_results.csv
+│ └── garch_parameters.csv
+│
+├── requirements.txt
+│
+└── README.md
+
+
+---
+
+# Data Pipeline
+
+The project uses historical market data and performs:
+
+- price cleaning
+- return calculation
+- rolling volatility estimation
+- train/test separation
+
+Daily returns are calculated as:
+
+\[
+R_t = \frac{P_t-P_{t-1}}{P_{t-1}}
+\]
+
+where:
+
+- \(P_t\) is the asset price at time t
+
+---
+
+# Volatility Models
+
+## 1. Historical Volatility
+
+A benchmark model based on rolling historical volatility.
+
+Advantages:
+
+- simple
+- interpretable
+- commonly used as a baseline
+
+Limitations:
+
+- slow adaptation to changing market conditions
+
+---
+
+## 2. EWMA Volatility
+
+The Exponentially Weighted Moving Average model assigns higher importance to recent observations.
+
+Formula:
+
+\[
+\sigma_t^2 =
+\lambda\sigma_{t-1}^2
++
+(1-\lambda)r_{t-1}^2
+\]
+
+where:
+
+- λ controls the decay factor
+
+The optimal lambda was selected based on forecasting error.
+
+---
+
+## 3. GARCH(1,1)
+
+The Generalized Autoregressive Conditional Heteroskedasticity model captures volatility clustering.
+
+Model:
+
+\[
+\sigma_t^2 =
+\omega
++
+\alpha r_{t-1}^2
++
+\beta\sigma_{t-1}^2
+\]
+
+Parameters:
+
+- ω: long-term variance component
+- α: reaction to market shocks
+- β: volatility persistence
+
+---
+
+# Model Evaluation
+
+Models were evaluated using:
+
+## RMSE
+
+\[
+RMSE =
+\sqrt{
+\frac{1}{n}
+\sum(y-\hat y)^2
+}
+\]
+
+
+## MAE
+
+\[
+MAE =
+\frac{1}{n}
+\sum|y-\hat y|
+\]
+
+
+Results:
+
+| Model | RMSE | MAE |
+|---|---:|---:|
+| Historical | 0.0214 | 0.0113 |
+| EWMA | 0.0308 | 0.0307 |
+| GARCH | 0.0305 | 0.0210 |
+
+---
+
+# Key Finding
+
+The historical volatility benchmark achieved the lowest forecasting error.
+
+However, forecasting accuracy is not the only objective in financial risk management.
+
+A model can have slightly higher forecasting error while providing better risk calibration.
+
+---
+
+# Risk Analytics
+
+## Value at Risk (VaR)
+
+VaR estimates the potential loss over a given horizon at a specified confidence level.
+
+This project implements:
+
+### Historical VaR
+
+Based on empirical return distribution.
+
+### Parametric VaR
+
+Assumes normally distributed returns:
+
+\[
+VaR = \mu + z\sigma
+\]
+
+
+### GARCH-based VaR
+
+Uses forecasted volatility from the GARCH model:
+
+\[
+VaR_t = z\sigma_t
+\]
+
+---
+
+# VaR Backtesting
+
+A 95% VaR model should theoretically produce approximately:
+
+\[
+5\%
+\]
+
+violations.
+
+Results:
+
+| Method | Violation Rate |
+|---|---:|
+| Historical VaR | 3.19% |
+| Parametric VaR | 2.39% |
+| GARCH VaR | 5.45% |
+
+---
+
+# Risk Management Conclusion
+
+The GARCH-based VaR achieved the closest calibration to the expected violation frequency.
+
+This demonstrates that:
+
+- forecasting accuracy
+- risk calibration
+
+are different objectives.
+
+The best forecasting model is not always the best risk management model.
+
+---
+
+# Streamlit Dashboard
+
+The project includes an interactive dashboard with:
+
+## Overview
+
+- market snapshot
+- latest price
+- latest return
+- current volatility estimate
+
+## Volatility Models
+
+- model comparison
+- RMSE/MAE visualization
+- realized volatility vs GARCH forecast
+
+## Risk Analytics
+
+- VaR comparison
+- violation analysis
+- return distribution
+
+## Model Insights
+
+- quantitative interpretation
+- GARCH parameter overview
+
+
+Run the dashboard:
+
+```bash
+streamlit run app/streamlit_app.py
