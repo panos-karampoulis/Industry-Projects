@@ -1,0 +1,364 @@
+# Statistical Arbitrage Research Framework
+
+## Pairs Trading: An Empirical Study of Mean Reversion Opportunities
+
+---
+
+## Overview
+
+This project develops a statistical arbitrage research framework for identifying and evaluating mean-reversion opportunities between equity pairs.
+
+The objective is to investigate whether statistical relationships between stocks can generate robust trading signals through cointegration-based pairs trading.
+
+The framework includes:
+
+- Pair discovery
+- Correlation analysis
+- Cointegration testing
+- Hedge ratio estimation
+- Spread construction
+- Z-score signal generation
+- Backtesting engine
+- Portfolio construction
+- Transaction cost analysis
+- Interactive Streamlit research dashboard
+
+---
+
+# Research Question
+
+> Can statistical relationships between stocks generate robust trading signals after accounting for risk and transaction costs?
+
+---
+
+# Dataset
+
+The research universe consists of selected large-cap US equities.
+
+Example universe:
+
+- AAPL
+- AMD
+- BAC
+- CVX
+- GOOGL
+- GS
+- INTC
+- JPM
+- KO
+- MA
+- MS
+- MSFT
+- NVDA
+- PEP
+- SBUX
+- V
+- XOM
+
+Sample period:
+
+
+2015 - 2025
+
+
+---
+
+# Project Structure
+
+
+Statistical Arbitrage Research Framework
+
+│
+├── app
+│ └── streamlit.py
+│
+├── data
+│ ├── raw
+│ │ └── prices.csv
+│ │
+│ ├── pair_backtest_results.csv
+│ ├── portfolio_results.csv
+│ └── transaction_cost_analysis.csv
+│
+├── src
+│ ├── spread.py
+│ ├── signals.py
+│ ├── backtest.py
+│ ├── costs.py
+│ ├── portfolio.py
+│ └── research.py
+│
+├── notebooks
+│ └── statistical_arbitrage_research.ipynb
+│
+├── requirements.txt
+└── README.md
+
+
+---
+
+# Methodology
+
+## 1. Pair Selection
+
+Candidate pairs are generated using:
+
+- Pairwise correlation analysis
+- Statistical filtering
+
+A total of:
+
+
+153
+
+
+possible stock combinations were evaluated.
+
+---
+
+# 2. Cointegration Testing
+
+Pairs were evaluated using:
+
+- Engle-Granger cointegration methodology
+- Augmented Dickey-Fuller stationarity test
+
+Results:
+
+
+12 cointegrated pairs identified
+
+
+A cointegrated pair indicates that two assets share a stable long-term relationship.
+
+---
+
+# 3. Spread Construction
+
+The hedge ratio is estimated using linear regression:
+
+\[
+Y_t = \alpha + \beta X_t
+\]
+
+The spread is defined as:
+
+\[
+Spread_t = Y_t - \beta X_t
+\]
+
+The spread represents the relative mispricing between the two assets.
+
+---
+
+# 4. Signal Generation
+
+Trading signals are generated using the spread z-score.
+
+Entry rules:
+
+
+Z-score > +2
+
+Short spread
+
+Z-score < -2
+
+Long spread
+
+
+Exit condition:
+
+
+Mean reversion toward zero
+
+
+---
+
+# 5. Backtesting Framework
+
+Each pair is evaluated using:
+
+- Total return
+- Sharpe ratio
+- Maximum drawdown
+- Number of trades
+
+---
+
+# Individual Pair Results
+
+Best performing individual pair:
+
+| Pair | Total Return | Sharpe Ratio | Max Drawdown |
+|---|---:|---:|---:|
+| AAPL-AMD | 46.49% | 0.267 | -35.08% |
+
+Although AAPL-AMD generated the highest return, the strategy experienced significant drawdown risk.
+
+---
+
+# Portfolio Construction
+
+An equal-weight portfolio was constructed using the strongest pairs.
+
+Selected pairs:
+
+
+AAPL-AMD
+KO-MA
+KO-V
+MA-V
+
+
+Portfolio performance:
+
+| Metric | Value |
+|---|---:|
+| Total Return | 29.95% |
+| Sharpe Ratio | 0.386 |
+| Maximum Drawdown | -9.31% |
+
+---
+
+# Key Finding
+
+Portfolio diversification improved risk-adjusted performance.
+
+Comparison:
+
+| Strategy | Return | Sharpe | Drawdown |
+|---|---:|---:|---:|
+| AAPL-AMD | 46.49% | 0.267 | -35.08% |
+| Multi-Pair Portfolio | 29.95% | 0.386 | -9.31% |
+
+The portfolio sacrificed some absolute return but achieved significantly better risk characteristics.
+
+---
+
+# Transaction Cost Analysis
+
+The strategy was tested under different execution cost assumptions.
+
+| Transaction Cost | Return | Sharpe Ratio |
+|---|---:|---:|
+| 0.05% | 17.37% | 0.250 |
+| 0.10% | 6.00% | 0.113 |
+| 0.20% | -13.54% | -0.164 |
+
+---
+
+# Research Interpretation
+
+The results indicate that statistical arbitrage can identify mean-reversion opportunities between related equities.
+
+However:
+
+- Trading costs have a significant impact.
+- High turnover strategies require efficient execution.
+- Portfolio diversification improves robustness.
+- Realistic implementation assumptions are critical.
+
+---
+
+# Streamlit Dashboard
+
+The project includes an interactive research dashboard.
+
+## Features
+
+### Research Overview
+
+- Number of tested pairs
+- Number of cointegrated pairs
+- Best performing pair
+- Portfolio Sharpe ratio
+
+
+### Pair Explorer
+
+Interactive analysis of individual pairs:
+
+- Spread chart
+- Z-score signals
+- Entry and exit points
+- Equity curve
+- Drawdown analysis
+
+
+### Portfolio Analysis
+
+Includes:
+
+- Performance metrics
+- Risk evaluation
+- Transaction cost sensitivity
+
+
+Run dashboard:
+
+```bash
+streamlit run app/streamlit.py
+Technologies Used
+
+Python ecosystem:
+
+Python
+pandas
+numpy
+scipy
+statsmodels
+scikit-learn
+matplotlib
+streamlit
+Limitations
+
+Current limitations:
+
+Limited equity universe
+No market impact model
+No intraday execution simulation
+Static hedge ratio
+No dynamic portfolio optimization
+Future Improvements
+
+Possible extensions:
+
+Dynamic Hedge Ratio
+
+Using:
+
+Kalman Filter
+Rolling regression
+Larger Universe
+
+Examples:
+
+S&P 500
+Russell 1000
+Advanced Signal Models
+
+Potential additions:
+
+Machine learning pair ranking
+Regime detection
+Volatility filters
+Production Pipeline
+
+Future implementation:
+
+Automated daily data updates
+Live monitoring dashboard
+Execution simulation
+Conclusion
+
+This project demonstrates a complete statistical arbitrage research workflow.
+
+The framework shows that:
+
+Cointegration can identify meaningful relationships between equities.
+Mean-reversion strategies can generate trading opportunities.
+Portfolio diversification improves risk-adjusted performance.
+Transaction costs are a critical factor in real-world deployment.
+
+The project provides a foundation for further development toward a production-level quantitative trading research platform.
