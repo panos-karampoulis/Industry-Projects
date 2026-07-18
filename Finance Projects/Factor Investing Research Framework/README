@@ -1,0 +1,280 @@
+Multi-Factor Equity Research Framework
+Quantitative Asset Management Research Project
+
+A quantitative equity research framework designed to investigate whether common equity factors can explain stock returns and generate risk-adjusted excess performance.
+
+The project evaluates a multi-factor investment strategy combining:
+
+Momentum
+Quality
+Low Volatility
+
+The objective is to build, backtest and analyze a systematic factor portfolio using historical market data.
+
+Research Question
+
+Which equity factors explain stock returns?
+
+The research investigates whether stocks with stronger characteristics:
+
+higher past returns
+higher profitability
+lower volatility
+
+can generate superior portfolio performance.
+
+Strategy Overview
+
+The framework follows a standard quantitative asset management workflow:
+
+Calculate factor signals
+Normalize factor scores
+Build composite ranking
+Select portfolio constituents
+Backtest historical performance
+Evaluate risk-adjusted returns
+Perform CAPM risk analysis
+Dataset
+Universe
+
+Large-cap US equities.
+
+Sample period:
+
+2015-01-02 → 2025-12-30
+
+Frequency:
+
+Daily prices
+
+Portfolio rebalance:
+
+Monthly
+Factor Construction
+1. Momentum Factor
+
+Momentum measures historical price strength.
+
+Formula:
+
+Momentum =
+Price(t) / Price(t-252) - 1
+
+Stocks with stronger previous 12-month performance receive higher scores.
+
+2. Low Volatility Factor
+
+Low volatility identifies stocks with more stable return behavior.
+
+Formula:
+
+Volatility =
+Std(Returns) × sqrt(252)
+
+Lower volatility receives a higher score.
+
+3. Quality Factor
+
+Quality is measured using Return on Equity (ROE).
+
+Formula:
+
+ROE =
+Net Income / Shareholder Equity
+
+Companies with stronger profitability receive higher quality rankings.
+
+Composite Factor Model
+
+Each factor is transformed into percentile rankings.
+
+The final score:
+
+Composite Score =
+
+40% Momentum
+
++
+
+30% Quality
+
++
+
+30% Low Volatility
+
+Stocks are ranked from highest to lowest composite score.
+
+Portfolio Construction
+Long Portfolio
+
+The strategy invests in the top 20% ranked stocks.
+
+Characteristics:
+
+Equal weighted
+Monthly rebalance
+Systematic stock selection
+Backtesting Methodology
+
+At each rebalance date:
+
+Calculate historical factor values
+Rank all stocks
+Select top-ranked securities
+Hold portfolio for one month
+Rebalance
+
+This approach avoids look-ahead bias.
+
+Performance Results
+Factor Portfolio Performance
+Metric	Result
+Annual Return	16.77%
+Sharpe Ratio	1.01
+Maximum Drawdown	-20.90%
+CAPM Analysis
+
+The portfolio was evaluated using the Capital Asset Pricing Model.
+
+Model:
+
+Rp - Rf = α + β(Rm - Rf) + ε
+
+Results:
+
+Metric	Value
+Alpha	-0.001288
+Beta	0.874
+R²	0.577
+Alpha p-value	0.681
+Interpretation
+
+The multi-factor portfolio generated attractive historical returns with a Sharpe ratio above 1.
+
+The portfolio characteristics indicate:
+
+Moderate risk-adjusted performance
+Lower market sensitivity
+Defensive exposure through low volatility
+
+However, CAPM analysis shows that the estimated alpha is not statistically significant.
+
+This suggests that the observed performance may be explained by factor exposure rather than persistent market-independent alpha.
+
+Dashboard
+
+The project includes an interactive Streamlit research dashboard.
+
+Features:
+
+Portfolio performance metrics
+Cumulative return visualization
+Monthly return distribution
+Research statistics
+
+Run:
+
+streamlit run app/streamlit.py
+Project Structure
+Factor-Investing-Research/
+
+│
+├── app/
+│   └── streamlit.py
+│
+├── data/
+│   └── raw/
+│       ├── prices.csv
+│       └── fundamentals.csv
+│
+├── src/
+│   ├── factors.py
+│   ├── composite.py
+│   ├── portfolio.py
+│   ├── factor_backtest.py
+│   ├── performance.py
+│   └── capm.py
+│
+├── notebooks/
+│   └── research.ipynb
+│
+├── requirements.txt
+│
+└── README.md
+Installation
+
+Clone repository:
+
+git clone <repository-url>
+
+Create environment:
+
+python -m venv .venv
+
+Activate environment.
+
+Windows:
+
+.venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+Running the Project
+Research Notebook
+jupyter notebook
+Streamlit Dashboard
+streamlit run app/streamlit.py
+Technologies Used
+
+Python
+
+Libraries:
+
+pandas
+numpy
+matplotlib
+statsmodels
+scikit-learn
+streamlit
+Limitations
+
+This research framework has several limitations:
+
+Small stock universe
+No transaction costs
+No market capitalization weighting
+No sector neutrality
+No liquidity constraints
+No institutional risk model
+
+A production implementation would include:
+
+Larger universe (S&P 500 / Russell 3000)
+Transaction cost modeling
+Factor exposure attribution
+Risk factor decomposition
+Portfolio optimization
+Future Improvements
+
+Possible extensions:
+
+Add Value factor
+Add Earnings Quality factor
+Implement Fama-French regression
+Add benchmark comparison
+Add portfolio optimization
+Add automated data pipeline
+Conclusion
+
+This project demonstrates a complete quantitative asset management workflow:
+
+✓ Factor research
+✓ Signal generation
+✓ Portfolio construction
+✓ Historical backtesting
+✓ Risk analysis
+✓ CAPM evaluation
+✓ Interactive dashboard
+
+The framework provides a foundation for further institutional-style factor investing research.
