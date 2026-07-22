@@ -1,0 +1,358 @@
+# Portfolio Optimization & Risk Dashboard
+
+## Overview
+
+This project develops an interactive portfolio optimization and risk analytics dashboard using Python, Streamlit, and Plotly.
+
+The main research question is:
+
+> **Which portfolio construction method provides the best risk-adjusted performance?**
+
+The dashboard compares different portfolio allocation techniques and evaluates their performance using return, risk, and risk-adjusted metrics.
+
+---
+
+# Research Objective
+
+Portfolio construction is one of the most important decisions in asset management.
+
+This project investigates whether optimized portfolios can outperform a simple benchmark approach by comparing:
+
+- Equal Weight Portfolio
+- Minimum Variance Portfolio
+- Maximum Sharpe Portfolio
+- Risk Parity Portfolio
+
+The analysis focuses on the trade-off between:
+
+- Expected return
+- Portfolio volatility
+- Risk-adjusted performance
+- Drawdown protection
+
+---
+
+# Portfolio Construction Methods
+
+## 1. Equal Weight Portfolio
+
+A simple benchmark strategy where every asset receives the same allocation.
+
+Formula:
+
+\[
+w_i = \frac{1}{N}
+\]
+
+Advantages:
+
+- Simple implementation
+- No optimization assumptions
+- Common benchmark approach
+
+---
+
+## 2. Minimum Variance Portfolio
+
+The objective is to minimize portfolio volatility.
+
+Optimization problem:
+
+\[
+min(w^T \Sigma w)
+\]
+
+where:
+
+- \(w\) = portfolio weights
+- \(\Sigma\) = covariance matrix
+
+Advantages:
+
+- Lower portfolio risk
+- Defensive allocation
+
+---
+
+## 3. Maximum Sharpe Portfolio
+
+The portfolio maximizing risk-adjusted return.
+
+Sharpe ratio:
+
+\[
+Sharpe =
+\frac{R_p-R_f}{\sigma_p}
+\]
+
+where:
+
+- \(R_p\) = portfolio return
+- \(R_f\) = risk-free rate
+- \(\sigma_p\) = portfolio volatility
+
+Advantages:
+
+- Optimizes return per unit of risk
+- Common institutional approach
+
+---
+
+## 4. Risk Parity Portfolio
+
+Allocates risk equally across assets.
+
+Instead of equal capital allocation, the portfolio aims for equal contribution to portfolio risk.
+
+Advantages:
+
+- More balanced exposure
+- Used by many institutional investors
+
+---
+
+# Data
+
+Historical equity prices are used for portfolio construction and backtesting.
+
+Period:
+
+
+2015-01-02 to 2025-12-30
+
+
+Assets included:
+
+
+AAPL
+AMZN
+BAC
+CVX
+GOOGL
+HD
+JNJ
+JPM
+KO
+MA
+MCD
+META
+MSFT
+NVDA
+PEP
+PG
+SBUX
+V
+WMT
+XOM
+
+
+---
+
+# Performance Metrics
+
+The dashboard evaluates each portfolio using:
+
+## Annual Return
+
+Measures yearly portfolio growth.
+
+---
+
+## Volatility
+
+Annualized standard deviation of returns.
+
+---
+
+## Sharpe Ratio
+
+Measures risk-adjusted performance.
+
+Higher values indicate better return compensation for risk.
+
+---
+
+## Maximum Drawdown
+
+Measures the largest portfolio decline from peak value.
+
+Important for understanding downside risk.
+
+---
+
+# Dashboard Features
+
+## Interactive Controls
+
+Users can modify:
+
+- Risk Free Rate
+- Efficient Frontier simulations
+
+and regenerate portfolio analysis.
+
+---
+
+## KPI Summary Cards
+
+The dashboard displays:
+
+- Best performing portfolio
+- Annual return
+- Sharpe ratio
+- Maximum drawdown
+
+---
+
+## Performance Comparison
+
+Table comparing:
+
+| Portfolio | Return | Volatility | Sharpe | Drawdown |
+|---|---|---|---|---|
+| Equal Weight | | | | |
+| Minimum Variance | | | | |
+| Maximum Sharpe | | | | |
+| Risk Parity | | | | |
+
+---
+
+## Efficient Frontier
+
+The dashboard generates simulated portfolios and visualizes:
+
+- Return
+- Volatility
+- Portfolio efficiency
+
+---
+
+## Portfolio Growth
+
+Displays cumulative wealth evolution over time.
+
+---
+
+## Drawdown Analysis
+
+Shows portfolio losses and recovery periods.
+
+---
+
+## Portfolio Allocation
+
+Visualizes the asset weights of the Maximum Sharpe portfolio.
+
+---
+
+# Results
+
+Based on the backtest:
+
+| Portfolio | Annual Return | Sharpe Ratio | Maximum Drawdown |
+|---|---:|---:|---:|
+| Maximum Sharpe | 36.0% | 1.42 | -35.8% |
+| Equal Weight | 20.1% | 1.02 | -32.9% |
+| Risk Parity | 17.8% | 0.96 | -31.8% |
+| Minimum Variance | 13.1% | 0.80 | -26.4% |
+
+---
+
+# Interpretation
+
+The Maximum Sharpe portfolio produced the strongest risk-adjusted performance.
+
+Key observations:
+
+- Maximum Sharpe achieved the highest return and Sharpe ratio.
+- Minimum Variance provided the lowest volatility and best downside protection.
+- Risk Parity produced a balanced risk allocation.
+- Equal Weight remained a competitive benchmark.
+
+The results demonstrate the trade-off between return optimization and risk management.
+
+---
+
+# Project Structure
+
+
+Portfolio Optimization & Risk Dashboard/
+
+│
+├── app/
+│ └── streamlit.py
+│
+├── data/
+│ └── raw/
+│ └── prices.csv
+│
+├── src/
+│ ├── data.py
+│ ├── optimization.py
+│ ├── performance.py
+│ ├── risk.py
+│ ├── efficient_frontier.py
+│ └── plotting.py
+│
+├── requirements.txt
+│
+└── README.md
+
+
+---
+
+# Installation
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+
+Navigate to the project folder:
+
+cd Portfolio\ Optimization\ &\ Risk\ Dashboard
+
+Create virtual environment:
+
+python -m venv .venv
+
+Activate environment:
+
+Windows:
+
+.venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+Running the Dashboard
+
+Start Streamlit:
+
+streamlit run app/streamlit.py
+
+The dashboard will open in your browser.
+
+Technologies Used
+Programming
+Python
+Data Analysis
+Pandas
+NumPy
+Optimization
+SciPy
+Visualization
+Plotly
+Dashboard
+Streamlit
+Future Improvements
+
+Possible extensions:
+
+Add CAPM regression analysis
+Add Fama-French factor models
+Include transaction costs
+Add portfolio rebalancing simulation
+Add Monte Carlo forecasting
+Connect live market data API
+Deploy dashboard online
