@@ -1,0 +1,268 @@
+# 📈 AI Investment Decision Engine
+
+An end-to-end machine learning platform for stock selection, portfolio analytics, explainable AI, and automated investment research reports.
+
+The system combines financial fundamentals, machine learning classification, SHAP explainability, and portfolio backtesting into an interactive Streamlit dashboard.
+
+---
+
+# 🚀 Features
+
+## 🤖 Machine Learning Stock Selection
+
+The engine uses a Logistic Regression pipeline:
+
+- StandardScaler preprocessing
+- Classification model
+- BUY / HOLD prediction
+- Probability scoring
+
+Example output:
+
+| Symbol | Probability | Signal |
+|---|---:|---|
+| NVDA | 94% | BUY |
+| MSFT | 94% | BUY |
+| GOOGL | 97% | BUY |
+
+---
+
+# 🧠 Explainable AI (SHAP)
+
+The model is fully explainable using SHAP values.
+
+For every stock the system identifies:
+
+### Positive Drivers
+
+- Profitability metrics
+- Cash flow quality
+- Business efficiency
+
+### Negative Drivers
+
+- Valuation risk
+- Financial risk factors
+
+Example:
+
+
+NVDA
+
+Positive contributors:
+
+operatingMargin
+freeCashFlowPerShare
+
+Negative contributors:
+
+peRatio
+
+---
+
+# 📊 Portfolio Backtesting
+
+The platform compares the AI portfolio against SPY.
+
+Metrics:
+
+- Annual Return
+- Annual Volatility
+- Sharpe Ratio
+- Maximum Drawdown
+
+Example:
+
+| Portfolio | Return | Sharpe | Drawdown |
+|---|---:|---:|---:|
+| AI Portfolio | 14.1% | 0.94 | -26.7% |
+| SPY | 11.4% | 0.66 | -25.3% |
+
+---
+
+# 📉 Risk Analytics
+
+The dashboard provides:
+
+- Equity curve comparison
+- Drawdown analysis
+- Risk-adjusted performance
+
+---
+
+# 🖥️ Interactive Dashboard
+
+Built with Streamlit.
+
+Available pages:
+
+## 📊 Portfolio
+
+Displays:
+
+- Performance metrics
+- Portfolio statistics
+- Benchmark comparison
+
+
+## 🤖 ML Signals
+
+Shows:
+
+- Stock predictions
+- Probability scores
+- Trading signals
+
+
+## 🧠 Explainability
+
+Provides:
+
+- Feature importance
+- SHAP charts
+- Model reasoning
+
+
+## 🔍 Stock Analysis
+
+Individual company research page:
+
+- Company profile
+- Financial quality metrics
+- AI recommendation
+- Analyst summary
+- SHAP drivers
+
+
+## 📄 AI Research Report
+
+Automatically generates PDF investment reports including:
+
+- Investment thesis
+- Financial metrics
+- Model prediction
+- Explainability results
+
+---
+
+# 🏗️ Architecture
+
+
+Financial Data
+|
+v
+Feature Engineering
+|
+v
+Machine Learning Model
+(Logistic Regression Pipeline)
+|
++----------------+
+| |
+v v
+Predictions SHAP Explainability
+|
+v
+Portfolio Construction
+|
+v
+Backtesting Engine
+|
+v
+Streamlit Dashboard
+
+
+---
+
+# 📂 Project Structure
+
+
+AI-Investment-Decision-Engine
+
+├── app
+│ └── app.py
+│
+├── data
+│ └── processed
+│ ├── company_financials.csv
+│ ├── ml_signals.csv
+│ ├── shap_values.csv
+│ ├── feature_importance.csv
+│ ├── equity_curves.csv
+│ └── performance_metrics.csv
+│
+├── notebooks
+│ └── investment_engine.ipynb
+│
+├── requirements.txt
+│
+└── README.md
+
+
+---
+
+# ⚙️ Installation
+
+Clone repository:
+
+```bash
+git clone https://github.com/yourusername/AI-Investment-Decision-Engine.git
+
+Create environment:
+
+python -m venv venv
+
+Activate:
+
+Windows:
+
+venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+▶️ Run Application
+
+Start Streamlit:
+
+streamlit run app/app.py
+
+The dashboard will open automatically.
+
+🛠️ Technologies
+
+Python
+
+pandas
+numpy
+scikit-learn
+shap
+matplotlib
+plotly
+streamlit
+reportlab
+
+Machine Learning:
+
+Logistic Regression
+Feature Engineering
+Explainable AI
+
+Visualization:
+
+Plotly
+Streamlit
+📌 Future Improvements
+
+Planned upgrades:
+
+LLM generated analyst reports
+Real-time market data
+Portfolio optimization algorithms
+Cloud deployment
+Automated daily investment signals
+Disclaimer
+
+This project is for educational and research purposes only.
+
+It does not constitute financial advice or investment recommendation.
