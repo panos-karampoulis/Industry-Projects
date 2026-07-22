@@ -1,0 +1,310 @@
+# Monte Carlo Methods & Stochastic Processes Lab
+
+## Overview
+
+This project implements a quantitative finance framework for simulating stochastic processes and pricing European options using Monte Carlo methods.
+
+The objective is to build an end-to-end pricing engine that combines:
+
+- Stochastic calculus intuition
+- Geometric Brownian Motion simulation
+- Monte Carlo numerical methods
+- Black-Scholes analytical validation
+- Statistical error estimation
+- Interactive Streamlit visualization
+
+
+---
+
+# Project Question
+
+**How accurately can Monte Carlo simulations reproduce analytical option pricing models?**
+
+
+---
+
+# Mathematical Background
+
+## Geometric Brownian Motion
+
+Stock prices are modeled using:
+
+\[
+dS_t = \mu S_t dt + \sigma S_t dW_t
+\]
+
+where:
+
+- \(S_t\) = asset price
+- \(\mu\) = drift
+- \(\sigma\) = volatility
+- \(W_t\) = Wiener process
+
+
+The discrete simulation form:
+
+\[
+S_{t+\Delta t}
+=
+S_t
+\exp
+\left(
+(\mu-\frac12\sigma^2)\Delta t
++
+\sigma\sqrt{\Delta t}Z
+\right)
+\]
+
+
+---
+
+# Monte Carlo Option Pricing
+
+European option prices are estimated through:
+
+\[
+Price =
+e^{-rT}
+E[Payoff]
+\]
+
+
+For a European Call:
+
+\[
+Payoff=max(S_T-K,0)
+\]
+
+
+For a European Put:
+
+\[
+Payoff=max(K-S_T,0)
+\]
+
+
+---
+
+# Black-Scholes Validation
+
+The Monte Carlo estimator is compared against the analytical Black-Scholes solution.
+
+
+Example configuration:
+
+```
+Initial Price: 100
+Strike: 100
+Risk Free Rate: 5%
+Volatility: 20%
+Maturity: 1 year
+Simulations: 10,000
+```
+
+
+Results:
+
+| Method | Price |
+|---|---:|
+| Monte Carlo | 10.3443 |
+| Black-Scholes | 10.4506 |
+
+
+Pricing error:
+
+```
+1.02%
+```
+
+
+The analytical solution falls inside the Monte Carlo confidence interval.
+
+
+---
+
+# Statistical Validation
+
+## Confidence Interval
+
+A 95% confidence interval is calculated as:
+
+
+\[
+CI=
+\bar{x}
+\pm
+1.96
+\frac{s}{\sqrt{N}}
+\]
+
+
+Example:
+
+```
+Monte Carlo Price:
+
+10.3443
+
+
+95% Confidence Interval:
+
+[10.06 , 10.63]
+```
+
+
+---
+
+# Convergence Analysis
+
+The project evaluates Monte Carlo convergence by increasing simulation paths.
+
+
+Example:
+
+| Simulations | Absolute Error |
+|---|---:|
+|1,000|0.3776|
+|5,000|0.2620|
+|10,000|0.1715|
+|50,000|0.0875|
+|100,000|0.0849|
+
+
+As simulation count increases, pricing error decreases.
+
+
+---
+
+# Project Architecture
+
+
+```
+Monte Carlo Methods & Stochastic Processes Lab
+
+│
+├── app
+│   └── streamlit.py
+
+├── src
+│   ├── brownian_motion.py
+│   ├── black_scholes.py
+│   ├── monte_carlo.py
+│   ├── statistics.py
+│   └── plotting.py
+
+├── notebooks
+│   └── exploration.ipynb
+
+├── requirements.txt
+
+└── README.md
+```
+
+
+---
+
+# Installation
+
+
+Clone repository:
+
+```bash
+git clone <repository-url>
+```
+
+
+Create environment:
+
+```bash
+python -m venv .venv
+```
+
+
+Activate:
+
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+
+---
+
+# Run Dashboard
+
+
+From project root:
+
+
+```bash
+streamlit run app/streamlit.py
+```
+
+
+---
+
+# Dashboard Features
+
+
+## Interactive Parameters
+
+Users can modify:
+
+- Stock price
+- Strike price
+- Risk free rate
+- Volatility
+- Time horizon
+- Number of simulations
+- Option type
+
+
+## Visualizations
+
+The dashboard provides:
+
+- Simulated GBM price paths
+- Terminal price distribution
+- Monte Carlo vs Black-Scholes comparison
+- Confidence interval estimation
+
+
+---
+
+# Technologies
+
+
+Python
+
+- NumPy
+- Pandas
+- SciPy
+- Plotly
+- Streamlit
+
+
+---
+
+# Future Improvements
+
+
+Possible extensions:
+
+- Antithetic variates variance reduction
+- Control variates
+- American option pricing
+- Implied volatility solver
+- Greeks estimation
+- Heston stochastic volatility model
+- Jump diffusion models
+
+
+---
