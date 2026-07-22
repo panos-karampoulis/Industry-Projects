@@ -1,0 +1,384 @@
+# 📈 Algorithmic Trading Research Framework
+
+A modular quantitative trading research framework built with Python, VectorBT and Streamlit for systematic strategy development, portfolio construction, risk analysis and walk-forward validation.
+
+The project simulates a professional quantitative research workflow:
+
+**Market Data → Feature Engineering → Strategy Development → Backtesting → Portfolio Construction → Risk Analytics → Validation → Reporting**
+
+---
+
+# 🚀 Project Overview
+
+The objective of this project is to develop a reproducible framework for researching and evaluating systematic trading strategies.
+
+The framework implements multiple trading approaches, compares their performance, combines strategies into a portfolio and evaluates risk-adjusted performance using quantitative metrics.
+
+The project focuses on:
+
+- Systematic trading strategy research
+- Portfolio diversification
+- Risk-adjusted performance evaluation
+- Backtesting methodology
+- Out-of-sample validation
+
+---
+
+# 🏗️ Architecture
+
+
+Algorithmic-Trading-Research-Framework/
+
+│
+├── app/
+│ ├── data_loader.py
+│ ├── indicators.py
+│ ├── strategies.py
+│ ├── backtester.py
+│ ├── portfolio.py
+│ ├── evaluation.py
+│ └── walk_forward.py
+│
+├── dashboard/
+│ └── app.py
+│
+├── notebooks/
+│
+├── data/
+│
+│
+├── requirements.txt
+│
+└── README.md
+
+
+---
+
+# 🛠️ Technology Stack
+
+## Programming
+
+- Python
+- Pandas
+- NumPy
+
+## Quantitative Research
+
+- VectorBT
+- Technical indicators
+- Portfolio analytics
+- Walk-forward validation
+
+## Visualization
+
+- Streamlit
+- Plotly
+- Matplotlib
+- Seaborn
+
+## Development
+
+- Git
+- GitHub
+- Virtual environments
+
+---
+
+# 📊 Trading Strategies
+
+The framework currently implements three systematic strategies.
+
+---
+
+## 1. SMA Crossover Strategy
+
+A trend-following strategy based on moving average relationships.
+
+Logic:
+
+- Long position when:
+
+
+Short SMA > Long SMA
+
+
+- Exit when:
+
+
+Short SMA < Long SMA
+
+
+Purpose:
+
+- Capture long-term market trends
+- Evaluate momentum persistence
+
+---
+
+## 2. RSI Mean Reversion Strategy
+
+A mean-reversion approach based on Relative Strength Index.
+
+Logic:
+
+Buy signal:
+
+
+RSI < Oversold Threshold
+
+
+Sell signal:
+
+
+RSI > Overbought Threshold
+
+
+Purpose:
+
+- Capture temporary price deviations
+- Exploit potential reversals
+
+---
+
+## 3. Momentum Strategy
+
+A trend-following strategy based on price momentum.
+
+Logic:
+
+Positive momentum:
+
+
+Current Price > Previous Price
+
+
+Negative momentum:
+
+
+Current Price < Previous Price
+
+
+Purpose:
+
+- Capture short-term directional movement
+
+---
+
+# 🔬 Backtesting Methodology
+
+Backtesting is performed using VectorBT.
+
+The framework evaluates:
+
+- Portfolio returns
+- Trading activity
+- Risk metrics
+- Drawdowns
+- Strategy consistency
+
+Metrics calculated:
+
+| Metric | Description |
+|---|---|
+| Total Return | Overall strategy performance |
+| Annual Return | Annualized performance |
+| Volatility | Annualized risk |
+| Sharpe Ratio | Risk-adjusted return |
+| Sortino Ratio | Downside risk-adjusted return |
+| Calmar Ratio | Return relative to drawdown |
+| Maximum Drawdown | Largest portfolio decline |
+| Win Rate | Percentage of profitable trades |
+
+---
+
+# 💼 Portfolio Construction
+
+Individual strategies are combined into a portfolio framework.
+
+The portfolio layer evaluates:
+
+- Combined returns
+- Strategy allocation
+- Diversification benefits
+- Risk contribution
+
+Portfolio analysis includes:
+
+## Return Contribution
+
+Measures the contribution of each strategy to total portfolio returns.
+
+## Risk Contribution
+
+Measures how much volatility each strategy contributes to overall portfolio risk.
+
+---
+
+# ⚠️ Risk Analytics
+
+The framework includes:
+
+## Correlation Analysis
+
+Strategy correlation matrix:
+
+- Identifies diversification opportunities
+- Detects highly correlated strategies
+
+
+## Risk Contribution
+
+Evaluates:
+
+- Volatility contribution
+- Portfolio concentration
+
+
+## Drawdown Analysis
+
+Tracks:
+
+- Maximum losses
+- Recovery periods
+- Strategy stability
+
+---
+
+# 🔄 Walk Forward Validation
+
+To reduce overfitting risk, strategies are evaluated using walk-forward testing.
+
+Methodology:
+
+Example:
+
+
+Training:
+2015-2018
+
+Testing:
+2018-2019
+
+
+The process is repeated through multiple market periods.
+
+Benefits:
+
+- Simulates real deployment conditions
+- Evaluates robustness
+- Measures out-of-sample performance
+
+---
+
+# 📈 Streamlit Dashboard
+
+The project includes an interactive dashboard for research and reporting.
+
+Features:
+
+## Overview
+
+- Portfolio KPIs
+- Equity Curve
+- Drawdown Curve
+
+
+## Strategy Analysis
+
+- Strategy comparison
+- Returns analysis
+
+
+## Risk Analytics
+
+- Correlation heatmap
+- Return contribution
+- Risk contribution
+
+
+## Portfolio
+
+- Allocation visualization
+- Portfolio statistics
+
+
+## Validation
+
+- Walk-forward results
+
+
+## Reporting
+
+Exportable:
+
+- Performance reports
+- Validation results
+
+---
+
+# 📊 Results
+
+Example evaluation metrics:
+
+
+Portfolio Performance
+
+Total Return:
+293%
+
+Annual Return:
+18.8%
+
+Sharpe Ratio:
+0.90
+
+Maximum Drawdown:
+-28%
+
+Win Rate:
+~67%
+
+
+Results demonstrate:
+
+- Strong historical performance
+- Improved diversification through multiple strategies
+- Better risk-adjusted characteristics compared with individual strategies
+
+---
+
+# 📁 Running the Project
+
+Clone repository:
+
+```bash
+git clone <repository-url>
+
+Create environment:
+
+python -m venv venv
+
+Activate environment:
+
+Windows:
+
+venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Run dashboard:
+
+streamlit run dashboard/app.py
+🔮 Future Improvements
+
+Potential extensions:
+
+Additional ML-based strategies
+Factor models
+Risk parity portfolio optimization
+Transaction cost modelling
+Slippage simulation
+Real-time market data integration
+Automated strategy monitoring
