@@ -1,0 +1,461 @@
+# 📊 FinSight AI
+
+### AI-Powered Financial Risk Intelligence Platform
+
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
+![FAISS](https://img.shields.io/badge/FAISS-Vector%20Search-green)
+![Ollama](https://img.shields.io/badge/Ollama-Llama3.2-orange)
+![RAG](https://img.shields.io/badge/RAG-Document%20AI-purple)
+
+---
+
+## Overview
+
+FinSight AI is an AI-powered financial intelligence platform designed to assist analysts in understanding financial statements, annual reports, and business risks.
+
+The application combines:
+
+- Financial APIs
+- Annual Report Analysis
+- Retrieval-Augmented Generation (RAG)
+- Large Language Models (LLMs)
+- Semantic Search
+- Interactive Dashboards
+
+The goal is to reduce the time required for reviewing financial disclosures while providing explainable, evidence-based answers.
+
+---
+
+# Main Features
+
+## 📈 Financial Market Dashboard
+
+Retrieve real-time company information:
+
+- Stock Price
+- Market Capitalization
+- Industry
+- Sector
+- Beta
+- Dividend
+- Exchange
+
+Example:
+
+```
+Microsoft
+Amazon
+NVIDIA
+Apple
+Tesla
+```
+
+---
+
+## 📊 Company Comparison
+
+Compare multiple companies side-by-side.
+
+Metrics include:
+
+- Market Cap
+- Price
+- Industry
+- Sector
+- Beta
+- Dividend
+
+Useful for:
+
+- Equity Research
+- Financial Analysis
+- Business Intelligence
+
+---
+
+## 🤖 AI Financial Assistant (RAG)
+
+Ask questions directly to Annual Reports.
+
+Examples:
+
+```
+What are the main risks?
+
+What are the AI risks?
+
+Explain the legal risks.
+
+Summarize operational risks.
+
+What risks could affect revenue?
+```
+
+The assistant retrieves relevant sections from the annual report before generating the response.
+
+No hallucinations.
+Every answer is grounded on document evidence.
+
+---
+
+## 📑 Evidence Retrieval
+
+Every AI response includes:
+
+- Retrieved document chunks
+- Similarity score
+- Evidence references
+
+This allows analysts to validate the AI answer.
+
+Example
+
+```
+Source 548
+
+Issues relating to the responsible use
+of AI may result in reputational
+or financial harm...
+```
+
+---
+
+## 📊 AI Risk Comparison
+
+Compare AI-related risks across companies.
+
+Example:
+
+```
+Compare AI risks between
+
+Amazon
+Microsoft
+NVIDIA
+```
+
+The assistant generates:
+
+- Risk Category
+- Evidence
+- Business Impact
+- Analyst Interpretation
+- Confidence Level
+
+---
+
+## 📈 AI Risk Severity Indicator
+
+FinSight AI estimates an AI Risk Severity Indicator using:
+
+- AI-specific disclosures
+- Legal liability references
+- Regulatory mentions
+- Compliance discussions
+- Reputation risks
+- Retrieval confidence
+
+Example
+
+| Company | AI Risk Severity |
+|----------|-----------------|
+| Amazon | 6.8 / 10 |
+| Microsoft | 7.5 / 10 |
+| NVIDIA | 8.4 / 10 |
+
+The score is intended as an explainable heuristic rather than a financial probability model.
+
+---
+
+# Dashboard
+
+The Streamlit application contains four modules.
+
+## Home
+
+General company information.
+
+---
+
+## Company Comparison
+
+Side-by-side financial comparison.
+
+---
+
+## AI Assistant
+
+Question answering over annual reports.
+
+---
+
+## Risk Comparison
+
+Multi-company AI risk analysis.
+
+---
+
+# Architecture
+
+```
+                 Financial Modeling Prep API
+                            │
+                            ▼
+                  Financial Company Data
+                            │
+                            ▼
+                     Streamlit Dashboard
+                            │
+                            ▼
+                    Annual Report PDFs
+                            │
+                            ▼
+                    PDF Text Extraction
+                            │
+                            ▼
+                       Text Chunking
+                            │
+                            ▼
+                Sentence Transformer Embeddings
+                            │
+                            ▼
+                     FAISS Vector Database
+                            │
+                            ▼
+                   Semantic Document Search
+                            │
+                            ▼
+                  Ollama (Llama 3.2 Local)
+                            │
+                            ▼
+             AI Financial Research Assistant
+                            │
+                            ▼
+             Evidence-Based Risk Intelligence
+```
+
+---
+
+# Technology Stack
+
+## Programming
+
+- Python
+
+---
+
+## Dashboard
+
+- Streamlit
+
+---
+
+## Data Processing
+
+- Pandas
+- NumPy
+
+---
+
+## Vector Database
+
+- FAISS
+
+---
+
+## Embeddings
+
+- Sentence Transformers
+- all-MiniLM-L6-v2
+
+---
+
+## Large Language Model
+
+- Ollama
+- Llama 3.2
+
+---
+
+## Financial Data
+
+- Financial Modeling Prep API
+
+---
+
+## Document Processing
+
+- PyPDF
+
+---
+
+## NLP
+
+- Retrieval-Augmented Generation (RAG)
+
+---
+
+# Project Structure
+
+```
+FinSight-AI
+
+│
+├── app
+│   ├── analysis.py
+│   ├── company.py
+│   ├── comparison.py
+│   ├── config.py
+│   ├── document_loader.py
+│   ├── embeddings.py
+│   ├── llm.py
+│   ├── rag.py
+│   ├── retrieval.py
+│   ├── risk_analysis.py
+│   ├── risk_score.py
+│   ├── text_splitter.py
+│   ├── vector_store.py
+│
+├── dashboard
+│   └── main.py
+│
+├── documents
+│   ├── amazon
+│   ├── microsoft
+│   └── nvidia
+│
+├── vectorstores
+│   ├── amazon
+│   ├── microsoft
+│   └── nvidia
+│
+├── README.md
+│
+└── requirements.txt
+```
+
+---
+
+# Example Questions
+
+General
+
+```
+What are the main risks?
+```
+
+AI
+
+```
+What are the AI risks?
+```
+
+Financial
+
+```
+What operational risks could affect revenue?
+```
+
+Comparison
+
+```
+Compare AI risks between Amazon, Microsoft and NVIDIA.
+```
+
+---
+
+# Installation
+
+Clone repository
+
+```bash
+git clone https://github.com/yourusername/FinSight-AI.git
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Run Ollama
+
+```bash
+ollama run llama3.2
+```
+
+Run Streamlit
+
+```bash
+streamlit run dashboard/main.py
+```
+
+---
+
+# Future Improvements
+
+- SEC Filing Downloader
+- Earnings Call Analysis
+- ESG Risk Module
+- Sentiment Analysis
+- Time-Series Risk Tracking
+- PDF Upload Interface
+- Risk Trend Dashboard
+- Financial Ratio Forecasting
+
+---
+
+# Business Value
+
+FinSight AI demonstrates practical applications of:
+
+- Financial Analysis
+- Risk Intelligence
+- Natural Language Processing
+- Retrieval-Augmented Generation
+- Explainable AI
+- Document Intelligence
+- Business Analytics
+
+The project simulates how AI can support analysts in reviewing financial disclosures and identifying business risks.
+
+---
+
+# Skills Demonstrated
+
+✔ Python
+
+✔ Streamlit
+
+✔ Financial APIs
+
+✔ FAISS
+
+✔ Sentence Transformers
+
+✔ Retrieval-Augmented Generation
+
+✔ Ollama
+
+✔ Llama 3.2
+
+✔ NLP
+
+✔ Financial Risk Analysis
+
+✔ Business Intelligence
+
+✔ Dashboard Development
+
+---
+
+# Author
+
+**Panos Karampoulis**
+
+Energy & Finance | Data Analytics | AI Applications | Financial Risk Analysis
+
+LinkedIn: *(add your profile)*
+
+GitHub: *(add your repository link)*
