@@ -1,0 +1,283 @@
+Risk Modeling Framework
+Market Risk Analytics Dashboard using VaR, Monte Carlo Simulation & Stress Testing
+
+A quantitative risk management framework built in Python for measuring and visualizing portfolio risk using real market data.
+
+The project implements classical and simulation-based risk models including:
+
+Historical Value at Risk (VaR)
+Parametric VaR
+Monte Carlo VaR
+Expected Shortfall (CVaR)
+Stress Testing
+Historical Crisis Replay
+Drawdown Analysis
+
+The results are presented through an interactive Streamlit dashboard.
+
+Project Overview
+
+Risk management is a fundamental component of quantitative finance.
+
+This project builds a complete risk analytics pipeline:
+
+Market Data
+     |
+     ↓
+Return Calculation
+     |
+     ↓
+Portfolio Risk Engine
+     |
+     ↓
+VaR / Expected Shortfall Models
+     |
+     ↓
+Stress Testing
+     |
+     ↓
+Interactive Dashboard
+
+The goal is to simulate how a portfolio behaves under normal market conditions and extreme market events.
+
+Features
+1. Market Data Pipeline
+
+The framework accepts historical price data:
+
+data/raw/prices.csv
+
+The pipeline calculates:
+
+daily returns
+portfolio returns
+cumulative performance
+Risk Metrics
+Value at Risk (VaR)
+
+VaR estimates the maximum expected loss over a given confidence level.
+
+Example:
+
+95% VaR = €1,500
+
+means:
+
+There is a 95% probability that the portfolio will not lose more than €1,500 in one day.
+
+Implemented methods:
+
+Historical Simulation VaR
+
+Uses actual historical return observations.
+
+Advantages:
+
+no distribution assumptions
+captures real market behavior
+Parametric VaR
+
+Assumes normally distributed returns:
+
+R∼N(μ,σ
+2
+)
+
+The risk measure is calculated using:
+
+VaR=−z
+α
+	​
+
+σ+μ
+Monte Carlo VaR
+
+Simulates thousands of possible future return scenarios.
+
+Process:
+
+Estimate return parameters
+Generate random scenarios
+Calculate simulated losses
+Extract percentile loss
+
+Example:
+
+10,000 simulations
+95% percentile loss
+Expected Shortfall
+
+Expected Shortfall measures the average loss beyond the VaR threshold.
+
+Formula:
+
+ES=E[X∣X>VaR]
+
+Unlike VaR, Expected Shortfall captures tail risk.
+
+Stress Testing
+
+The framework includes hypothetical market shocks:
+
+Examples:
+
+Scenario	Shock
+Market Correction	-10%
+Severe Crash	-20%
+Financial Crisis	-30%
+Extreme Shock	-50%
+
+The system calculates:
+
+portfolio impact
+monetary loss
+Historical Crisis Replay
+
+The framework can analyze real market crises.
+
+Implemented scenarios:
+
+COVID Crash
+
+Period:
+
+February 2020 - April 2020
+
+Metrics:
+
+Total Return
+Maximum Drawdown
+Worst Trading Day
+Recovery Time
+2022 Rate Shock
+
+Analyzes the impact of rising interest rates and market repricing.
+
+Dashboard
+
+Built using Streamlit.
+
+The dashboard provides:
+
+Risk Overview
+
+KPI cards:
+
+Historical VaR
+Parametric VaR
+Monte Carlo VaR
+Expected Shortfall
+Interactive Charts
+
+Included visualizations:
+
+Portfolio Return Distribution
+VaR comparison
+Portfolio Growth
+Drawdown analysis
+Risk Tables
+
+Includes:
+
+Risk model comparison
+Worst historical loss days
+Stress test results
+Crisis analysis
+Technology Stack
+Programming
+Python
+Libraries
+Pandas
+NumPy
+SciPy
+Plotly
+Streamlit
+Project Structure
+Risk Modeling Framework
+
+│
+├── app
+│   └── streamlit.py
+│
+├── data
+│   └── raw
+│       └── prices.csv
+│
+├── src
+│   ├── data.py
+│   ├── returns.py
+│   ├── historical_var.py
+│   ├── parametric_var.py
+│   ├── monte_carlo_var.py
+│   ├── expected_shortfall.py
+│   ├── risk_report.py
+│   ├── stress_testing.py
+│   ├── stress_analysis.py
+│   ├── crisis_analysis.py
+│   └── plotting.py
+│
+└── requirements.txt
+Installation
+
+Clone repository:
+
+git clone <repository-url>
+
+Create environment:
+
+python -m venv .venv
+
+Activate:
+
+Windows:
+
+.venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+Running the Dashboard
+
+From project root:
+
+streamlit run app/streamlit.py
+Example Results
+
+The framework produces:
+
+Historical VaR 95%:
+1.58%
+
+Parametric VaR 95%:
+1.76%
+
+Monte Carlo VaR 95%:
+1.77%
+
+Expected Shortfall:
+2.68%
+
+Values depend on the selected portfolio and historical data.
+
+Quantitative Concepts Demonstrated
+
+This project demonstrates:
+
+✅ Probability distributions
+✅ Monte Carlo simulation
+✅ Statistical risk estimation
+✅ Portfolio analytics
+✅ Tail risk modelling
+✅ Market stress analysis
+✅ Financial mathematics
+
+Future Improvements
+
+Possible extensions:
+
+VaR backtesting (Kupiec test)
+GARCH volatility modelling
+Alternative distributions (t-distribution)
+Multi-asset optimization
+Real-time market data API
+Machine learning risk forecasting
