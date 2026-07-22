@@ -1,0 +1,426 @@
+# 📈 Factor Investing Lab — CAPM & Fama-French Framework
+
+## Overview
+
+The **Factor Investing Lab** is a quantitative finance research platform designed to analyze, construct, and evaluate factor-based investment strategies.
+
+The project combines:
+
+- Financial data engineering
+- Portfolio construction
+- Factor modeling
+- Risk-adjusted performance analysis
+- Interactive quantitative visualization
+
+The objective is to replicate a simplified institutional-style factor research workflow.
+
+---
+
+# Features
+
+## 1. Market Data Engine
+
+The framework downloads and processes historical market data for a selected universe of assets.
+
+Supported:
+
+- Equities
+- ETFs
+- Market benchmark (SPY)
+
+Pipeline:
+
+
+Price Data
+|
+↓
+Returns Calculation
+|
+↓
+Factor Analysis
+|
+↓
+Portfolio Construction
+
+
+---
+
+# 2. Factor Strategies
+
+The framework implements three classical equity factors.
+
+---
+
+## Momentum Factor
+
+Based on historical price performance.
+
+Method:
+
+- Rank assets by past returns
+- Select top-performing assets
+- Build equal-weight portfolio
+
+Output:
+
+- Momentum portfolio returns
+- Performance metrics
+
+---
+
+## Value Factor (HML)
+
+Inspired by the Fama-French Value factor.
+
+The framework estimates value exposure through:
+
+- HML factor sensitivity
+- Historical return relationships
+
+Outputs:
+
+- Value ranking
+- Value portfolio construction
+
+---
+
+## Low Volatility Factor
+
+A defensive factor strategy.
+
+Method:
+
+- Calculate historical volatility
+- Select lowest volatility assets
+- Construct equal-weight portfolio
+
+
+Objective:
+
+Reduce portfolio risk and drawdowns.
+
+---
+
+# 3. Portfolio Analytics
+
+Every factor portfolio is evaluated using:
+
+## Annual Return
+
+Measures yearly performance.
+
+Formula:
+
+\[
+R_{annual}= (1+R)^{252}-1
+\]
+
+
+---
+
+## Annual Volatility
+
+Measures return dispersion.
+
+\[
+\sigma_{annual}=\sigma_{daily}\sqrt{252}
+\]
+
+
+---
+
+## Sharpe Ratio
+
+Risk-adjusted return metric.
+
+\[
+Sharpe=\frac{R_p-R_f}{\sigma_p}
+\]
+
+
+---
+
+## Maximum Drawdown
+
+Measures worst historical decline.
+
+\[
+MDD=min(\frac{P_t}{Peak_t}-1)
+\]
+
+
+---
+
+# 4. Fama-French Exposure Analyzer
+
+The framework includes a three-factor regression model:
+
+\[
+R_i-R_f=
+\alpha+
+\beta_m(MKT-RF)
++
+\beta_s SMB
++
+\beta_h HML
++\epsilon
+\]
+
+
+The dashboard provides:
+
+- Alpha
+- Market Beta
+- SMB Beta
+- HML Beta
+- R²
+- Regression statistics
+
+
+---
+
+# 5. Rolling Beta Analysis
+
+The system calculates time-varying market exposure.
+
+Example:
+
+
+Rolling Beta
+
+2.0 |
+1.5 | ______
+1.0 |_______/
+0.5 |
+----------------
+Time
+
+
+Useful for:
+
+- Risk monitoring
+- Market sensitivity analysis
+- Regime changes
+
+---
+
+# 6. Factor Portfolio Optimization
+
+A Monte Carlo optimizer searches for the highest Sharpe factor allocation.
+
+Available factors:
+
+- Momentum
+- Value
+- Low Volatility
+
+
+Example output:
+
+
+Factor Weight
+
+Momentum 45%
+
+Value 20%
+
+Low Volatility 35%
+
+
+Objective:
+
+Maximize:
+
+\[
+Sharpe=\frac{Return}{Risk}
+\]
+
+
+---
+
+# Interactive Streamlit Dashboard
+
+The project includes a complete research dashboard.
+
+## Dashboard Features
+
+### Factor Performance
+
+Displays:
+
+- Annual Return
+- Volatility
+- Sharpe Ratio
+- Maximum Drawdown
+
+
+---
+
+### Portfolio Growth
+
+Interactive cumulative performance chart.
+
+Comparison:
+
+- Market (SPY)
+- Momentum
+- Value
+- Low Volatility
+
+
+---
+
+### Risk / Return Analysis
+
+Interactive scatter plot:
+
+X-axis:
+
+
+Volatility
+
+
+Y-axis:
+
+
+Return
+
+
+
+---
+
+### Sharpe Ranking
+
+Ranks strategies by risk-adjusted performance.
+
+
+---
+
+### Factor Constituents
+
+Displays selected assets for each strategy.
+
+
+---
+
+### Exposure Analysis
+
+Interactive asset selection:
+
+Example:
+
+
+AAPL
+
+Alpha:
+0.0003
+
+Market Beta:
+1.10
+
+SMB:
+-0.28
+
+HML:
+-0.31
+
+
+---
+
+# Project Architecture
+
+
+Factor Investing Lab
+│
+├── app
+│ └── streamlit.py
+│
+├── src
+│ ├── market_data.py
+│ ├── returns.py
+│ ├── factor_data.py
+│ ├── fama_french.py
+│ ├── factor_portfolios.py
+│ ├── value_factor.py
+│ ├── performance.py
+│ ├── factor_analysis.py
+│ ├── factor_charts.py
+│ ├── factor_pipeline.py
+│ ├── factor_exposure.py
+│ └── factor_optimizer.py
+│
+└── README.md
+
+
+---
+
+# Technologies
+
+Python:
+
+- pandas
+- numpy
+- matplotlib
+- plotly
+- statsmodels
+- streamlit
+
+
+Financial Models:
+
+- CAPM
+- Fama-French Three Factor Model
+- Momentum Investing
+- Value Investing
+- Low Volatility Investing
+- Portfolio Optimization
+
+
+---
+
+# Installation
+
+Clone repository:
+
+```bash
+git clone <repository-url>
+
+Install dependencies:
+
+pip install -r requirements.txt
+Running the Dashboard
+
+From project directory:
+
+streamlit run app/streamlit.py
+
+The dashboard will open automatically in the browser.
+
+Example Research Results
+
+Example factor comparison:
+
+Portfolio	Annual Return	Sharpe	Maximum Drawdown
+Market (SPY)	16.8%	0.74	-33.7%
+Momentum	57.4%	1.37	-51.1%
+Value	17.9%	0.59	-46.7%
+Low Volatility	10.9%	0.55	-32.8%
+
+Interpretation:
+
+Momentum produced the strongest returns but higher downside risk.
+Low volatility reduced portfolio risk.
+Value performance was more dependent on market regime.
+Factor diversification improves portfolio construction flexibility.
+Future Improvements
+
+Planned extensions:
+
+Fama-French Five Factor Model
+Quality Factor
+Dividend Factor
+Transaction Costs
+Rebalancing Simulation
+Walk-forward Backtesting
+Machine Learning Factor Selection
+Risk Parity Optimization
