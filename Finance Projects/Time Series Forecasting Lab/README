@@ -1,0 +1,469 @@
+# 📈 SPY Machine Learning Trading Dashboard
+
+An end-to-end quantitative research project that combines time-series analysis, machine learning, technical indicators, explainable AI, and interactive visualization to investigate whether ML models can improve SPY ETF trading decisions.
+
+The project develops a complete workflow:
+
+- Market data acquisition
+- Feature engineering
+- Statistical modelling
+- Deep learning experiments
+- Machine learning classification
+- Trading strategy construction
+- Backtesting
+- Risk analysis
+- Explainability
+- Interactive Streamlit dashboard
+
+
+---
+
+# 🚀 Project Overview
+
+The main objective is to predict future SPY market direction and evaluate whether machine learning can provide a systematic trading advantage.
+
+The final system combines:
+
+
+XGBoost Classifier
+
+SMA200 Market Regime Filter
+
+Transaction Cost Adjusted Backtesting
+
+Streamlit Interactive Dashboard
+
+
+The final conclusion is that machine learning was more effective as a **risk-management overlay** rather than a standalone alpha-generation model.
+
+
+---
+
+# 🏗️ Architecture
+
+             SPY Historical Data
+                     |
+                     |
+                     v
+
+          Feature Engineering
+
+                     |
+                     |
+    --------------------------------
+    |              |               |
+    v              v               v
+
+  ARIMA          GARCH          LSTM
+
+    |              |               |
+
+    --------------------------------
+
+                     |
+                     v
+
+             XGBoost Classifier
+
+                     |
+                     v
+
+          SMA200 Regime Filter
+
+                     |
+                     v
+
+              Backtesting
+
+                     |
+                     v
+
+          Streamlit Dashboard
+
+
+---
+
+# 📊 Dataset
+
+The project uses historical SPY ETF daily market data.
+
+Data includes:
+
+- Open
+- High
+- Low
+- Close
+- Volume
+
+
+Additional technical features were generated to capture:
+
+- Trend
+- Momentum
+- Volatility
+- Mean reversion
+- Volume behaviour
+
+
+---
+
+# 🧩 Feature Engineering
+
+The final model uses engineered technical indicators.
+
+## Trend Features
+
+- SMA50
+- SMA100
+- SMA200
+- SMA50/SMA200 relationship
+- Distance from SMA200
+
+
+## Momentum Features
+
+- Rolling returns
+- Momentum indicators
+
+
+## Volatility Features
+
+- Rolling volatility
+- Bollinger Bands
+
+
+## Volume Features
+
+- Volume change
+- Volume ratios
+
+
+The objective was to capture different market states:
+
+- Bull markets
+- Bear markets
+- High volatility periods
+- Mean reversion opportunities
+
+
+---
+
+# 🤖 Models Tested
+
+
+# 1. ARIMA
+
+Purpose:
+
+- Statistical return forecasting
+- Time-series modelling
+
+
+Result:
+
+ARIMA struggled to predict future returns due to financial market noise and non-stationarity.
+
+
+
+---
+
+# 2. GARCH
+
+Purpose:
+
+- Volatility forecasting
+- Risk estimation
+
+
+Result:
+
+GARCH provided useful volatility information but was not sufficient as a standalone trading strategy.
+
+
+
+---
+
+# 3. LSTM Neural Network
+
+Architecture:
+
+
+LSTM Layer
+|
+Dropout
+|
+Dense Output
+
+
+
+Purpose:
+
+Binary classification of future market direction.
+
+
+Result:
+
+The model suffered from prediction bias and limited generalization ability.
+
+
+
+---
+
+# 4. XGBoost Classifier
+
+The final machine learning model.
+
+
+Target:
+
+
+Future 20-day return > 2%
+
+
+
+Classification:
+
+
+1 = Positive future return
+
+0 = Otherwise
+
+
+
+The model was selected because it provided:
+
+- Better stability
+- Feature importance interpretation
+- Strong performance compared with previous approaches
+
+
+---
+
+# ⚙️ Hyperparameter Optimization
+
+Final parameters:
+
+```python
+{
+    "subsample": 0.8,
+    "n_estimators": 800,
+    "min_child_weight": 1,
+    "max_depth": 4,
+    "learning_rate": 0.05,
+    "colsample_bytree": 1.0
+}
+📈 Model Performance
+
+Classification results:
+
+Accuracy: 51.6%
+
+Precision: 48.7%
+
+Recall: 54.3%
+
+F1 Score: 51.4%
+
+ROC AUC: 0.534
+
+The model achieved a small predictive edge above random classification.
+
+💹 Trading Strategy
+
+The final strategy:
+
+XGBoost Probability Prediction
+
++
+
+SMA200 Market Regime Filter
+
++
+
+Transaction Costs
+
+Trading logic:
+
+Generate probability of positive future return
+Enter only when probability exceeds threshold
+Trade only when SPY is above SMA200
+Include transaction costs
+📊 Backtesting Results
+Buy & Hold SPY
+Metric	Value
+Annual Return	13.53%
+Annual Volatility	17.63%
+Sharpe Ratio	0.77
+Maximum Drawdown	-24.50%
+XGBoost + SMA200
+Metric	Value
+Annual Return	2.62%
+Annual Volatility	8.28%
+Sharpe Ratio	0.32
+Maximum Drawdown	-16.88%
+XGBoost + SMA200 + Transaction Costs
+Metric	Value
+Annual Return	1.50%
+Annual Volatility	8.27%
+Sharpe Ratio	0.18
+Maximum Drawdown	-17.84%
+🔍 Explainable AI (SHAP)
+
+SHAP was used to understand model decisions.
+
+Top influential features:
+
+SMA200
+SMA50/SMA200 relationship
+Bollinger Lower Band
+SMA100
+Price distance from SMA200
+
+Interpretation:
+
+The model mainly learned:
+
+Market trend
+Long-term regime
+Price deviation from historical averages
+
+This confirms that the strategy behaves primarily as a trend/regime detection system.
+
+🖥️ Streamlit Dashboard
+
+The project includes an interactive Streamlit application.
+
+Features:
+
+✅ Live SPY data update
+
+✅ Model probability prediction
+
+✅ BUY / HOLD signal generation
+
+✅ SMA200 market regime detection
+
+✅ Price and trend charts
+
+✅ Latest market data table
+
+✅ SHAP feature importance visualization
+
+✅ Adjustable prediction threshold
+
+Run:
+
+streamlit run app.py
+
+Dashboard:
+
+http://localhost:8501
+📷 Dashboard Preview
+
+Add screenshots here:
+
+images/
+
+dashboard.png
+
+equity_curve.png
+
+shap_features.png
+
+Example:
+
+![Dashboard](images/dashboard.png)
+📁 Project Structure
+SPY-ML-Trading/
+
+│
+├── app.py
+│
+├── xgboost_spy_model.pkl
+│
+├── requirements.txt
+│
+├── README.md
+│
+├── notebooks/
+│   └── SPY_ML_Strategy.ipynb
+│
+└── images/
+    ├── dashboard.png
+    ├── equity_curve.png
+    └── shap_features.png
+
+🛠️ Technologies Used
+
+Programming:
+
+Python
+
+Libraries:
+
+pandas
+numpy
+matplotlib
+plotly
+scikit-learn
+XGBoost
+TensorFlow / Keras
+SHAP
+statsmodels
+arch
+Streamlit
+yfinance
+joblib
+⚠️ Limitations
+
+Financial markets are complex and constantly changing.
+
+Current limitations:
+
+Single asset (SPY)
+Historical data only
+No live trading execution
+Market regimes may change
+Transaction costs simplified
+🔮 Future Improvements
+
+Possible extensions:
+
+Model Improvements
+Walk-forward validation
+LightGBM comparison
+Ensemble models
+Transformer-based time-series models
+Strategy Improvements
+Portfolio allocation
+Multiple ETFs
+
+Examples:
+
+QQQ
+IWM
+DIA
+Deployment
+
+Future versions could include:
+
+Streamlit Cloud deployment
+Automated daily predictions
+Email/Telegram alerts
+Broker API integration
+📝 Final Conclusion
+
+This project demonstrates a complete machine learning workflow applied to quantitative trading research.
+
+The final model did not outperform passive SPY investment in absolute returns.
+
+However, it successfully demonstrated that machine learning can:
+
+Identify market regimes
+Reduce portfolio volatility
+Limit drawdowns
+Provide interpretable trading signals
+
+The main conclusion:
+
+Machine learning models may provide greater value as risk-management systems rather than standalone return prediction engines.
