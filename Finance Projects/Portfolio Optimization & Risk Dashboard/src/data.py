@@ -1,0 +1,25 @@
+import pandas as pd
+
+
+def load_prices(path: str) -> pd.DataFrame:
+    """
+    Load historical adjusted closing prices.
+
+    Parameters
+    ----------
+    path : str
+        CSV file path.
+
+    Returns
+    -------
+    pd.DataFrame
+        Historical prices.
+    """
+
+    prices = pd.read_csv(
+        path,
+        index_col=0,
+        parse_dates=True
+    )
+
+    return prices
