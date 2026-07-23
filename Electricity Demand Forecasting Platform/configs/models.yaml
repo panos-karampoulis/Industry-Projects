@@ -1,0 +1,103 @@
+germany:
+
+  model_name: "xgboost_load_forecaster"
+
+  model_version: "v3"
+
+  model_file: "xgboost_load_forecaster_v3.pkl"
+
+  metrics:
+
+    MAE_MW: 1138.73
+
+    RMSE_MW: 1548.04
+
+    R2: 0.9718
+
+
+
+greece:
+
+  model_name: "xgboost_load_forecaster"
+
+  model_version: "v3"
+
+  model_file: "xgboost_load_forecaster_v3.pkl"
+
+  metrics:
+
+    MAE_MW: 134.79
+
+    RMSE_MW: 197.35
+
+    R2: 0.9733
+
+
+
+italy:
+
+  model_name: "xgboost_load_forecaster"
+
+  model_version: "v3"
+
+  model_file: "xgboost_load_forecaster_v3.pkl"
+
+  metrics:
+
+    MAE_MW: 724.52
+
+    RMSE_MW: 1147.23
+
+    R2: 0.9714
+
+france:
+
+  model_name: "xgboost_load_forecaster"
+
+  model_version: "v3"
+
+  model_file: "xgboost_load_forecaster_v3.pkl"
+
+  metrics:
+
+    MAE_MW: 923.39
+
+    RMSE_MW: 1329.29
+
+    R2: 0.9842
+
+
+
+austria:
+
+  model_name: "xgboost_load_forecaster"
+
+  model_version: "v3"
+
+  model_file: "xgboost_load_forecaster_v3.pkl"
+
+  metrics:
+
+    MAE_MW: 186.55
+
+    RMSE_MW: 275.01
+
+    R2: 0.9563
+
+
+
+netherlands:
+
+  model_name: "xgboost_load_forecaster"
+
+  model_version: "v3"
+
+  model_file: "xgboost_load_forecaster_v3.pkl"
+
+  metrics:
+
+    MAE_MW: 265.96
+
+    RMSE_MW: 369.76
+
+    R2: 0.9664
