@@ -46,6 +46,402 @@ Accurate demand predictions help market participants:
 This project addresses the following question:
 
 > Can machine learning models accurately forecast short-term electricity demand using historical consumption patterns and weather information?
+            ENTSO-E
+              |
+              |
+      Electricity Demand Data
+              |
+              |
+        Data Pipeline
+              |
+              |
+    +-------------------+
+    |                   |
+    |   Weather Data    |
+    |   Open-Meteo      |
+    |                   |
+    +-------------------+
+              |
+              |
+        Dataset Merge
+              |
+              |
+    Feature Engineering
+              |
+              |
+        XGBoost Model
+              |
+              |
+      Forecast Engine
+              |
+              |
+    Streamlit Dashboard
+
+
+---
+
+# 🔄 Data Pipeline
+
+The project includes an automated data workflow:
+
+## 1. Load Data Extraction
+
+Electricity demand data is collected from:
+
+**ENTSO-E Transparency Platform**
+
+The pipeline:
+
+- downloads historical demand data,
+- converts time zones,
+- aggregates data into hourly resolution,
+- stores raw datasets.
+
+---
+
+## 2. Weather Data Extraction
+
+Weather variables are retrieved from:
+
+**Open-Meteo API**
+
+Features include:
+
+- Temperature
+- Relative humidity
+- Wind speed
+- Cloud cover
+- Surface pressure
+- Solar radiation
+
+---
+
+## 3. Dataset Preparation
+
+The final modelling dataset combines:
+Electricity Demand
++
+Weather Variables
++
+Calendar Features
++
+Historical Load Features
+
+
+---
+
+# 🧠 Machine Learning Approach
+
+## Model
+
+The forecasting engine uses:
+
+## XGBoost Regressor
+
+Chosen because it performs well on structured time-series forecasting problems with:
+
+- nonlinear relationships,
+- multiple external variables,
+- lag dependencies.
+
+---
+
+# 🔧 Feature Engineering
+
+The model uses several groups of predictors.
+
+---
+
+## Weather Features
+
+Examples:
+temperature_2m
+
+relative_humidity_2m
+
+wind_speed_10m
+
+cloud_cover
+
+surface_pressure
+
+shortwave_radiation
+
+
+---
+
+## Calendar Features
+
+Including:
+hour
+
+day_of_week
+
+month
+
+day_of_year
+
+week_of_year
+
+is_weekend
+
+
+---
+
+## Cyclic Time Features
+
+To capture seasonal behaviour:
+
+hour_sin
+
+hour_cos
+
+day_year_sin
+
+day_year_cos
+
+---
+
+## Historical Demand Features
+
+Lag-based variables:
+load_lag_24
+
+load_lag_168
+
+load_lag_8760
+
+load_mean_24
+
+load_mean_168
+
+load_mean_720
+
+load_std_24
+
+
+---
+
+# 🌍 Supported Countries
+
+The platform currently supports:
+
+| Country | Market |
+|---|---|
+| 🇩🇪 Germany | DE |
+| 🇬🇷 Greece | GR |
+| 🇮🇹 Italy | IT |
+| 🇫🇷 France | FR |
+| 🇦🇹 Austria | AT |
+| 🇳🇱 Netherlands | NL |
+
+---
+
+# 📊 Model Performance
+
+Evaluation performed using historical test data.
+
+Metrics:
+
+- MAE
+- RMSE
+- R² Score
+
+
+| Country | MAE (MW) | RMSE (MW) | R² |
+|---|---:|---:|---:|
+| Germany | 1138.73 | 1548.04 | 0.9718 |
+| Greece | 134.79 | 197.35 | 0.9733 |
+| Italy | 724.52 | 1147.23 | 0.9714 |
+| France | 923.39 | 1329.29 | 0.9842 |
+| Austria | 186.55 | 275.01 | 0.9563 |
+| Netherlands | 265.96 | 369.76 | 0.9664 |
+
+---
+
+# ⚡ Forecast Engine
+
+The forecasting engine generates:
+
+- 24 hourly demand predictions
+- Average daily demand
+- Peak demand
+- Peak hour
+- Daily energy consumption
+
+
+Example output:
+
+
+Forecast Horizon:
+
+24 hours
+
+Average Load:
+
+47.2 GW
+
+Peak Load:
+
+50.0 GW
+
+Peak Hour:
+
+09:00
+
+
+---
+
+# 📈 Streamlit Dashboard
+
+The project includes an interactive dashboard.
+
+Features:
+
+## Country Selection
+
+Users can select:
+
+
+Germany
+Greece
+Italy
+France
+Austria
+Netherlands
+
+
+---
+
+## Forecast Generation
+
+The dashboard produces:
+
+- hourly demand curve,
+- forecast KPIs,
+- model performance information.
+
+---
+
+## Forecast Storage
+
+Generated forecasts are automatically saved:
+
+
+reports/
+
+└── forecasts/
+
+└── country/
+
+    country_forecast_date.csv
+
+This enables future forecast monitoring.
+
+---
+
+# 📂 Repository Structure
+
+
+Electricity Demand Forecasting
+
+│
+├── app.py
+│
+├── configs
+│ ├── countries.yaml
+│ └── models.yaml
+│
+├── data
+│ ├── raw
+│ ├── weather
+│ └── processed
+│
+├── models
+│ ├── germany
+│ ├── greece
+│ ├── italy
+│ ├── france
+│ ├── austria
+│ └── netherlands
+│
+├── reports
+│ └── forecasts
+│
+└── src
+├── update_data.py
+├── download_load.py
+├── download_weather.py
+├── prepare_dataset.py
+├── train_all_models.py
+├── forecast_engine.py
+├── download_actuals.py
+└── forecast_monitoring.py
+
+
+---
+
+# 🚀 Installation
+
+Clone repository:
+
+```bash
+git clone <repository-url>
+
+Create environment:
+
+python -m venv venv
+
+Activate:
+
+Windows:
+
+venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+▶️ Run Forecast Dashboard
+
+Start Streamlit:
+
+streamlit run src/app.py
+🔮 Future Improvements
+
+Possible extensions:
+
+Automated daily forecasting pipeline
+Forecast vs Actual monitoring dashboard
+Model drift detection
+Automated model retraining
+MLflow experiment tracking
+Docker deployment
+API deployment
+Integration with energy market prices
+🛠️ Technologies Used
+Programming
+Python
+Pandas
+NumPy
+Machine Learning
+XGBoost
+Scikit-learn
+Data Sources
+ENTSO-E Transparency Platform
+Open-Meteo API
+Visualization
+Streamlit
+Plotly
+Development
+Git
+VS Code
+💡 Key Takeaway
+
+This project demonstrates an end-to-end energy analytics workflow:
+
+Raw Data → Feature Engineering → Machine Learning → Forecast Engine → Business Dashboard
+
+The objective is not only to build a predictive model, but to create a complete forecasting application that could support real-world electricity market analysis and operational decision-making.
 
 ---
 
