@@ -1,0 +1,52 @@
+# ⚡ Electricity Demand Forecasting Platform
+
+## End-to-End Machine Learning System for Multi-Country Electricity Load Forecasting
+
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-XGBoost-orange)
+![Streamlit](https://img.shields.io/badge/Dashboard-Streamlit-red)
+![Energy](https://img.shields.io/badge/Domain-Energy%20Analytics-green)
+
+---
+
+# 📌 Project Overview
+
+This project implements an end-to-end electricity demand forecasting platform capable of generating **24-hour ahead load forecasts** for multiple European electricity markets.
+
+The system combines:
+
+- Historical electricity demand data from **ENTSO-E**
+- Weather information from **Open-Meteo**
+- Time-series feature engineering
+- Machine learning forecasting models
+- Automated data pipelines
+- Interactive Streamlit dashboard
+
+The goal is to create a realistic energy analytics workflow similar to forecasting systems used by utilities, energy traders and market analysts.
+
+---
+
+# 🎯 Business Problem
+
+Electricity demand forecasting is a critical task for:
+
+- Energy trading decisions
+- Grid operation
+- Renewable integration
+- Capacity planning
+- Market balancing activities
+
+Accurate demand predictions help market participants:
+
+- anticipate consumption patterns,
+- optimize generation scheduling,
+- reduce imbalance costs,
+- improve operational decisions.
+
+This project addresses the following question:
+
+> Can machine learning models accurately forecast short-term electricity demand using historical consumption patterns and weather information?
+
+---
+
+# 🏗️ System Architecture
