@@ -1,0 +1,2 @@
+model,country,MAE,RMSE
+Random Forest,germany,9.011764829377066,16.623072783813544
