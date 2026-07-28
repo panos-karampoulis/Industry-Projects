@@ -1,0 +1,6 @@
+country,model,training_time_sec,MAE,RMSE,R2,sMAPE
+france,Linear_Regression,0.12,10.0499,14.6727,0.9398,37.1945
+germany,Linear_Regression,0.18,14.0276,21.3157,0.8524,25.3485
+italy,Linear_Regression,0.02,8.1592,11.7975,0.9064,8.5625
+netherlands,Linear_Regression,0.02,10.2291,18.1915,0.9424,25.7544
+spain,Linear_Regression,0.02,5.0717,7.7207,0.9802,26.3851

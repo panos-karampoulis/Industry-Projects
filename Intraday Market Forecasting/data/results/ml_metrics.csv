@@ -1,0 +1,16 @@
+country,model,training_time_sec,MAE,RMSE,R2,sMAPE
+france,Linear_Regression,0.12,10.0499,14.6727,0.9398,37.1945
+france,Random_Forest,9.2,11.755,18.2939,0.9064,35.7737
+france,XGBoost,3.64,15.3214,24.6166,0.8306,40.0852
+germany,Linear_Regression,0.18,14.0276,21.3157,0.8524,25.3485
+germany,Random_Forest,105.6,11.8437,21.5752,0.8488,21.2533
+germany,XGBoost,8.63,13.1987,24.0047,0.8129,22.8772
+italy,Linear_Regression,0.02,8.1592,11.7975,0.9064,8.5625
+italy,Random_Forest,10.81,8.7581,12.847,0.889,8.524
+italy,XGBoost,3.75,9.3545,13.659,0.8745,9.1521
+netherlands,Linear_Regression,0.02,10.2291,18.1915,0.9424,25.7544
+netherlands,Random_Forest,9.92,10.2936,26.2445,0.8802,21.3133
+netherlands,XGBoost,3.69,11.2363,33.6566,0.8029,23.918
+spain,Linear_Regression,0.02,5.0717,7.7207,0.9802,26.3851
+spain,Random_Forest,8.01,5.4066,8.0768,0.9783,20.9714
+spain,XGBoost,3.33,6.8651,10.7419,0.9616,26.1375
