@@ -1,0 +1,430 @@
+# ⚡ Day Ahead Electricity Price Forecasting Platform
+
+## Machine Learning Forecasting & Energy Market Analytics Dashboard
+
+![Python](https://img.shields.io/badge/Python-3.14-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Forecasting-green)
+![Energy Markets](https://img.shields.io/badge/Domain-Energy%20Markets-orange)
+
+
+---
+
+# 📌 Project Overview
+
+This project develops an end-to-end **Day Ahead Electricity Price Forecasting Platform** combining:
+
+- Machine Learning forecasting models
+- Energy market analytics
+- Feature engineering
+- Model comparison
+- Interactive Streamlit dashboard
+
+
+The platform allows users to explore electricity market behaviour and evaluate forecasting performance for:
+
+- 🇩🇪 Germany
+- 🇬🇷 Greece
+
+
+The final application provides an analyst-oriented interface similar to an energy market intelligence tool.
+
+
+---
+
+# 🎯 Business Problem
+
+Electricity prices in European energy markets are highly volatile due to:
+
+- Demand fluctuations
+- Renewable generation variability
+- Fuel prices
+- Conventional generation availability
+- Market conditions
+
+
+Accurate day-ahead price forecasting is essential for:
+
+- Energy trading
+- Portfolio optimization
+- Risk management
+- Renewable integration
+- Market analysis
+
+
+The objective of this project is to predict hourly electricity prices using historical market and generation data.
+
+
+---
+
+# 🏗️ Project Architecture
+
+
+
+Raw Energy Data
+|
+|
+Data Cleaning Pipeline
+|
+|
+Feature Engineering
+|
+|
+Machine Learning Models
+|
+|
+Forecast Evaluation
+|
+|
+Streamlit Analytics Platform
+
+
+
+---
+
+# 📊 Dataset
+
+
+Countries:
+
+## 🇩🇪 Germany
+
+Hourly electricity market data including:
+
+- Day ahead price
+- Load demand
+- Solar generation
+- Wind generation
+- Gas generation
+- Lignite generation
+- Hydro generation
+- Renewable indicators
+
+
+## 🇬🇷 Greece
+
+Hourly electricity market data including:
+
+- Day ahead price
+- Demand
+- Solar
+- Wind
+- Gas
+- Lignite
+- Oil
+- Hydro
+- Storage
+
+
+Dataset coverage:
+
+
+2020 - 2026
+
+
+Frequency:
+
+
+Hourly
+
+
+
+---
+
+# ⚙️ Feature Engineering
+
+
+The forecasting pipeline creates:
+
+
+## Time Features
+
+- Hour
+- Day of week
+- Weekend indicator
+- Month
+- Seasonality features
+
+
+## Price Features
+
+Lag variables:
+
+- Price lag 1 hour
+- Price lag 24 hours
+- Price lag 168 hours
+
+
+Rolling statistics:
+
+- 24h rolling mean
+- 24h rolling volatility
+- 168h rolling mean
+
+
+## Energy System Features
+
+Created features:
+
+- Renewable generation
+- Renewable share
+- Residual load
+- Fossil generation
+
+
+---
+
+# 🤖 Machine Learning Models
+
+
+Four machine learning algorithms were evaluated:
+
+
+| Model | Type |
+|---|---|
+| Random Forest | Ensemble Tree |
+| XGBoost | Gradient Boosting |
+| LightGBM | Gradient Boosting |
+| CatBoost | Gradient Boosting |
+
+
+The models predict:
+
+
+Hourly Day Ahead Electricity Price (€/MWh)
+
+
+
+---
+
+# 📈 Model Performance
+
+
+## 🇩🇪 Germany
+
+
+| Model | MAE | RMSE |
+|---|---:|---:|
+| Random Forest | 9.01 | 16.62 |
+| XGBoost | 9.40 | 17.42 |
+| LightGBM | 8.83 | 15.86 |
+| CatBoost | 8.83 | 15.86 |
+
+
+Best performing model:
+
+
+CatBoost / LightGBM
+
+
+---
+
+## 🇬🇷 Greece
+
+
+| Model | MAE | RMSE |
+|---|---:|---:|
+| Random Forest | 13.52 | 20.57 |
+| XGBoost | 13.54 | 20.57 |
+| CatBoost | 13.29 | 20.26 |
+
+
+Best performing model:
+
+
+CatBoost
+
+
+
+---
+
+# 📊 Streamlit Dashboard
+
+
+The project includes an interactive energy analytics platform.
+
+
+## 📈 Forecast Explorer
+
+
+Purpose:
+
+Machine Learning Evaluation
+
+
+Features:
+
+- Country selection
+- Model selection
+- Date selection
+- Actual vs Forecast comparison
+- Daily MAE
+- Daily RMSE
+- Hourly forecast table
+
+
+Forecast evaluation period:
+
+
+April 2025 - July 2026
+
+
+
+---
+
+# ⚡ Market Explorer
+
+
+Purpose:
+
+Energy market intelligence and historical analysis
+
+
+Features:
+
+- Historical price evolution
+- Electricity demand analysis
+- Renewable generation analysis
+- Residual load monitoring
+- Energy generation mix
+- Market insights
+- Forecast overlay
+
+
+Historical coverage:
+
+
+2020 - 2026
+
+
+
+---
+
+# 📊 Model Comparison
+
+
+Includes:
+
+- Model ranking
+- MAE comparison
+- RMSE comparison
+- Best model identification
+
+
+Models:
+
+- Random Forest
+- XGBoost
+- LightGBM
+- CatBoost
+
+
+---
+
+# 🔍 Feature Analysis
+
+
+Model explainability using:
+
+- Feature importance
+- Market driver analysis
+
+
+Main drivers identified:
+
+- Previous electricity price
+- Daily price patterns
+- Demand conditions
+- Renewable availability
+
+
+---
+
+# 🛠️ Technologies
+
+
+## Programming
+
+- Python
+- Pandas
+- NumPy
+
+
+## Machine Learning
+
+- Scikit-learn
+- XGBoost
+- LightGBM
+- CatBoost
+
+
+## Visualization
+
+- Streamlit
+- Plotly
+
+
+## Development
+
+- VS Code
+- GitHub
+
+
+---
+
+# 📂 Project Structure
+
+
+
+Day Ahead Price Forecasting/
+
+│
+├── data/
+│ ├── processed/
+│
+├── models/
+│ ├── germany/
+│ └── greece/
+│
+├── results/
+│ ├── germany/
+│ └── greece/
+│
+├── src/
+│ ├── models/
+│ └── features/
+│
+├── pages/
+│ ├── Forecast_Explorer.py
+│ ├── Market_Explorer.py
+│ └── Model_Comparison.py
+│
+├── app.py
+├── requirements.txt
+└── README.md
+
+
+
+---
+
+# ▶️ Running the Application
+
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+
+Run Streamlit:
+
+streamlit run app.py
+🚀 Future Improvements
+
+Possible extensions:
+
+Probabilistic forecasting
+Prediction intervals
+SHAP explainability
+Neural networks (LSTM/Transformers)
+Real-time market data integration
+Automated retraining pipeline
