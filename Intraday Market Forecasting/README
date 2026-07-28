@@ -1,0 +1,207 @@
+⚡ European Intraday Electricity Market Forecasting Engine
+AI-Based 15-Minute Electricity Price Forecasting
+
+An end-to-end machine learning project for forecasting European intraday electricity prices using historical market data, feature engineering and gradient boosting models.
+
+The project demonstrates the complete workflow of an intraday forecasting engine, from raw market data processing to model training, recursive forecasting, backtesting and interactive visualization.
+
+📌 Project Objective
+
+Intraday electricity markets are highly dynamic, with prices changing every 15 minutes due to:
+
+Renewable generation variability
+Electricity demand fluctuations
+Weather conditions
+Grid congestion
+Cross-border market coupling
+
+The objective of this project is to build a machine learning pipeline capable of forecasting the next 24 hours of intraday electricity prices (96 × 15-minute intervals) across multiple European markets.
+
+🌍 Markets Covered
+
+The forecasting engine supports:
+
+🇩🇪 Germany
+🇫🇷 France
+🇮🇹 Italy
+🇳🇱 Netherlands
+🇪🇸 Spain
+
+Historical data covers approximately 2020–2026.
+
+⚠️ Repository Notice
+
+To keep the repository lightweight, the following folders are not included:
+
+data/
+models/
+
+These folders contain large datasets, trained machine learning models and generated forecasts whose combined size exceeds GitHub's recommended repository limits.
+
+All source code required to recreate these folders is included in the src/ directory.
+
+🔄 Project Pipeline
+Raw Market Data
+        │
+        ▼
+Data Cleaning
+(src/preprocessing)
+        │
+        ▼
+Feature Engineering
+(src/features)
+        │
+        ▼
+Training Dataset
+        │
+        ▼
+XGBoost Model Training
+(src/models)
+        │
+        ▼
+Saved Models
+        │
+        ▼
+Recursive Intraday Forecasting
+(src/forecasting)
+        │
+        ▼
+Forecast Outputs
+        │
+        ▼
+Backtesting
+(src/backtesting)
+        │
+        ▼
+Streamlit Dashboard
+🧠 Machine Learning Model
+
+Current forecasting model:
+
+XGBoost Regressor
+
+Forecast horizon:
+
+24 hours
+
+Resolution:
+
+15 minutes
+
+Total forecast steps:
+
+96
+⚙️ Feature Engineering
+
+The forecasting model uses several engineered variables, including:
+
+Calendar Features
+Hour
+Day of week
+Month
+Weekend indicator
+Lag Features
+Previous price
+24-hour lag
+48-hour lag
+Weekly lag
+Rolling Statistics
+Rolling mean
+Rolling standard deviation
+Weather Variables
+Temperature
+Wind
+Solar-related features (where available)
+📈 Model Evaluation
+
+The project includes a complete backtesting framework.
+
+Evaluation metrics include:
+
+Mean Absolute Error (MAE)
+Root Mean Squared Error (RMSE)
+Mean Absolute Percentage Error (MAPE)
+Forecast Bias
+
+Additional monitoring:
+
+Rolling MAE
+Error distribution
+Largest forecast errors
+📊 Streamlit Dashboard
+
+The application provides interactive monitoring through five pages:
+
+1. Overview
+
+Project description and supported markets.
+
+2. Intraday Forecast Explorer
+24-hour forecast
+Historical prices
+Interactive visualization
+3. Market Comparison
+Cross-country comparison
+Price volatility
+Correlation matrix
+Market spreads
+Market stress indicator
+4. Model Performance
+MAE
+RMSE
+MAPE
+Actual vs Forecast
+Feature importance
+5. Backtesting Analytics
+Forecast validation
+Rolling error metrics
+Forecast bias
+Country performance ranking
+📁 Project Structure
+├── app.py
+├── pages/
+├── src/
+│   ├── preprocessing/
+│   ├── features/
+│   ├── forecasting/
+│   ├── models/
+│   ├── backtesting/
+│   └── monitoring/
+├── requirements.txt
+└── README.md
+🚀 Reproducing the Project
+
+The complete pipeline can be recreated using the scripts inside the src/ directory.
+
+Typical execution order:
+
+Run preprocessing scripts.
+Generate engineered features.
+Train the XGBoost models.
+Generate intraday forecasts.
+Run backtesting.
+Launch the dashboard:
+streamlit run app.py
+🛠️ Technologies
+Python
+Pandas
+NumPy
+XGBoost
+Scikit-learn
+Plotly
+Streamlit
+Joblib
+🎯 Skills Demonstrated
+
+This repository demonstrates:
+
+Time-series forecasting
+Energy market analytics
+Machine learning model development
+Feature engineering
+Forecast validation
+Model monitoring
+Interactive dashboard development
+👤 Author
+
+Panagiotis Karampoulis
