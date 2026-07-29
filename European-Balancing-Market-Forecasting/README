@@ -1,0 +1,281 @@
+European Balancing Market Forecasting & Risk Intelligence Platform
+Overview
+
+The European Balancing Market Forecasting & Risk Intelligence Platform is an end-to-end energy analytics project designed to analyze electricity balancing markets across major European countries.
+
+The platform combines:
+
+Data engineering pipelines
+Electricity market analytics
+Forecasting models
+Renewable generation analysis
+Imbalance risk assessment
+Interactive dashboard visualization
+
+The objective is to simulate a real-world energy analytics workflow supporting market analysts, trading teams, and risk management functions.
+
+Business Problem
+
+Electricity balancing markets play a critical role in maintaining grid stability by correcting deviations between electricity demand and generation.
+
+Increasing renewable penetration introduces additional uncertainty due to:
+
+Weather dependency
+Generation volatility
+Forecast errors
+Price fluctuations
+Imbalance exposure
+
+Energy market participants require analytical tools to:
+
+Forecast system conditions
+Monitor imbalance risk
+Quantify market stress
+Identify operational risks
+
+This project develops a complete analytics platform addressing these challenges.
+
+Market Coverage
+
+The platform analyzes five European electricity markets:
+
+Country	Market Area
+Germany	DE-LU
+France	FR
+Italy	IT
+Netherlands	NL
+Spain	ES
+
+Analysis period:
+
+2020 - 2026
+
+System Architecture
+
+The project follows a modular data analytics architecture:
+
+Data Sources
+     |
+     ↓
+Data Ingestion Layer
+     |
+     ↓
+Data Validation
+     |
+     ↓
+Feature Engineering
+     |
+     ↓
+Forecasting Models
+     |
+     ↓
+Risk Analytics
+     |
+     ↓
+Interactive Dashboard
+Data Pipeline
+
+The platform includes automated refresh capabilities through an incremental pipeline.
+
+Pipeline steps:
+
+Generation data update
+Load data update
+Price data update
+Imbalance calculation
+Generation feature engineering
+Market feature engineering
+Risk feature engineering
+Machine learning forecasting
+
+The refresh process can be executed through:
+
+python src/pipeline/refresh_pipeline.py
+Data Sources
+
+Primary source:
+
+ENTSO-E Transparency Platform
+
+The project uses European electricity market data including:
+
+Actual electricity load
+Forecast electricity load
+Electricity generation by technology
+Renewable generation
+Electricity prices
+Balancing market deviations
+Feature Engineering
+
+The platform creates market-relevant features including:
+
+Load Features
+Load forecast error
+Lagged demand variables
+Hourly patterns
+Weekly seasonality
+Monthly seasonality
+Renewable Features
+Renewable generation
+Renewable penetration
+Renewable volatility
+Lagged renewable generation
+Rolling statistics
+Balancing Features
+Imbalance magnitude
+Imbalance direction
+Imbalance cost proxy
+Market stress indicators
+Price Features
+Electricity price
+High price events
+Price volatility indicators
+Forecasting Models
+Next-Day Forecasting
+
+The platform includes machine learning forecasting models for short-term electricity market prediction.
+
+Forecast targets:
+
+Electricity demand
+Balancing imbalance
+
+Models implemented:
+
+Linear Regression
+Random Forest
+XGBoost
+
+Evaluation metrics:
+
+MAE
+RMSE
+MAPE
+Risk Intelligence Module
+
+The platform evaluates three main categories of market risk.
+
+Balancing Risk
+
+Measures exposure related to electricity system deviations.
+
+Key drivers:
+
+Imbalance volatility
+Forecast errors
+System uncertainty
+Price Risk
+
+Analyzes electricity price uncertainty through:
+
+Price volatility
+Extreme price events
+Market stress conditions
+Renewable Risk
+
+Evaluates renewable generation uncertainty through:
+
+Renewable penetration
+Generation variability
+Forecast uncertainty
+Interactive Dashboard
+
+The project includes a Streamlit-based analytics dashboard.
+
+Features:
+
+Market Overview
+Average electricity price
+Imbalance volatility
+Renewable exposure
+Market stress indicators
+Market Analytics
+Price evolution
+Balancing imbalance trends
+Renewable generation mix
+Risk Rankings
+
+Cross-country comparison of:
+
+Balancing risk
+Price risk
+Renewable risk
+Forecast Performance
+
+Model comparison through:
+
+MAE
+RMSE
+Forecasting accuracy metrics
+
+Run dashboard:
+
+streamlit run src/dashboard/app.py
+Technology Stack
+Programming
+Python
+Data Processing
+Pandas
+NumPy
+Machine Learning
+Scikit-learn
+XGBoost
+Visualization
+Plotly
+Streamlit
+Development Tools
+VS Code
+Git
+GitHub
+Project Structure
+European-Balancing-Market-Forecasting/
+
+│
+├── src/
+│
+│   ├── analytics/
+│   ├── balancing/
+│   ├── config/
+│   ├── dashboard/
+│   ├── data_loader/
+│   ├── features/
+│   ├── forecasting/
+│   ├── pipeline/
+│   └── visualization/
+│
+├── requirements.txt
+├── README.md
+└── tests/
+Key Outcomes
+
+The platform demonstrates:
+
+✓ End-to-end energy data pipeline development
+
+✓ European electricity market analysis
+
+✓ Machine learning forecasting workflows
+
+✓ Renewable generation risk assessment
+
+✓ Market imbalance analytics
+
+✓ Interactive business intelligence dashboard development
+
+Future Improvements
+
+Potential extensions:
+
+7-day electricity forecasting
+Long-term forecasting models
+Probabilistic forecasting intervals
+Battery Energy Storage System (BESS) optimization
+Intraday market forecasting
+Automated trading strategy simulation
+Market bidding optimization
+Real-time API integration
+Author
+
+Panagiotis Karampoulis
+
+Energy & Finance Analytics | Data Analysis | Machine Learning | Energy Markets
