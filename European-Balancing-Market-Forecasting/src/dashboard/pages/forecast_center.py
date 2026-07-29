@@ -7,24 +7,36 @@ from pathlib import Path
 # ============================================================
 # PATHS
 # ============================================================
+# ============================================================
+# PATHS
+# ============================================================
 
-ROOT = Path(
-    r"D:\Portfolio\European-Balancing-Market-Forecasting"
-)
+ROOT = Path(__file__).resolve().parents[2]
+
+
+DATA_DIR = ROOT / "data"
+
+ANALYTICS_DIR = DATA_DIR / "analytics"
+
+DEMO_DIR = ROOT / "demo_data"
 
 
 FORECAST_DIR = (
-    ROOT
-    /
-    "data"
-    /
-    "analytics"
+    ANALYTICS_DIR
     /
     "forecasting"
     /
     "ml"
 )
 
+
+DEMO_FORECAST_DIR = (
+    DEMO_DIR
+    /
+    "forecasting"
+    /
+    "ml"
+)
 
 COUNTRIES = [
     "germany",
@@ -75,30 +87,59 @@ country = st.selectbox(
 # LOAD FORECAST
 # ============================================================
 
-file = (
+# ============================================================
+# LOAD FORECAST
+# ============================================================
+
+
+production_file = (
 
     FORECAST_DIR
-
     /
-
     f"{country}_ml_forecast.csv"
 
 )
 
 
-if not file.exists():
+demo_file = (
+
+    DEMO_FORECAST_DIR
+    /
+    f"{country}_ml_forecast.csv"
+
+)
+
+
+
+if production_file.exists():
+
+    file = production_file
+
+
+elif demo_file.exists():
+
+    file = demo_file
+
+    st.info(
+        "Running forecast in demo mode"
+    )
+
+
+else:
 
     st.error(
-        "Forecast file not found."
+        f"Forecast file not found for {country}"
     )
 
     st.stop()
 
 
 
-df = pd.read_csv(
-    file
-)
+df = pd.read_csv(file)
+
+
+
+
 
 
 df["timestamp"] = pd.to_datetime(
