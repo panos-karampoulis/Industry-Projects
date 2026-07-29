@@ -13,6 +13,28 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
+st.write("ROOT:", ROOT)
+
+st.write(
+    "DEMO CHECK:",
+    ROOT / "demo_data" / "forecasting" / "ml" / "germany_ml_forecast.csv"
+)
+
+st.write(
+    "EXISTS:",
+    (
+        ROOT
+        /
+        "demo_data"
+        /
+        "forecasting"
+        /
+        "ml"
+        /
+        "germany_ml_forecast.csv"
+    ).exists()
+)
+
 
 DATA_DIR = ROOT / "data"
 
