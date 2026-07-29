@@ -14,7 +14,9 @@ import plotly.express as px
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-
+st.write("FILE:", __file__)
+st.write("ROOT:", PROJECT_ROOT)
+st.write("FILES:", list(PROJECT_ROOT.glob("*")))
 # ==========================================================
 # DATA PATHS
 # ==========================================================
@@ -256,21 +258,41 @@ def load_forecast(country):
 def load_analytics(filename):
 
 
-    file = (
-
+    full_file = (
         ANALYTICS_DIR
-
         /
-
         filename
-
     )
 
 
-    if not file.exists():
+    demo_file = (
+        PROJECT_ROOT
+        /
+        "demo_data"
+        /
+        "analytics"
+        /
+        filename
+    )
+
+
+    if full_file.exists():
+
+        file = full_file
+
+
+    elif demo_file.exists():
+
+        file = demo_file
+
+        st.info(
+            "Running analytics in demo mode"
+        )
+
+
+    else:
 
         return pd.DataFrame()
-
 
 
     return pd.read_csv(file)
