@@ -101,7 +101,7 @@ st.set_page_config(
 def load_risk_dataset(country):
 
 
-    file = (
+    full_file = (
 
         PROCESSED_DIR
 
@@ -116,10 +116,41 @@ def load_risk_dataset(country):
     )
 
 
-    if not file.exists():
+    demo_file = (
+
+        PROJECT_ROOT
+
+        /
+
+        "demo_data"
+
+        /
+
+        "risk_dataset"
+
+        /
+
+        f"{country}_risk_features.csv"
+
+    )
+
+
+    if full_file.exists():
+
+        file = full_file
+
+    elif demo_file.exists():
+
+        file = demo_file
+
+        st.info(
+            "Running in demo mode"
+        )
+
+    else:
 
         st.error(
-            f"Missing dataset:\n{file}"
+            f"No dataset found for {country}"
         )
 
         return pd.DataFrame()
@@ -131,17 +162,18 @@ def load_risk_dataset(country):
     )
 
 
-    df["timestamp"] = pd.to_datetime(
+    if "timestamp" in df.columns:
 
-        df["timestamp"],
+        df["timestamp"] = pd.to_datetime(
 
-        utc=True
+            df["timestamp"],
 
-    )
+            utc=True
+
+        )
 
 
     return df
-
 
 
 
@@ -150,7 +182,7 @@ def load_risk_dataset(country):
 def load_forecast(country):
 
 
-    file = (
+    full_file = (
 
         ANALYTICS_DIR
 
@@ -169,7 +201,44 @@ def load_forecast(country):
     )
 
 
-    if not file.exists():
+    demo_file = (
+
+        PROJECT_ROOT
+
+        /
+
+        "demo_data"
+
+        /
+
+        "forecasting"
+
+        /
+
+        "ml"
+
+        /
+
+        f"{country}_ml_forecast.csv"
+
+    )
+
+
+    if full_file.exists():
+
+        file = full_file
+
+
+    elif demo_file.exists():
+
+        file = demo_file
+
+        st.info(
+            "Running forecast in demo mode"
+        )
+
+
+    else:
 
         return pd.DataFrame()
 
@@ -182,7 +251,6 @@ def load_forecast(country):
 
     if "timestamp" in df.columns:
 
-
         df["timestamp"] = pd.to_datetime(
 
             df["timestamp"],
@@ -193,7 +261,6 @@ def load_forecast(country):
 
 
     return df
-
 
 
 
