@@ -12,11 +12,40 @@ import plotly.express as px
 # PROJECT ROOT
 # ==========================================================
 
+# ==========================================================
+# PROJECT ROOT (LOCAL + STREAMLIT CLOUD SAFE)
+# ==========================================================
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+if not (PROJECT_ROOT / "demo_data").exists():
+
+    PROJECT_ROOT = Path.cwd()
 
 st.write("FILE:", __file__)
 st.write("ROOT:", PROJECT_ROOT)
 st.write("FILES:", list(PROJECT_ROOT.glob("*")))
+
+
+st.write(
+    "FORECAST PATH:",
+    PROJECT_ROOT /
+    "demo_data" /
+    "forecasting" /
+    "ml" /
+    "germany_ml_forecast.csv"
+)
+
+st.write(
+    "FORECAST EXISTS:",
+    (
+        PROJECT_ROOT /
+        "demo_data" /
+        "forecasting" /
+        "ml" /
+        "germany_ml_forecast.csv"
+    ).exists()
+)
 # ==========================================================
 # DATA PATHS
 # ==========================================================
@@ -159,98 +188,67 @@ def load_risk_dataset(country):
 def load_forecast(country):
 
 
-    full_file = (
+    possible_files = [
 
-        ANALYTICS_DIR
+        (
+            ANALYTICS_DIR
+            /
+            "forecasting"
+            /
+            "ml"
+            /
+            f"{country}_ml_forecast.csv"
+        ),
 
-        /
-
-        "forecasting"
-
-        /
-
-        "ml"
-
-        /
-
-        f"{country}_ml_forecast.csv"
-
-    )
-
-
-    demo_file = (
-
-        PROJECT_ROOT
-
-        /
-
-        "demo_data"
-
-        /
-
-        "forecasting"
-
-        /
-
-        "ml"
-
-        /
-
-        f"{country}_ml_forecast.csv"
-
-    )
-
-
-    if full_file.exists():
-
-        file = full_file
-
-
-    elif demo_file.exists():
-
-        file = demo_file
-
-        st.info(
-            "Running forecast in demo mode"
+        (
+            PROJECT_ROOT
+            /
+            "demo_data"
+            /
+            "forecasting"
+            /
+            "ml"
+            /
+            f"{country}_ml_forecast.csv"
         )
 
+    ]
 
-    else:
+
+    file = None
+
+
+    for f in possible_files:
+
+        if f.exists():
+
+            file = f
+            break
+
+
+    if file is None:
+
+        st.warning(
+            f"Forecast file not found for {country}"
+        )
 
         return pd.DataFrame()
 
 
 
-    df = pd.read_csv(
-        file
-    )
+    df = pd.read_csv(file)
+
 
 
     if "timestamp" in df.columns:
 
         df["timestamp"] = pd.to_datetime(
             df["timestamp"],
-            errors="coerce",
             utc=True
         )
 
-        df = df.dropna(
-            subset=["timestamp"]
-        )
-
-        df = df.sort_values(
-            "timestamp"
-        )
-
-        df = df.set_index(
-            "timestamp"
-        )
-
-        df = df.reset_index()
-
 
     return df
-
 
 
 
@@ -258,48 +256,46 @@ def load_forecast(country):
 def load_analytics(filename):
 
 
-    full_file = (
-        ANALYTICS_DIR
-        /
-        filename
-    )
+    possible_files = [
 
+        (
+            ANALYTICS_DIR
+            /
+            filename
+        ),
 
-    demo_file = (
-        PROJECT_ROOT
-        /
-        "demo_data"
-        /
-        "analytics"
-        /
-        filename
-    )
-
-
-    if full_file.exists():
-
-        file = full_file
-
-
-    elif demo_file.exists():
-
-        file = demo_file
-
-        st.info(
-            "Running analytics in demo mode"
+        (
+            PROJECT_ROOT
+            /
+            "demo_data"
+            /
+            "analytics"
+            /
+            filename
         )
 
+    ]
 
-    else:
+
+    file = None
+
+
+    for f in possible_files:
+
+        if f.exists():
+
+            file = f
+            break
+
+
+
+    if file is None:
 
         return pd.DataFrame()
 
 
+
     return pd.read_csv(file)
-
-
-
-
 
 # ==========================================================
 # REFRESH FUNCTION
