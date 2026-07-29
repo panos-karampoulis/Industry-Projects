@@ -12,9 +12,7 @@ import plotly.express as px
 # PROJECT ROOT
 # ==========================================================
 
-PROJECT_ROOT = Path(
-    r"D:\Portfolio\European-Balancing-Market-Forecasting"
-)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 # ==========================================================
@@ -23,12 +21,13 @@ PROJECT_ROOT = Path(
 
 DATA_DIR = PROJECT_ROOT / "data"
 
+DEMO_DIR = PROJECT_ROOT / "demo_data"
+
 RAW_DIR = DATA_DIR / "raw"
 
 PROCESSED_DIR = DATA_DIR / "processed"
 
 ANALYTICS_DIR = DATA_DIR / "analytics"
-
 
 
 # ==========================================================
@@ -104,13 +103,9 @@ def load_risk_dataset(country):
     full_file = (
 
         PROCESSED_DIR
-
         /
-
         "risk_dataset"
-
         /
-
         f"{country}_risk_features.csv"
 
     )
@@ -118,18 +113,10 @@ def load_risk_dataset(country):
 
     demo_file = (
 
-        PROJECT_ROOT
-
+        DEMO_DIR
         /
-
-        "demo_data"
-
-        /
-
         "risk_dataset"
-
         /
-
         f"{country}_risk_features.csv"
 
     )
@@ -139,6 +126,7 @@ def load_risk_dataset(country):
 
         file = full_file
 
+
     elif demo_file.exists():
 
         file = demo_file
@@ -146,6 +134,7 @@ def load_risk_dataset(country):
         st.info(
             "Running in demo mode"
         )
+
 
     else:
 
@@ -156,21 +145,7 @@ def load_risk_dataset(country):
         return pd.DataFrame()
 
 
-
-    df = pd.read_csv(
-        file
-    )
-
-
-    if "timestamp" in df.columns:
-
-        df["timestamp"] = pd.to_datetime(
-
-            df["timestamp"],
-
-            utc=True
-
-        )
+    df = pd.read_csv(file)
 
 
     return df
@@ -252,12 +227,24 @@ def load_forecast(country):
     if "timestamp" in df.columns:
 
         df["timestamp"] = pd.to_datetime(
-
             df["timestamp"],
-
+            errors="coerce",
             utc=True
-
         )
+
+        df = df.dropna(
+            subset=["timestamp"]
+        )
+
+        df = df.sort_values(
+            "timestamp"
+        )
+
+        df = df.set_index(
+            "timestamp"
+        )
+
+        df = df.reset_index()
 
 
     return df
@@ -611,6 +598,20 @@ daily_price = (
 
     df
 
+    .copy()
+
+)
+
+daily_price["timestamp"] = pd.to_datetime(
+    daily_price["timestamp"],
+    errors="coerce"
+)
+
+
+daily_price = (
+
+    daily_price
+
     .set_index("timestamp")
 
     ["price_eur_mwh"]
@@ -643,7 +644,9 @@ st.plotly_chart(
 
     fig,
 
-    use_container_width=True
+    use_container_width=True,
+
+    key="price_evolution_chart"
 
 )
 
@@ -662,11 +665,36 @@ st.subheader(
 
 
 
+# ==========================================================
+# IMBALANCE ANALYSIS
+# ==========================================================
+
+st.subheader(
+    "Balancing Market Imbalance"
+)
+
+
+daily_imbalance = df.copy()
+
+
+daily_imbalance["timestamp"] = pd.to_datetime(
+    daily_imbalance["timestamp"],
+    errors="coerce",
+    utc=True
+)
+
+
 daily_imbalance = (
 
-    df
+    daily_imbalance
 
-    .set_index("timestamp")
+    .dropna(
+        subset=["timestamp"]
+    )
+
+    .set_index(
+        "timestamp"
+    )
 
     ["imbalance_mw"]
 
@@ -675,6 +703,30 @@ daily_imbalance = (
     .mean()
 
     .reset_index()
+
+)
+
+
+fig = px.line(
+
+    daily_imbalance,
+
+    x="timestamp",
+
+    y="imbalance_mw",
+
+    title="Daily Average Imbalance"
+
+)
+
+
+st.plotly_chart(
+
+    fig,
+
+    use_container_width=True,
+
+    key="imbalance_chart"
 
 )
 
@@ -800,7 +852,9 @@ if len(available_generation) > 0:
 
         fig,
 
-        use_container_width=True
+        use_container_width=True,
+
+        key="renewable_mix_chart"
 
     )
 
@@ -889,7 +943,9 @@ if not forecast.empty:
 
             fig,
 
-            use_container_width=True
+            use_container_width=True,
+
+            key="forecast_chart"
 
         )
 
