@@ -3,6 +3,13 @@ Overview
 
 The European Balancing Market Forecasting & Risk Intelligence Platform is an end-to-end energy analytics project designed to analyze electricity balancing markets across major European countries.
 
+## 🌐 Live Demo
+
+The interactive Streamlit dashboard is available here:
+
+👉 https://industry-projects-5mshb3elzypw7kr7ajwtdm.streamlit.app
+
+
 The platform combines:
 
 Data engineering pipelines
