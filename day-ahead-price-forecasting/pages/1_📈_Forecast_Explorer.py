@@ -16,6 +16,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEMO_DIR = PROJECT_ROOT / "demo_data"
 
 PREDICTIONS_DIR = DEMO_DIR / "predictions"
+
+st.write("PROJECT ROOT:", PROJECT_ROOT)
+st.write("PREDICTIONS DIR:", PREDICTIONS_DIR)
+st.write("FILES:", list(PREDICTIONS_DIR.glob("*")))
 # ============================================================
 # PAGE CONFIG
 # ============================================================
