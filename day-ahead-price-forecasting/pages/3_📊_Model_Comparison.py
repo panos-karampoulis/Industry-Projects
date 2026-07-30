@@ -77,18 +77,13 @@ def load_results(country):
     models = [
 
         "random_forest",
-
         "xgboost",
-
-        "lightgbm",
-
-        
+        "sarimax"
 
     ]
 
 
     results = []
-
 
 
     for model in models:
@@ -98,8 +93,6 @@ def load_results(country):
 
             RESULTS_DIR
             /
-            country
-            /
             f"{model}_results.csv"
 
         )
@@ -108,21 +101,15 @@ def load_results(country):
         if file.exists():
 
 
-            df = pd.read_csv(
-                file
-            )
+            df = pd.read_csv(file)
 
-
-            # ensure country column exists
 
             if "country" not in df.columns:
 
                 df["country"] = country
 
 
-
             df["model"] = model
-
 
 
             results.append(df)
@@ -132,7 +119,6 @@ def load_results(country):
     if len(results) == 0:
 
         return None
-
 
 
     final = pd.concat(
@@ -145,8 +131,6 @@ def load_results(country):
 
 
     return final
-
-
 
 
 
