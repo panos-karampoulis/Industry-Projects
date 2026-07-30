@@ -28,7 +28,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 DEMO_DIR = PROJECT_ROOT / "demo_data"
 
-MARKET_DIR = DEMO_DIR / "market"
+DATA_DIR = PROJECT_ROOT / "data" / "processed"
 
 PREDICTIONS_DIR = DEMO_DIR / "predictions"
 
@@ -60,11 +60,9 @@ def load_market_data(country):
 
 
     file = (
-
-        MARKET_DIR
-        /
-        f"{country}_clean.csv"
-
+        DATA_DIR
+        / country
+        / f"{country}_clean.csv"
     )
 
     if not file.exists():
