@@ -19,7 +19,18 @@ st.set_page_config(
 
 )
 
+# ============================================================
+# PROJECT ROOT
+# ============================================================
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+DEMO_DIR = PROJECT_ROOT / "demo_data"
+
+MARKET_DIR = DEMO_DIR / "market"
+
+PREDICTIONS_DIR = DEMO_DIR / "predictions"
 
 # ============================================================
 # TITLE
@@ -50,21 +61,21 @@ def load_market_data(country):
 
     file = (
 
-        Path("data")
-
+        MARKET_DIR
         /
-
-        "processed"
-
-        /
-
-        country
-
-        /
-
         f"{country}_clean.csv"
 
     )
+
+    if not file.exists():
+
+        st.error(
+            f"Market dataset not found: {file}"
+        )
+
+        return pd.DataFrame()
+
+
 
 
     df = pd.read_csv(
@@ -803,19 +814,19 @@ st.subheader(
 
 
 show_forecast = st.checkbox(
-
-    "Show CatBoost Forecast"
-
-)
+        "Show XGBoost Forecast"
+    )
 
 
 
 if show_forecast:
 
 
-    forecast_file = Path(
+    forecast_file = (
 
-        f"results/{country}/catboost_predictions.csv"
+        PREDICTIONS_DIR
+        /
+        "xgboost_predictions.csv"
 
     )
 
@@ -855,7 +866,7 @@ if show_forecast:
 
                     "datetime",
 
-                    "catboost_prediction"
+                    "xgboost_predictions.csv"
 
                 ]
 
@@ -902,11 +913,11 @@ if show_forecast:
 
                     x=overlay["datetime"],
 
-                    y=overlay["catboost_prediction"],
+                    y=overlay["xgboost_prediction"],
 
                     mode="lines",
 
-                    name="CatBoost Forecast"
+                    name="XGBoost Forecast"
 
                 )
 
@@ -947,7 +958,7 @@ if show_forecast:
 
                 -
 
-                overlay["catboost_prediction"]
+                overlay["xgboost_prediction"]
 
             ).abs().mean()
 
@@ -961,7 +972,7 @@ if show_forecast:
 
                     -
 
-                    overlay["catboost_prediction"]
+                    overlay["xgboost_prediction"]
 
                 )
 
@@ -1011,7 +1022,7 @@ if show_forecast:
 
         st.warning(
 
-            "CatBoost prediction file not available."
+            "XGBoost prediction file not available."
 
         )
 

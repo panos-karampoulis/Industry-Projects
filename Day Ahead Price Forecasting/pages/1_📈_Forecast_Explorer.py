@@ -5,7 +5,17 @@ import os
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 import numpy as np
 
+from pathlib import Path
+# ============================================================
+# PROJECT ROOT
+# ============================================================
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+DEMO_DIR = PROJECT_ROOT / "demo_data"
+
+PREDICTIONS_DIR = DEMO_DIR / "predictions"
 # ============================================================
 # PAGE CONFIG
 # ============================================================
@@ -46,16 +56,16 @@ Compare actual electricity prices against machine learning forecasts.
 def load_predictions(country, model):
 
 
+   
+
     file = (
-
-        f"results/"
-        f"{country}/"
+        PREDICTIONS_DIR
+        /
         f"{model}_predictions.csv"
-
     )
 
 
-    if not os.path.exists(file):
+    if not file.exists():
 
         return None
 
@@ -84,8 +94,6 @@ def load_predictions(country, model):
 
 
     return df
-
-
 
 
 # ============================================================

@@ -1,23 +1,53 @@
-# Python environment
-venv/
-
-# Python cache
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
 
-# Environment variables
+# Virtual environments
+venv/
 .env
+
+# Logs
+logs/
+*.log
+
+# CatBoost temporary files
+catboost_info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large raw data
+data/raw/
+
+# Temporary files
+*.tmp
+*.bak
 
 # Machine Learning models
 models/
 *.pkl
 *.joblib
 
-# Logs
-logs/
+# Large datasets
+data/raw/
+data/processed/
+
+# Python environments
+venv/
 
 # CatBoost
 catboost_info/
 
-# Jupyter
-.ipynb_checkpoints/
+# Logs
+logs/
+
+# Large datasets
+data/raw/
+data/processed/
+data/final/
+data/features/

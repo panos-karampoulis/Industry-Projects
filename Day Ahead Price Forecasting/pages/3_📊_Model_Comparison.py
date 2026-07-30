@@ -1,7 +1,20 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import os
+from pathlib import Path
+
+# ============================================================
+# PROJECT ROOT
+# ============================================================
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+DEMO_DIR = PROJECT_ROOT / "demo_data"
+
+RESULTS_DIR = DEMO_DIR / "results"
+
+FEATURE_IMPORTANCE_DIR = DEMO_DIR / "feature_importance"
 
 
 # ============================================================
@@ -59,7 +72,7 @@ def load_results(country):
 
         "lightgbm",
 
-        "catboost"
+        
 
     ]
 
@@ -73,14 +86,16 @@ def load_results(country):
 
         file = (
 
-            f"results/"
-            f"{country}/"
+            RESULTS_DIR
+            /
+            country
+            /
             f"{model}_results.csv"
 
         )
 
 
-        if os.path.exists(file):
+        if file.exists():
 
 
             df = pd.read_csv(
@@ -387,7 +402,7 @@ model_mapping = {
 
     "LightGBM": "lightgbm",
 
-    "CatBoost": "catboost"
+   
 
 }
 
@@ -409,15 +424,14 @@ model_choice = model_mapping[model_display]
 
 importance_file = (
 
-    f"results/"
-    f"{country}/"
+    FEATURE_IMPORTANCE_DIR
+    /
     f"{model_choice}_feature_importance.csv"
 
 )
 
 
-
-if os.path.exists(importance_file):
+if importance_file.exists():
 
 
     importance = pd.read_csv(
