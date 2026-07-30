@@ -161,6 +161,59 @@ def load_backtest():
     return df
 
 
+@st.cache_data
+def load_market_data():
+
+    possible_files = [
+
+        DATA_DIR
+        /
+        "market"
+        /
+        "europe_intraday_prices.csv",
+
+
+        BASE_DIR
+        /
+        "demo_data"
+        /
+        "market"
+        /
+        "europe_intraday_prices.csv"
+
+    ]
+
+
+    file = None
+
+
+    for path in possible_files:
+
+        if path.exists():
+
+            file = path
+            break
+
+
+    if file is None:
+
+        return None
+
+
+    df = pd.read_csv(
+        file
+    )
+
+
+    df["timestamp"] = pd.to_datetime(
+        df["timestamp"]
+    )
+
+
+    return df
+
+
+
 def get_last_refresh():
 
     if REFRESH_FILE.exists():
@@ -224,7 +277,7 @@ features = load_intraday_features()
 
 backtest = load_backtest()
 
-
+market_data = load_market_data()
 
 # ============================================================
 # KPI SECTION
@@ -336,7 +389,7 @@ with col2:
 # ============================================================
 
 
-if features is not None:
+if market_data is not None:
 
 
     st.divider()
@@ -348,7 +401,7 @@ if features is not None:
 
 
     latest_rows = (
-        features
+        market_data
         .sort_values(
             "timestamp"
         )
@@ -371,8 +424,6 @@ if features is not None:
         fig,
         use_container_width=True
     )
-
-
 
 # ============================================================
 # BACKTEST SUMMARY
