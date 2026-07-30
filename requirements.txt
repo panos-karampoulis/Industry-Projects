@@ -1,19 +1,35 @@
+# Dashboard
 streamlit
-plotly
+
+# Data Processing
 pandas
 numpy
 pyarrow
+
+# Visualization
+plotly
+matplotlib
+
+# Machine Learning
 scikit-learn
 xgboost
 lightgbm
 catboost
+
+# Time Series
 statsmodels
+prophet
+
+# Model Management
 joblib
+
+# Explainability
+shap
+
+# Utilities
 requests
 python-dotenv
-matplotlib
-scipy
-tqdm
 openpyxl
 pyyaml
-shap
+tqdm
+scipy
