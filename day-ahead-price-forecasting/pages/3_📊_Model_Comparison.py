@@ -15,17 +15,7 @@ DEMO_DIR = PROJECT_ROOT / "demo_data"
 RESULTS_DIR = DEMO_DIR / "results"
 
 FEATURE_IMPORTANCE_DIR = DEMO_DIR / "feature_importance"
-st.write("PROJECT ROOT:", PROJECT_ROOT)
 
-st.write(
-    "RESULTS DIR:",
-    RESULTS_DIR
-)
-
-st.write(
-    "RESULT FILES:",
-    list(RESULTS_DIR.rglob("*results.csv"))
-)
 
 # ============================================================
 # PAGE CONFIG
