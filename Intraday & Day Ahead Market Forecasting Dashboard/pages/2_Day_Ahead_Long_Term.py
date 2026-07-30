@@ -1,10 +1,8 @@
-import os
-from pathlib import Path
-
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+from pathlib import Path
 
 
 # ============================================================
@@ -23,29 +21,30 @@ st.set_page_config(
 # PATHS
 # ============================================================
 
-BASE_DIR = Path(
-    r"D:\Portfolio\Intraday Market Forecasting - updated"
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+
+DEMO_DIR = (
+    BASE_DIR
+    /
+    "demo_data"
 )
 
 
-ARCHIVE_DIR = (
-    BASE_DIR
-    /
-    "data"
+FORECAST_DIR = (
+    DEMO_DIR
     /
     "forecasts"
     /
-    "archive"
+    "day_ahead"
 )
 
 
 
 MARKET_FILE = (
-    BASE_DIR
+    DEMO_DIR
     /
-    "data"
-    /
-    "processed"
+    "market"
     /
     "europe_intraday_prices.csv"
 )
@@ -71,7 +70,6 @@ COUNTRIES = [
 st.title(
     "⚡ European Energy Forecast & Market Explorer"
 )
-
 
 
 st.markdown(
@@ -146,7 +144,6 @@ if st.sidebar.button(
 if analysis_mode == "Forecast History":
 
 
-
     st.header(
         "📈 Day Ahead Forecast Explorer"
     )
@@ -154,101 +151,17 @@ if analysis_mode == "Forecast History":
 
 
     # --------------------------------------------------------
-    # Available Forecast Runs
+    # LOAD DEMO FORECAST FILE
     # --------------------------------------------------------
-
-
-    available_dates = []
-
-
-
-    if ARCHIVE_DIR.exists():
-
-
-        for folder in ARCHIVE_DIR.iterdir():
-
-
-            if folder.is_dir():
-
-
-                available_dates.append(
-
-                    folder.name
-
-                )
-
-
-
-    available_dates = sorted(
-
-        available_dates,
-
-        reverse=True
-
-    )
-
-
-
-    if len(available_dates) == 0:
-
-
-        st.warning(
-
-            "No forecast archives found"
-
-        )
-
-
-        st.stop()
-
-
-
-    selected_run = st.sidebar.selectbox(
-
-        "Forecast Run Date",
-
-        available_dates
-
-    )
-
-
-
-    # --------------------------------------------------------
-    # Forecast Horizon
-    # --------------------------------------------------------
-
-
-    horizon = st.sidebar.selectbox(
-
-        "Forecast Horizon",
-
-        [
-
-            "D+1 (Tomorrow)",
-
-            "D+7",
-
-            "D+14",
-
-            "D+30"
-
-        ]
-
-    )
-
 
 
     forecast_file = (
 
-        ARCHIVE_DIR
+        FORECAST_DIR
 
         /
 
-        selected_run
-
-        /
-
-        f"{country}_day_ahead_forecast.csv"
+        f"{country}_day_ahead_30d_forecast.csv"
 
     )
 
@@ -265,6 +178,14 @@ if analysis_mode == "Forecast History":
 
 
         st.stop()
+
+
+
+    st.sidebar.success(
+
+        f"{country.upper()} forecast loaded"
+
+    )
 
 
 
@@ -295,8 +216,28 @@ if analysis_mode == "Forecast History":
 
 
     # --------------------------------------------------------
-    # APPLY HORIZON FILTER
+    # FORECAST HORIZON
     # --------------------------------------------------------
+
+
+    horizon = st.sidebar.selectbox(
+
+        "Forecast Horizon",
+
+        [
+
+            "D+1 (Tomorrow)",
+
+            "D+7",
+
+            "D+14",
+
+            "D+30"
+
+        ]
+
+    )
+
 
 
     forecast_start = (
@@ -379,7 +320,7 @@ if analysis_mode == "Forecast History":
 
         st.warning(
 
-            "No forecast data for selected horizon"
+            "No forecast data available"
 
         )
 
@@ -393,7 +334,7 @@ if analysis_mode == "Forecast History":
     # --------------------------------------------------------
 
 
-    c1,c2,c3,c4 = st.columns(4)
+    c1, c2, c3, c4 = st.columns(4)
 
 
 
@@ -406,25 +347,22 @@ if analysis_mode == "Forecast History":
     )
 
 
-
     c2.metric(
 
         "Maximum",
 
-        f"{forecast.forecast_price_eur_mwh.max():.2f}"
+        f"{forecast.forecast_price_eur_mwh.max():.2f} €/MWh"
 
     )
-
 
 
     c3.metric(
 
         "Minimum",
 
-        f"{forecast.forecast_price_eur_mwh.min():.2f}"
+        f"{forecast.forecast_price_eur_mwh.min():.2f} €/MWh"
 
     )
-
 
 
     c4.metric(
@@ -467,10 +405,11 @@ if analysis_mode == "Forecast History":
     )
 
 
-
     fig.update_layout(
 
-        height=450
+        height=450,
+
+        hovermode="x unified"
 
     )
 
@@ -509,7 +448,6 @@ if analysis_mode == "Forecast History":
 else:
 
 
-
     st.header(
 
         "📊 Historical Electricity Market Analysis"
@@ -518,12 +456,17 @@ else:
 
 
 
+    # --------------------------------------------------------
+    # CHECK MARKET DATA
+    # --------------------------------------------------------
+
+
     if not MARKET_FILE.exists():
 
 
         st.error(
 
-            "Historical market dataset not found"
+            f"Historical market dataset not found:\n{MARKET_FILE}"
 
         )
 
@@ -533,7 +476,7 @@ else:
 
 
     # --------------------------------------------------------
-    # LOAD DATA
+    # LOAD MARKET DATA
     # --------------------------------------------------------
 
 
@@ -555,6 +498,9 @@ else:
 
 
 
+    # Filter country
+
+
     df = df[
 
         df["country"] == country
@@ -571,8 +517,22 @@ else:
 
 
 
+    if df.empty:
+
+
+        st.warning(
+
+            "No market data available for selected country"
+
+        )
+
+
+        st.stop()
+
+
+
     # --------------------------------------------------------
-    # DATE RANGE AVAILABLE
+    # DATE RANGE
     # --------------------------------------------------------
 
 
@@ -587,6 +547,7 @@ else:
     )
 
 
+
     max_date = (
 
         df["timestamp"]
@@ -597,11 +558,6 @@ else:
 
     )
 
-
-
-    # --------------------------------------------------------
-    # SINGLE DAY SELECTOR
-    # --------------------------------------------------------
 
 
     selected_date = st.sidebar.date_input(
@@ -634,11 +590,7 @@ else:
 
         +
 
-        pd.Timedelta(
-
-            days=1
-
-        )
+        pd.Timedelta(days=1)
 
     )
 
@@ -693,7 +645,7 @@ else:
 
         "Maximum",
 
-        f"{daily_df.price_eur_mwh.max():.2f}"
+        f"{daily_df.price_eur_mwh.max():.2f} €/MWh"
 
     )
 
@@ -703,7 +655,7 @@ else:
 
         "Minimum",
 
-        f"{daily_df.price_eur_mwh.min():.2f}"
+        f"{daily_df.price_eur_mwh.min():.2f} €/MWh"
 
     )
 
@@ -724,7 +676,7 @@ else:
 
 
     # --------------------------------------------------------
-    # DAILY PROFILE
+    # DAILY PRICE PROFILE
     # --------------------------------------------------------
 
 
@@ -752,7 +704,9 @@ else:
 
     fig_daily.update_layout(
 
-        height=450
+        height=450,
+
+        hovermode="x unified"
 
     )
 
@@ -798,7 +752,7 @@ else:
 
         st.success(
 
-            "No extreme events detected"
+            "No extreme price events detected"
 
         )
 
@@ -867,11 +821,7 @@ else:
 
         y="price_eur_mwh",
 
-        title=(
-
-            f"{country.upper()} Monthly Average"
-
-        )
+        title=f"{country.upper()} Monthly Average Price"
 
     )
 
@@ -894,7 +844,8 @@ else:
     )
 
 
-        # --------------------------------------------------------
+
+    # --------------------------------------------------------
     # CALENDAR HEATMAP
     # --------------------------------------------------------
 
@@ -905,7 +856,7 @@ else:
 
     st.subheader(
 
-        "🗓️ Electricity Price Calendar Heatmap (2020-2026)"
+        "🗓️ Electricity Price Calendar Heatmap"
 
     )
 
@@ -991,13 +942,7 @@ else:
 
         },
 
-        title=(
-
-            f"{country.upper()} "
-
-            "Daily Average Electricity Prices"
-
-        )
+        title=f"{country.upper()} Daily Average Electricity Prices"
 
     )
 
@@ -1045,3 +990,7 @@ else:
         use_container_width=True
 
     )
+
+    
+    
+   

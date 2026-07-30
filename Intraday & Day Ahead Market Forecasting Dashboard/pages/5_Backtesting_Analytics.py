@@ -30,21 +30,23 @@ st.set_page_config(
 # ============================================================
 
 
-BASE_DIR = Path(
-
-    r"D:\Portfolio\Intraday Market Forecasting - updated"
-
-)
+BASE_DIR = Path(__file__).resolve().parents[1]
 
 
-
-BACKTEST_DIR = (
+DEMO_DIR = (
 
     BASE_DIR
 
     /
 
-    "data"
+    "demo_data"
+
+)
+
+
+BACKTEST_DIR = (
+
+    DEMO_DIR
 
     /
 
@@ -100,7 +102,7 @@ Evaluates:
 - Forecast accuracy
 - Model stability
 - Forecast bias
-- Market performance
+- European market performance
 """
 )
 
@@ -116,11 +118,7 @@ Evaluates:
 def load_file(path):
 
 
-    df = pd.read_csv(
-
-        path
-
-    )
+    df = pd.read_csv(path)
 
 
     df["timestamp"] = pd.to_datetime(
@@ -136,16 +134,14 @@ def load_file(path):
 
 
 
-
-
 # ============================================================
-# SELECT ENGINE
+# SIDEBAR
 # ============================================================
 
 
 st.sidebar.header(
 
-    "Backtesting Settings"
+    "⚡ Backtesting Settings"
 
 )
 
@@ -169,21 +165,15 @@ engine = st.sidebar.selectbox(
 
 if engine == "Intraday":
 
-
     FILE = INTRADAY_FILE
 
-
 else:
-
 
     FILE = DAY_AHEAD_FILE
 
 
 
-
-
 if not FILE.exists():
-
 
     st.error(
 
@@ -191,16 +181,11 @@ if not FILE.exists():
 
     )
 
-
     st.stop()
 
 
 
-df = load_file(
-
-    FILE
-
-)
+df = load_file(FILE)
 
 
 
@@ -242,29 +227,56 @@ df_country = df[
 
 
 # ============================================================
-# ERROR METRICS
+# DETECT ACTUAL / FORECAST
 # ============================================================
 
 
-actual = [
+actual_candidates = [
 
     c for c in df.columns
 
     if "actual" in c.lower()
 
-][0]
+]
 
 
 
-forecast = [
+forecast_candidates = [
 
     c for c in df.columns
 
     if "forecast" in c.lower()
 
-][0]
+]
 
 
+
+if len(actual_candidates)==0 or len(forecast_candidates)==0:
+
+
+    st.error(
+
+        "Actual / Forecast columns not detected"
+
+    )
+
+
+    st.write(df.columns)
+
+    st.stop()
+
+
+
+actual = actual_candidates[0]
+
+
+forecast = forecast_candidates[0]
+
+
+
+# ============================================================
+# ERROR METRICS
+# ============================================================
 
 
 df_country["error"] = (
@@ -302,6 +314,7 @@ df_country["squared_error"] = (
 mae = df_country["abs_error"].mean()
 
 
+
 rmse = np.sqrt(
 
     df_country["squared_error"]
@@ -309,6 +322,7 @@ rmse = np.sqrt(
     .mean()
 
 )
+
 
 
 bias = df_country["error"].mean()
@@ -346,7 +360,7 @@ mape = (
 
 st.header(
 
-    f"📊 {country.upper()} Backtest Results"
+    f"📊 {country.upper()} {engine} Backtest Results"
 
 )
 
@@ -356,57 +370,50 @@ c1,c2,c3,c4 = st.columns(4)
 
 
 
-with c1:
+c1.metric(
 
-    st.metric(
+    "MAE",
 
-        "MAE",
+    f"{mae:.2f}"
 
-        f"{mae:.2f}"
-
-    )
+)
 
 
-with c2:
+c2.metric(
 
-    st.metric(
+    "RMSE",
 
-        "RMSE",
+    f"{rmse:.2f}"
 
-        f"{rmse:.2f}"
-
-    )
+)
 
 
-with c3:
+c3.metric(
 
-    st.metric(
+    "MAPE",
 
-        "MAPE",
+    f"{mape:.2f}%"
 
-        f"{mape:.2f}%"
-
-    )
+)
 
 
-with c4:
+c4.metric(
 
-    st.metric(
+    "Bias",
 
-        "Bias",
+    f"{bias:.2f}"
 
-        f"{bias:.2f}"
+)
 
-    )
+
+
+st.divider()
 
 
 
 # ============================================================
 # ERROR TREND
 # ============================================================
-
-
-st.divider()
 
 
 st.subheader(
@@ -425,7 +432,11 @@ fig = px.line(
 
     y="error",
 
-    title="Forecast Error Over Time"
+    title=(
+
+        f"{country.upper()} Forecast Error"
+
+    )
 
 )
 
@@ -434,6 +445,14 @@ fig = px.line(
 fig.add_hline(
 
     y=0
+
+)
+
+
+
+fig.update_layout(
+
+    height=450
 
 )
 
@@ -492,6 +511,14 @@ fig_roll = px.line(
 
 
 
+fig_roll.update_layout(
+
+    height=450
+
+)
+
+
+
 st.plotly_chart(
 
     fig_roll,
@@ -503,11 +530,12 @@ st.plotly_chart(
 
 
 # ============================================================
-# COUNTRY RANKING
+# EUROPEAN RANKING
 # ============================================================
 
 
 st.divider()
+
 
 
 st.subheader(
@@ -518,13 +546,7 @@ st.subheader(
 
 
 
-ranking = (
-
-    df
-
-    .copy()
-
-)
+ranking = df.copy()
 
 
 
@@ -598,9 +620,13 @@ ranking_table = (
 
 
 
+ranking_table = ranking_table.round(3)
+
+
+
 st.dataframe(
 
-    ranking_table.round(3),
+    ranking_table,
 
     use_container_width=True
 
@@ -616,7 +642,17 @@ fig_rank = px.bar(
 
     y="MAE",
 
+    text="MAE",
+
     title="Forecast Accuracy Ranking (Lower is Better)"
+
+)
+
+
+
+fig_rank.update_layout(
+
+    height=400
 
 )
 
@@ -638,6 +674,7 @@ st.plotly_chart(
 
 
 st.divider()
+
 
 
 st.subheader(

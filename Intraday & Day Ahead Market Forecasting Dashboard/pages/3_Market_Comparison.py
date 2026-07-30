@@ -6,7 +6,6 @@ import streamlit as st
 import plotly.express as px
 
 
-
 # ============================================================
 # PAGE CONFIG
 # ============================================================
@@ -27,22 +26,28 @@ st.set_page_config(
 # PATHS
 # ============================================================
 
-BASE_DIR = Path(
-    r"D:\Portfolio\Intraday Market Forecasting - updated"
-)
+BASE_DIR = Path(__file__).resolve().parents[1]
 
 
-DATA_FILE = (
+DEMO_DIR = (
 
     BASE_DIR
 
     /
 
-    "data"
+    "demo_data"
+
+)
+
+
+
+DATA_FILE = (
+
+    DEMO_DIR
 
     /
 
-    "processed"
+    "market"
 
     /
 
@@ -81,6 +86,7 @@ st.title(
 
 
 st.markdown(
+
 """
 Comparative analytics platform for European electricity markets.
 
@@ -93,7 +99,22 @@ Analyzed metrics:
 - Market correlation
 - Market stress indicator
 """
+
 )
+
+
+
+# ============================================================
+# DEBUG PATH CHECK
+# ============================================================
+
+with st.expander("🔍 Debug Information"):
+
+    st.write("BASE DIR:", BASE_DIR)
+
+    st.write("DATA FILE:", DATA_FILE)
+
+    st.write("FILE EXISTS:", DATA_FILE.exists())
 
 
 
@@ -133,17 +154,20 @@ def load_market_data():
 
 
 
-
-
 if not DATA_FILE.exists():
 
 
     st.error(
 
-        f"Dataset not found:\n{DATA_FILE}"
+        f"""
+Market dataset not found:
+
+{DATA_FILE}
+
+Please check demo_data/market folder.
+"""
 
     )
-
 
     st.stop()
 
@@ -167,7 +191,7 @@ df = df[
 
 st.sidebar.header(
 
-    "Filters"
+    "⚙️ Market Filters"
 
 )
 
@@ -193,7 +217,6 @@ if len(selected_countries) == 0:
         "Select at least one country"
 
     )
-
 
     st.stop()
 
@@ -281,11 +304,7 @@ summary = (
 
 
 
-summary = summary.round(
-
-    2
-
-)
+summary = summary.round(2)
 
 
 
@@ -302,7 +321,6 @@ st.dataframe(
 # ============================================================
 # AVERAGE PRICE RANKING
 # ============================================================
-
 
 st.divider()
 
@@ -364,7 +382,6 @@ st.plotly_chart(
 # VOLATILITY RANKING
 # ============================================================
 
-
 st.subheader(
 
     "⚠️ Electricity Market Volatility"
@@ -421,7 +438,6 @@ st.plotly_chart(
 # EXTREME PRICES
 # ============================================================
 
-
 st.divider()
 
 
@@ -475,7 +491,6 @@ else:
 # ============================================================
 # PRICE CORRELATION MATRIX
 # ============================================================
-
 
 st.divider()
 
@@ -549,7 +564,6 @@ st.plotly_chart(
 # PRICE SPREAD ANALYSIS
 # ============================================================
 
-
 st.divider()
 
 
@@ -580,6 +594,7 @@ if len(available_markets) >= 2:
 
     with col1:
 
+
         market_a = st.selectbox(
 
             "Market A",
@@ -593,6 +608,7 @@ if len(available_markets) >= 2:
 
 
     with col2:
+
 
         market_b = st.selectbox(
 
@@ -678,7 +694,6 @@ if len(available_markets) >= 2:
 # MARKET STRESS SCORE
 # ============================================================
 
-
 st.divider()
 
 
@@ -696,27 +711,14 @@ stress = summary.copy()
 
 
 # ------------------------------------------------------------
-# Normalization
+# NORMALIZATION
 # ------------------------------------------------------------
 
 
-max_volatility = (
-
-    stress["Volatility"]
-
-    .max()
-
-)
+max_volatility = stress["Volatility"].max()
 
 
-
-max_negative = (
-
-    stress["Negative_Hours"]
-
-    .max()
-
-)
+max_negative = stress["Negative_Hours"].max()
 
 
 
@@ -781,7 +783,7 @@ stress["Stress_Score"] = (
 
 
 # ------------------------------------------------------------
-# Display
+# DISPLAY
 # ------------------------------------------------------------
 
 
@@ -856,7 +858,7 @@ st.plotly_chart(
 
 
 # ============================================================
-# END
+# FINAL MESSAGE
 # ============================================================
 
 

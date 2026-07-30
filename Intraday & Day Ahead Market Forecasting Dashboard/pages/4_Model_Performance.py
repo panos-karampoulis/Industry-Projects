@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import plotly.express as px
-import joblib
 
 
 
@@ -29,18 +28,23 @@ st.set_page_config(
 # PATHS
 # ============================================================
 
-BASE_DIR = Path(
-    r"D:\Portfolio\Intraday Market Forecasting - updated"
-)
+BASE_DIR = Path(__file__).resolve().parents[1]
 
 
-BACKTEST_DIR = (
+DEMO_DIR = (
 
     BASE_DIR
 
     /
 
-    "data"
+    "demo_data"
+
+)
+
+
+BACKTEST_DIR = (
+
+    DEMO_DIR
 
     /
 
@@ -49,14 +53,13 @@ BACKTEST_DIR = (
 )
 
 
+FEATURE_DIR = (
 
-MODEL_DIR = (
-
-    BASE_DIR
+    DEMO_DIR
 
     /
 
-    "models"
+    "feature_importance"
 
 )
 
@@ -107,7 +110,7 @@ Includes:
 
 - Forecast accuracy
 - Error analysis
-- Model explainability
+- Model comparison
 - Feature importance
 """
 )
@@ -140,8 +143,6 @@ def load_data(path):
 
 
 
-
-
 # ============================================================
 # SIDEBAR
 # ============================================================
@@ -149,7 +150,7 @@ def load_data(path):
 
 st.sidebar.header(
 
-    "Settings"
+    "⚡ Controls"
 
 )
 
@@ -173,16 +174,11 @@ forecast_type = st.sidebar.selectbox(
 
 if forecast_type == "Intraday":
 
-
     DATA_FILE = INTRADAY_FILE
-
 
 else:
 
-
     DATA_FILE = DAY_AHEAD_FILE
-
-
 
 
 
@@ -198,11 +194,7 @@ if not DATA_FILE.exists():
 
 
 
-df = load_data(
-
-    DATA_FILE
-
-)
+df = load_data(DATA_FILE)
 
 
 
@@ -255,9 +247,11 @@ for col in df.columns:
     name = col.lower()
 
 
+
     if "actual" in name:
 
         actual_col = col
+
 
 
     if "forecast" in name:
@@ -266,31 +260,24 @@ for col in df.columns:
 
 
 
-
-
 if actual_col is None or forecast_col is None:
 
 
     st.error(
 
-        "Could not detect actual / forecast columns"
+        "Actual / Forecast columns not found"
 
     )
 
 
-    st.write(
-
-        df.columns
-
-    )
+    st.write(df.columns)
 
     st.stop()
 
 
 
-
 # ============================================================
-# CALCULATE ERRORS
+# ERROR CALCULATION
 # ============================================================
 
 
@@ -318,34 +305,26 @@ df["absolute_error"] = (
 
 df["percentage_error"] = (
 
-    (
+    df["absolute_error"]
 
-        df["absolute_error"]
+    /
 
-        /
+    df[actual_col]
 
-        df[actual_col]
+    .replace(0,np.nan)
 
-        .replace(0,np.nan)
-
-    )
-
-    *
-
-    100
-
-)
+) * 100
 
 
 
 # ============================================================
-# KPI
+# KPI CARDS
 # ============================================================
 
 
 st.header(
 
-    f"📈 {country.upper()} Performance"
+    f"📈 {country.upper()} {forecast_type} Performance"
 
 )
 
@@ -362,12 +341,9 @@ rmse = np.sqrt(
 
         **2
 
-    )
-
-    .mean()
+    ).mean()
 
 )
-
 
 
 mape = df["percentage_error"].mean()
@@ -378,57 +354,50 @@ c1,c2,c3,c4 = st.columns(4)
 
 
 
-with c1:
+c1.metric(
 
-    st.metric(
+    "MAE",
 
-        "MAE",
+    f"{mae:.2f}"
 
-        f"{mae:.2f}"
-
-    )
+)
 
 
-with c2:
+c2.metric(
 
-    st.metric(
+    "RMSE",
 
-        "RMSE",
+    f"{rmse:.2f}"
 
-        f"{rmse:.2f}"
-
-    )
+)
 
 
-with c3:
+c3.metric(
 
-    st.metric(
+    "MAPE",
 
-        "MAPE",
+    f"{mape:.2f}%"
 
-        f"{mape:.2f}%"
-
-    )
+)
 
 
-with c4:
+c4.metric(
 
-    st.metric(
+    "Observations",
 
-        "Rows",
+    f"{len(df):,}"
 
-        f"{len(df):,}"
+)
 
-    )
+
+
+st.divider()
 
 
 
 # ============================================================
 # ACTUAL VS FORECAST
 # ============================================================
-
-
-st.divider()
 
 
 st.subheader(
@@ -451,7 +420,21 @@ fig = px.line(
 
         forecast_col
 
-    ]
+    ],
+
+    title=(
+
+        f"{country.upper()} Actual vs Forecast"
+
+    )
+
+)
+
+
+
+fig.update_layout(
+
+    height=450
 
 )
 
@@ -474,7 +457,7 @@ st.plotly_chart(
 
 st.subheader(
 
-    "📉 Forecast Error"
+    "📉 Forecast Error Over Time"
 
 )
 
@@ -495,6 +478,14 @@ fig_error = px.line(
 fig_error.add_hline(
 
     y=0
+
+)
+
+
+
+fig_error.update_layout(
+
+    height=400
 
 )
 
@@ -529,7 +520,15 @@ fig_hist = px.histogram(
 
     x="error",
 
-    nbins=80
+    nbins=60
+
+)
+
+
+
+fig_hist.update_layout(
+
+    height=400
 
 )
 
@@ -591,7 +590,7 @@ st.dataframe(
 
 
 # ============================================================
-# FIND MODEL AUTOMATICALLY
+# FEATURE IMPORTANCE
 # ============================================================
 
 
@@ -601,211 +600,103 @@ st.divider()
 
 st.subheader(
 
-    "🤖 XGBoost Feature Importance"
+    "🤖 Feature Importance"
 
 )
 
 
 
-model_file = None
+feature_file = None
 
 
 
-for root, dirs, files in os.walk(
-
-    MODEL_DIR
-
-):
+for file in FEATURE_DIR.glob("*.csv"):
 
 
-    for file in files:
+    if forecast_type.lower() in file.name.lower():
 
-
-        if file.endswith(
-
-            (
-
-                ".pkl",
-
-                ".joblib"
-
-            )
-
-        ):
-
-
-            if country.lower() in file.lower():
-
-
-                model_file = (
-
-                    Path(root)
-
-                    /
-
-                    file
-
-                )
-
-                break
+        feature_file = file
 
 
 
-    if model_file:
+if feature_file is None:
+
+
+    for file in FEATURE_DIR.glob("*.csv"):
+
+        feature_file = file
 
         break
 
 
 
+if feature_file and feature_file.exists():
 
 
-if model_file:
+    importance = pd.read_csv(
 
-
-    st.info(
-
-        f"Loaded model: {model_file.name}"
+        feature_file
 
     )
 
 
-    try:
 
+    importance = importance.sort_values(
 
-        model = joblib.load(
+        "Importance",
 
-            model_file
+        ascending=False
 
-        )
+    ).head(15)
 
 
-        if hasattr(
 
-            model,
+    fig_imp = px.bar(
 
-            "feature_importances_"
+        importance,
 
-        ):
+        x="Importance",
 
+        y="Feature",
 
-            if hasattr(
+        orientation="h",
 
-                model,
+        title="Top Model Features"
 
-                "feature_names_in_"
+    )
 
-            ):
 
 
-                features = model.feature_names_in_
+    fig_imp.update_layout(
 
+        height=500
 
-            else:
+    )
 
 
-                features = [
 
-                    f"feature_{i}"
+    st.plotly_chart(
 
-                    for i in range(
+        fig_imp,
 
-                        len(
+        use_container_width=True
 
-                            model.feature_importances_
-
-                        )
-
-                    )
-
-                ]
-
-
-
-            importance = pd.DataFrame(
-
-                {
-
-                    "Feature":
-
-                        features,
-
-                    "Importance":
-
-                        model.feature_importances_
-
-                }
-
-            )
-
-
-
-            importance = importance.sort_values(
-
-                "Importance",
-
-                ascending=False
-
-            ).head(15)
-
-
-
-            fig_imp = px.bar(
-
-                importance,
-
-                x="Importance",
-
-                y="Feature",
-
-                orientation="h"
-
-            )
-
-
-
-            st.plotly_chart(
-
-                fig_imp,
-
-                use_container_width=True
-
-            )
-
-
-
-        else:
-
-
-            st.warning(
-
-                "Model has no feature importance"
-
-            )
-
-
-    except Exception as e:
-
-
-        st.warning(
-
-            str(e)
-
-        )
+    )
 
 
 else:
 
 
-    st.warning(
+    st.info(
 
-        f"No model found for {country}"
+        "Feature importance demo file not available"
 
     )
 
 
 
 # ============================================================
-# SUMMARY
+# SUMMARY TABLE
 # ============================================================
 
 
@@ -860,11 +751,8 @@ summary = pd.DataFrame(
 
 
 
-st.table(
+st.table(summary)
 
-    summary
-
-)
 
 
 st.success(

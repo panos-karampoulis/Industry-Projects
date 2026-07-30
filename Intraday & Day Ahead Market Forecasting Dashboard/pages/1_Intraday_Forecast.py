@@ -34,13 +34,12 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 FORECAST_DIR = (
     BASE_DIR
     /
-    "data"
+    "demo_data"
     /
     "forecasts"
     /
     "intraday"
 )
-
 
 
 # ============================================================
