@@ -62,16 +62,41 @@ REFRESH_FILE = (
 @st.cache_data
 def load_intraday_features():
 
-    file = (
+    possible_files = [
+
+        # Local real data
         DATA_DIR
         /
         "processed"
         /
+        "europe_intraday_weather_features.csv",
+
+
+        # Streamlit demo data
+        BASE_DIR
+        /
+        "demo_data"
+        /
+        "features"
+        /
         "europe_intraday_weather_features.csv"
-    )
+
+    ]
 
 
-    if not file.exists():
+    file = None
+
+
+    for path in possible_files:
+
+        if path.exists():
+
+            file = path
+            break
+
+
+    if file is None:
+
         return None
 
 
@@ -92,14 +117,41 @@ def load_intraday_features():
 @st.cache_data
 def load_backtest():
 
-    file = (
-        BACKTEST_DIR
+    possible_files = [
+
+        # Local path
+        DATA_DIR
+        /
+        "backtesting"
+        /
+        "intraday_backtest_results.csv",
+
+
+        # Streamlit Cloud demo path
+        BASE_DIR
+        /
+        "demo_data"
+        /
+        "backtesting"
         /
         "intraday_backtest_results.csv"
-    )
+
+    ]
 
 
-    if not file.exists():
+    file = None
+
+
+    for path in possible_files:
+
+        if path.exists():
+
+            file = path
+            break
+
+
+    if file is None:
+
         return None
 
 
@@ -109,7 +161,6 @@ def load_backtest():
 
 
     return df
-
 
 
 def get_last_refresh():
