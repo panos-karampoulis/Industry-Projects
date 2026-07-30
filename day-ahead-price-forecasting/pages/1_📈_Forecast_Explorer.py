@@ -126,21 +126,19 @@ country = st.sidebar.selectbox(
 
 
 
+available_models = [
+
+    f.stem.replace("_predictions","")
+    for f in PREDICTIONS_DIR.glob("*_predictions.csv")
+
+]
+
+
 model = st.sidebar.selectbox(
 
     "Model",
 
-    [
-
-        "random_forest",
-
-        "xgboost",
-
-        "lightgbm",
-
-        "catboost"
-
-    ]
+    available_models
 
 )
 
