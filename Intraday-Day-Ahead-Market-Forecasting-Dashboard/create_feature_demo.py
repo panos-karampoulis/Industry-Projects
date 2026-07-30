@@ -164,3 +164,95 @@ print(
     )
 
 )
+
+from pathlib import Path
+import pandas as pd
+import numpy as np
+
+
+OUTPUT = Path(
+    "demo_data/features"
+)
+
+OUTPUT.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+
+timestamps = pd.date_range(
+    start="2025-01-01",
+    periods=5000,
+    freq="15min"
+)
+
+
+df = pd.DataFrame({
+
+    "timestamp": timestamps,
+
+    "load_lag_1": np.random.normal(
+        50000,5000,len(timestamps)
+    ),
+
+    "load_lag_24": np.random.normal(
+        50000,5000,len(timestamps)
+    ),
+
+    "temperature": np.random.normal(
+        15,8,len(timestamps)
+    ),
+
+    "wind_generation": np.random.uniform(
+        0,20000,len(timestamps)
+    ),
+
+    "solar_generation": np.random.uniform(
+        0,15000,len(timestamps)
+    ),
+
+    "hour": timestamps.hour,
+
+    "day_of_week": timestamps.dayofweek,
+
+    "month": timestamps.month,
+
+    "holiday_flag": np.random.randint(
+        0,2,len(timestamps)
+    ),
+
+    "price_lag_1": np.random.normal(
+        80,20,len(timestamps)
+    ),
+
+    "price_lag_24": np.random.normal(
+        80,20,len(timestamps)
+    ),
+
+    "rolling_mean_24": np.random.normal(
+        80,10,len(timestamps)
+    ),
+
+    "rolling_std_24": np.random.uniform(
+        5,20,len(timestamps)
+    ),
+
+    "renewable_share": np.random.uniform(
+        0,1,len(timestamps)
+    ),
+
+    "demand_forecast": np.random.normal(
+        50000,5000,len(timestamps)
+    )
+
+})
+
+
+df.to_csv(
+    OUTPUT /
+    "europe_intraday_weather_features.csv",
+    index=False
+)
+
+
+print("Feature dataset created")

@@ -61,18 +61,15 @@ REFRESH_FILE = (
 
 @st.cache_data
 def load_intraday_features():
-
+    # Local real data
     possible_files = [
 
-        # Local real data
         DATA_DIR
         /
         "processed"
         /
         "europe_intraday_weather_features.csv",
 
-
-        # Streamlit demo data
         BASE_DIR
         /
         "demo_data"
@@ -82,6 +79,10 @@ def load_intraday_features():
         "europe_intraday_weather_features.csv"
 
     ]
+    
+
+
+       
 
 
     file = None
