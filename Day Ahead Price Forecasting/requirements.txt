@@ -1,0 +1,17 @@
+pandas
+numpy
+scikit-learn
+xgboost
+lightgbm
+catboost
+shap
+matplotlib
+plotly
+streamlit
+requests
+openpyxl
+joblib
+scipy
+statsmodels
+entsoe-py
+python-dotenv
