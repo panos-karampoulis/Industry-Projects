@@ -220,9 +220,9 @@ def get_last_refresh():
 
         with open(
             REFRESH_FILE,
-            "r"
+            "r",
+            encoding="utf-8"
         ) as f:
-
             return f.read()
 
     return "No refresh available"
