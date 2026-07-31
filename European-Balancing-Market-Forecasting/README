@@ -1,7 +1,6 @@
-European Balancing Market Forecasting & Risk Intelligence Platform
-Overview
+# ⚡ European Balancing Market Forecasting & Risk Intelligence Platform
 
-The European Balancing Market Forecasting & Risk Intelligence Platform is an end-to-end energy analytics project designed to analyze electricity balancing markets across major European countries.
+## Electricity Balancing Analytics, Forecasting & Risk Intelligence for European Power Markets
 
 ## 🌐 Live Demo
 
@@ -9,22 +8,80 @@ The interactive Streamlit dashboard is available here:
 
 👉 https://industry-projects-5mshb3elzypw7kr7ajwtdm.streamlit.app
 
+---
 
-The platform combines:
+# Project Overview
 
-Data engineering pipelines
-Electricity market analytics
-Forecasting models
-Renewable generation analysis
-Imbalance risk assessment
-Interactive dashboard visualization
+The **European Balancing Market Forecasting & Risk Intelligence Platform** is an end-to-end energy analytics project developed to analyze electricity balancing markets across major European power systems.
 
-The objective is to simulate a real-world energy analytics workflow supporting market analysts, trading teams, and risk management functions.
+The project demonstrates the complete workflow of an energy analytics platform, including:
 
-Business Problem
+- Market data engineering
+- Feature engineering
+- Electricity balancing analytics
+- Renewable generation analysis
+- Machine learning forecasting
+- Risk intelligence
+- Interactive Streamlit dashboard
+
+The objective is to simulate a real-world analytics environment supporting:
+
+- Energy Market Analysts
+- Balancing Market Analysts
+- Trading Teams
+- Risk Management Departments
+
+---
+
+# ⚠️ Demo Repository Notice
+
+This GitHub repository contains the **demo deployment version** of the project.
+
+The original local implementation includes a significantly larger production environment containing:
+
+- Historical ENTSO-E market datasets
+- Additional balancing market files
+- Intermediate processing outputs
+- Forecast artifacts
+- Extended forecasting pipelines
+- Larger analytical datasets
+
+These files are intentionally excluded from GitHub because they exceed repository size recommendations and are not required for demonstrating the platform architecture.
+
+The current repository includes everything necessary to understand the project design, including:
+
+- Interactive Streamlit dashboard
+- Forecasting framework
+- Risk analytics modules
+- Feature engineering pipeline
+- Backtesting framework
+- Demo datasets used for deployment
+- Complete source code
+
+The demo version reproduces the analytical workflow while using representative sample datasets instead of the complete production environment.
+
+---
+
+# Business Problem
 
 Electricity balancing markets play a critical role in maintaining grid stability by correcting deviations between electricity demand and generation.
 
+Increasing renewable penetration introduces additional uncertainty due to:
+
+- Weather dependency
+- Generation volatility
+- Forecast errors
+- Price fluctuations
+- Imbalance exposure
+
+Energy market participants require analytical tools to:
+
+- Forecast system conditions
+- Monitor imbalance risk
+- Quantify market stress
+- Identify operational risks
+
+This project develops a complete analytics platform addressing these challenges.
 Increasing renewable penetration introduces additional uncertainty due to:
 
 Weather dependency
@@ -234,12 +291,18 @@ Development Tools
 VS Code
 Git
 GitHub
-Project Structure
+
+
+# Project Structure
+
+```
 European-Balancing-Market-Forecasting/
 
 │
-├── src/
+├── app.py
+├── pages/
 │
+├── src/
 │   ├── analytics/
 │   ├── balancing/
 │   ├── config/
@@ -248,12 +311,17 @@ European-Balancing-Market-Forecasting/
 │   ├── features/
 │   ├── forecasting/
 │   ├── pipeline/
-│   └── visualization/
+│   ├── visualization/
+│   └── utils/
+│
+├── demo_data/
+│
+├── images/
 │
 ├── requirements.txt
-├── README.md
-└── tests/
-Key Outcomes
+│
+└── README.md
+```
 
 The platform demonstrates:
 
@@ -281,6 +349,13 @@ Intraday market forecasting
 Automated trading strategy simulation
 Market bidding optimization
 Real-time API integration
+
+# Deployment Notes
+
+The Streamlit Cloud deployment uses lightweight demo datasets specifically prepared for public demonstration.
+
+The production version operates on larger historical datasets and additional forecasting outputs generated locally.
+
 Author
 
 Panagiotis Karampoulis
