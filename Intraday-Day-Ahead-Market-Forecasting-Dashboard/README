@@ -1,239 +1,411 @@
-⚡ European Electricity Market Forecasting Engine
-AI-Based Intraday & Day-Ahead Electricity Price Forecasting Platform
+# ⚡ European Electricity Market Forecasting Engine
 
+## AI-Based Intraday & Day-Ahead Electricity Market Forecasting Platform
 
-## ⚠️ Demo Version Notice
-
-This repository contains a **demo version** of the Intraday & Day-Ahead Market Forecasting Dashboard.
-
-The complete project implementation was developed locally and includes additional components, larger datasets, historical market data, and extended forecasting pipelines that are not included in this GitHub repository due to storage and deployment constraints.
-
-The current version includes:
-
-- Streamlit interactive dashboard
-- Intraday market forecasting interface
-- Day-ahead forecasting interface
-- Market comparison analytics
-- Model performance evaluation
-- Backtesting analytics
-- Feature importance analysis
-- SHAP-based explainability examples
-- Demo datasets for reproducibility
-
-The included data and forecasts are representative demo files designed to showcase the architecture, workflow, and analytical capabilities of the project.
-
-
-
-
-The interactive Streamlit dashboard is available here:
+Interactive Streamlit dashboard:
 
 👉 https://industry-projects-wgbicqgzbudpdkrjmnnwbo.streamlit.app/
 
-An end-to-end machine learning platform for forecasting European electricity market prices across five major European markets.
+---
 
-The project demonstrates the complete workflow of an energy forecasting pipeline, from raw data processing and feature engineering to machine learning model training, forecasting, backtesting and interactive visualization.
+# Project Overview
 
-⚠️ Repository Notice
+The **European Electricity Market Forecasting Engine** is an end-to-end machine learning platform developed for electricity price forecasting across major European energy markets.
 
-This repository does not include the data/ and models/ folders.
+The project demonstrates the complete workflow of an energy analytics pipeline:
 
-The original project contains several datasets, trained machine learning models and forecast outputs whose combined size exceeds GitHub's recommended repository limits.
+- Market data processing
+- Data quality checks
+- Feature engineering
+- Machine learning forecasting
+- Forecast validation
+- Backtesting
+- Model explainability
+- Interactive dashboard development
 
-These folders have therefore been excluded from version control.
+The objective is to simulate a real-world energy analytics environment where market participants require accurate forecasts for:
 
-The repository contains all source code required to reproduce the complete project.
+- Trading decisions
+- Market monitoring
+- Risk assessment
+- Forecast evaluation
+- Portfolio optimization
 
-Repository Structure
+---
+
+# ⚠️ Demo Version Notice
+
+This repository contains the **demo deployment version** of the project.
+
+The complete local version includes additional components such as:
+
+- Larger historical market datasets
+- Extended forecast outputs
+- Additional generated files
+- Local data pipelines
+- Additional model artifacts
+
+These files are not included in GitHub due to repository size and deployment constraints.
+
+The GitHub version contains:
+
+✅ Complete dashboard application  
+✅ Forecasting framework  
+✅ Feature engineering logic  
+✅ Backtesting modules  
+✅ Explainability components  
+✅ Demo datasets for reproducibility  
+
+The included demo files are representative datasets created to showcase the architecture, workflow and analytical capabilities of the platform.
+
+---
+
+# Repository Structure
+
+```
+European-Electricity-Market-Forecasting-Engine/
+
+│
 ├── app.py
 ├── pages/
+│
 ├── src/
+│   ├── preprocessing/
+│   ├── features/
+│   ├── forecasting/
+│   ├── backtesting/
+│   ├── explainability/
+│   └── utils/
+│
+├── demo_data/
+│   ├── forecasts/
+│   ├── backtesting/
+│   ├── feature_importance/
+│   └── market/
+│
+├── images/
+│
+├── results/
+│
 ├── requirements.txt
+│
 └── README.md
+```
 
-The following folders are intentionally omitted:
+---
 
-data/
-models/
-How the Project Works
+# System Architecture
 
-The project is fully reproducible because every processing step is implemented inside the src directory.
+The forecasting workflow follows a complete machine learning pipeline:
 
-The workflow is:
-
-Raw Data
-    │
-    ▼
-src/preprocessing
-    │
-    ▼
-Clean Datasets
-    │
-    ▼
-src/features
-    │
-    ▼
+```
+Market Data
+      │
+      ▼
+Data Cleaning & Validation
+(src/preprocessing)
+      │
+      ▼
 Feature Engineering
-    │
-    ▼
-Feature Datasets
-    │
-    ▼
-src/models
-    │
-    ▼
-Machine Learning Training
-    │
-    ▼
-Saved Models
-    │
-    ▼
-src/forecasting
-    │
-    ▼
+(src/features)
+      │
+      ▼
+Machine Learning Models
+      │
+      ▼
 Forecast Generation
-    │
-    ▼
-src/backtesting
-    │
-    ▼
-Performance Evaluation
-    │
-    ▼
-Streamlit Dashboard
-Reproducing the Project
+(src/forecasting)
+      │
+      ▼
+Backtesting & Evaluation
+(src/backtesting)
+      │
+      ▼
+Explainability Analysis
+(SHAP / Feature Importance)
+      │
+      ▼
+Interactive Streamlit Dashboard
+```
 
-The project was designed so that all missing files can be regenerated by running the source modules in sequence.
+---
 
-Step 1 — Data Processing
+# Forecasting Framework
 
-Run the preprocessing scripts to clean the raw electricity market datasets.
+The platform supports two electricity market forecasting horizons:
 
-Output:
+## 1. Intraday Forecasting
 
-data/processed/
-Step 2 — Feature Engineering
+Short-term forecasting designed for near real-time market analysis.
 
-Run the feature engineering modules.
+Includes:
 
-They create:
+- Recent market behaviour
+- Price dynamics
+- Lag features
+- Rolling statistics
+- Weather-related variables
+- Market indicators
 
-lag variables
-rolling statistics
-calendar features
-weather features
 
-Output:
+## 2. Day-Ahead Forecasting
 
-data/features/
-Step 3 — Train Models
+Forecasting for next-day electricity market prices.
 
-Run the training scripts.
+Includes:
 
-Models are saved automatically inside:
+- Historical price patterns
+- Calendar effects
+- Demand-related variables
+- Renewable generation indicators
+- Market seasonality
 
-models/
+---
 
-Supported models:
+# Dashboard Modules
 
-XGBoost
-Random Forest
-Step 4 — Generate Forecasts
+The Streamlit application includes five analytical sections:
 
-Run the forecasting modules.
+---
 
-They automatically create:
+## 1. Overview
 
-data/forecasts/
+Provides:
 
-including:
+- Project summary
+- Market coverage
+- Forecast information
+- Data status monitoring
 
-Intraday forecasts
-Day-Ahead forecasts
-Step 5 — Backtesting
+---
 
-Run the backtesting modules.
+## 2. Intraday Forecast Explorer
 
-Outputs:
+Features:
 
-data/backtesting/
+- Intraday price forecasts
+- Market evolution analysis
+- Forecast visualization
+- Data refresh functionality
 
-including evaluation metrics such as:
+---
 
-MAE
-RMSE
-MAPE
-Forecast Errors
-Step 6 — Launch Dashboard
+## 3. Day-Ahead Forecast Explorer
 
-Once the previous steps have been completed:
+Features:
 
-streamlit run app.py
+- Long-term forecasting view
+- Multi-country comparison
+- Forecast horizon analysis
 
-The Streamlit application automatically loads the generated datasets and trained models.
+---
 
-Dashboard Modules
+## 4. Market Comparison
 
-The application consists of five analytical pages:
+Includes:
 
-1. Overview
-Project summary
-Forecast coverage
-Supported markets
-2. Day-Ahead Forecast Explorer
-Historical prices
-30-day forecast
-Calendar navigation
-D+1 / D+7 / D+30 outlook
-3. Market Comparison
-Price comparison
-Volatility analysis
-Correlation matrix
-Market spread analysis
-Market stress indicator
-4. Model Performance
-MAE
-RMSE
-MAPE
-Actual vs Forecast
-Error analysis
-Feature importance
-5. Backtesting Analytics
-Forecast validation
-Rolling MAE
-Forecast bias
-Country ranking
-Largest forecast errors
-Technologies
-Python
-Pandas
-NumPy
-Scikit-learn
-XGBoost
-Plotly
-Streamlit
-Joblib
-Markets Covered
-Germany
-France
-Italy
-Netherlands
-Spain
+- Electricity price comparison
+- Market spreads
+- Volatility analysis
+- Market differences between countries
 
-Historical coverage:
+Supported markets:
 
-2020 – 2026
-Skills Demonstrated
+- Germany
+- France
+- Italy
+- Netherlands
+- Spain
+
+---
+
+## 5. Model Performance & Backtesting Analytics
+
+Evaluation framework including:
+
+- MAE
+- RMSE
+- MAPE
+- Forecast errors
+- Prediction vs actual analysis
+- Rolling performance monitoring
+- Feature importance analysis
+
+---
+
+# Machine Learning Approach
+
+The project applies supervised learning techniques for time-series forecasting.
+
+Main methodologies:
+
+- Lag feature engineering
+- Rolling window statistics
+- Calendar features
+- Weather-based variables
+- Machine learning regression models
+- Forecast validation
+
+Models used:
+
+- XGBoost
+- Random Forest
+- Statistical forecasting models
+
+---
+
+# Explainable AI
+
+To improve model transparency, the project includes:
+
+## Feature Importance Analysis
+
+Identifies the variables contributing most to model predictions.
+
+Examples:
+
+- Previous market prices
+- Load behaviour
+- Renewable generation
+- Weather conditions
+- Calendar effects
+
+
+## SHAP Analysis
+
+Provides model interpretability through:
+
+- Feature contribution analysis
+- Prediction explanation
+- Model behaviour inspection
+
+---
+
+# Backtesting Framework
+
+Forecast performance is evaluated through historical simulation.
+
+Metrics:
+
+- Mean Absolute Error (MAE)
+- Root Mean Squared Error (RMSE)
+- Mean Absolute Percentage Error (MAPE)
+- Forecast bias
+- Error distribution analysis
+
+
+The framework allows comparison between:
+
+- Forecasted prices
+- Actual market outcomes
+
+---
+
+# Markets Covered
+
+The demo version covers:
+
+🇩🇪 Germany  
+🇫🇷 France  
+🇮🇹 Italy  
+🇳🇱 Netherlands  
+🇪🇸 Spain  
+
+---
+
+# Technologies
+
+## Programming
+
+- Python
+
+## Data Analysis
+
+- Pandas
+- NumPy
+- SciPy
+
+## Machine Learning
+
+- Scikit-learn
+- XGBoost
+
+## Statistics
+
+- Statsmodels
+
+## Visualization
+
+- Plotly
+- Matplotlib
+- Streamlit
+
+## Model Management
+
+- Joblib
+
+---
+
+# Skills Demonstrated
 
 This project demonstrates:
 
-Energy Market Analytics
-Time-Series Forecasting
-Machine Learning
-Feature Engineering
-Forecast Validation
-Model Monitoring
-Explainable AI
-Interactive Dashboard Development
-Author
+- Energy Market Analytics
+- Electricity Price Forecasting
+- Time-Series Analysis
+- Machine Learning Applications
+- Feature Engineering
+- Forecast Validation
+- Backtesting Methodology
+- Explainable AI
+- Dashboard Development
+- Data Pipeline Design
 
-Panagiotis Karampoulis
+---
+
+# Running Locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/panos-karampoulis/Industry-Projects.git
+```
+
+Navigate to the project folder:
+
+```bash
+cd Intraday-Day-Ahead-Market-Forecasting-Dashboard
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the dashboard:
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# Future Improvements
+
+Possible extensions:
+
+- Automated market data ingestion
+- Real-time API integration
+- Additional European markets
+- Advanced forecasting models
+- Production monitoring pipeline
+- Automated retraining workflow
+
+---
+
+# Author
+
+**Panagiotis Karampoulis**
+
+Energy & Finance | Data Analytics | Machine Learning
