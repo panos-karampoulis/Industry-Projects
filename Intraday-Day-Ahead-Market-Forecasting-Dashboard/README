@@ -1,6 +1,8 @@
 ⚡ European Electricity Market Forecasting Engine
 AI-Based Intraday & Day-Ahead Electricity Price Forecasting Platform
 
+https://industry-projects-wgbicqgzbudpdkrjmnnwbo.streamlit.app/
+
 An end-to-end machine learning platform for forecasting European electricity market prices across five major European markets.
 
 The project demonstrates the complete workflow of an energy forecasting pipeline, from raw data processing and feature engineering to machine learning model training, forecasting, backtesting and interactive visualization.
