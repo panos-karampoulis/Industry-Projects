@@ -10,6 +10,7 @@ from datetime import datetime
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from datetime import datetime
 
 
 # ============================================================
@@ -21,7 +22,6 @@ st.set_page_config(
     page_icon="⚡",
     layout="wide"
 )
-
 
 # ============================================================
 # PATHS
@@ -52,6 +52,48 @@ REFRESH_FILE = (
     /
     "last_refresh.txt"
 )
+
+
+
+
+
+
+
+
+
+# ============================================================
+# DASHBOARD REFRESH
+# ============================================================
+
+if st.button("🔄 Refresh Dashboard"):
+
+    refresh_time = datetime.now().strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+
+    REFRESH_FILE.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    with open(
+        REFRESH_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        f.write(
+            refresh_time
+        )
+
+
+    st.cache_data.clear()
+
+    st.success(
+        "Dashboard refreshed successfully"
+    )
+
+    st.rerun()
 
 
 
