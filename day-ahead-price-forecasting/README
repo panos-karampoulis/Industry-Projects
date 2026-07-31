@@ -14,27 +14,56 @@ The interactive Streamlit dashboard is available here:
 👉 https://industry-projects-dkjsub8veqrbpplgnlphhk.streamlit.app/
 ---
 
+---
+
 # 📌 Project Overview
 
-This project develops an end-to-end **Day Ahead Electricity Price Forecasting Platform** combining:
+The **Day Ahead Electricity Price Forecasting Platform** is an end-to-end machine learning application developed for forecasting hourly electricity prices across European electricity markets.
 
-- Machine Learning forecasting models
+The project combines:
+
 - Energy market analytics
 - Feature engineering
-- Model comparison
+- Machine learning forecasting
+- Forecast validation
+- Explainable AI
 - Interactive Streamlit dashboard
 
+The objective is to simulate a real-world forecasting workflow supporting:
 
-The platform allows users to explore electricity market behaviour and evaluate forecasting performance for:
-
-- 🇩🇪 Germany
-- 🇬🇷 Greece
-
-
-The final application provides an analyst-oriented interface similar to an energy market intelligence tool.
-
+- Energy Analysts
+- Electricity Traders
+- Portfolio Managers
+- Risk Analysts
+- Market Intelligence Teams
 
 ---
+
+# ⚠️ Demo Repository Notice
+
+This repository contains the **demo deployment version** of the project.
+
+The complete local implementation contains additional resources including:
+
+- Historical market datasets
+- Intermediate processed datasets
+- Trained machine learning models
+- Forecast artifacts
+- Extended evaluation outputs
+- Production forecasting pipelines
+
+These files are intentionally excluded from GitHub due to repository size limitations and deployment constraints.
+
+The GitHub version includes:
+
+- Complete source code
+- Interactive Streamlit dashboard
+- Forecasting workflow
+- Demo datasets
+- Model evaluation framework
+- Feature engineering pipeline
+
+The demo reproduces the functionality of the forecasting platform while using representative sample datasets for deployment.
 
 # 🎯 Business Problem
 
@@ -120,11 +149,16 @@ Hourly electricity market data including:
 - Storage
 
 
-Dataset coverage:
+# 📊 Dataset
 
+The production project uses historical ENTSO-E market data.
 
-2020 - 2026
+The public repository contains representative demo datasets used for dashboard deployment and reproducibility.
 
+Covered markets:
+
+- 🇩🇪 Germany
+- 🇬🇷 Greece
 
 Frequency:
 
@@ -378,38 +412,19 @@ Main drivers identified:
 
 # 📂 Project Structure
 
+```
+Day-Ahead-Price-Forecasting/
 
-
-Day Ahead Price Forecasting/
-
-│
-├── data/
-│ ├── processed/
-│
-├── models/
-│ ├── germany/
-│ └── greece/
-│
-├── results/
-│ ├── germany/
-│ └── greece/
-│
-├── src/
-│ ├── models/
-│ └── features/
-│
-├── pages/
-│ ├── Forecast_Explorer.py
-│ ├── Market_Explorer.py
-│ └── Model_Comparison.py
 │
 ├── app.py
+├── pages/
+├── src/
+├── demo_data/
+├── images/
+├── results/
 ├── requirements.txt
 └── README.md
-
-
-
----
+```
 
 # ▶️ Running the Application
 
@@ -419,9 +434,16 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 
-Run Streamlit:
 
-streamlit run app.py
+# 🚀 Deployment Notes
+
+The Streamlit Cloud application uses lightweight demo datasets specifically prepared for public deployment.
+
+The production version operates on significantly larger historical datasets and locally generated model outputs that are not included in this repository.
+
+The current deployment demonstrates the complete analytical workflow while remaining fully reproducible.
+
+
 🚀 Future Improvements
 
 Possible extensions:
