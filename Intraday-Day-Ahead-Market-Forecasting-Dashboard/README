@@ -1,6 +1,30 @@
 ⚡ European Electricity Market Forecasting Engine
 AI-Based Intraday & Day-Ahead Electricity Price Forecasting Platform
 
+
+## ⚠️ Demo Version Notice
+
+This repository contains a **demo version** of the Intraday & Day-Ahead Market Forecasting Dashboard.
+
+The complete project implementation was developed locally and includes additional components, larger datasets, historical market data, and extended forecasting pipelines that are not included in this GitHub repository due to storage and deployment constraints.
+
+The current version includes:
+
+- Streamlit interactive dashboard
+- Intraday market forecasting interface
+- Day-ahead forecasting interface
+- Market comparison analytics
+- Model performance evaluation
+- Backtesting analytics
+- Feature importance analysis
+- SHAP-based explainability examples
+- Demo datasets for reproducibility
+
+The included data and forecasts are representative demo files designed to showcase the architecture, workflow, and analytical capabilities of the project.
+
+
+
+
 The interactive Streamlit dashboard is available here:
 
 👉 https://industry-projects-wgbicqgzbudpdkrjmnnwbo.streamlit.app/
