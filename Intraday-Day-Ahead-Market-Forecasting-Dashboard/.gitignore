@@ -28,7 +28,11 @@ venv/
 
 data/
 models/
+# Ignore datasets
+data/*
 
+# Keep refresh timestamp for Streamlit
+!data/last_refresh.txt
 
 # ======================
 # IDE
