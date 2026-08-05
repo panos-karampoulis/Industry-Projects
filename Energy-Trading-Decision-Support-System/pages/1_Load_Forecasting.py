@@ -33,7 +33,7 @@ SAMPLE_DIR = (
     /
     "data"
     /
-    "sample"
+    "demo"
 )
 
 
