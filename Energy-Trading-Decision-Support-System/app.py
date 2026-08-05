@@ -858,7 +858,20 @@ else:
 
 latest = market_day.iloc[-1]
 
+st.write("DEBUG MARKET DAY SHAPE:", market_day.shape)
 
+st.write("DEBUG LATEST ROW:")
+st.write(latest)
+
+st.write(
+    "DEBUG LOAD VALUE:",
+    latest.get("load_mw")
+)
+
+st.write(
+    "DEBUG RENEWABLE VALUE:",
+    latest.get("renewable_share")
+)
 
 
 
