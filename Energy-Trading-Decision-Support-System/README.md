@@ -1,130 +1,182 @@
 # ⚡ Energy Trading Decision Support System
 
-## AI-Based Forecasting, Risk Analytics & Trading Strategy Evaluation for European Electricity Markets
-
-An end-to-end energy analytics platform combining **machine learning forecasting**, **imbalance risk assessment**, **trading signal generation**, and **historical strategy backtesting**.
-
-The objective is to simulate how an energy trading analyst could support operational decisions by combining market forecasts, renewable uncertainty, imbalance exposure and quantitative trading performance metrics.
+## AI-Based Electricity Market Analytics, Forecasting & Trading Intelligence Platform
 
 ---
 
-# 🚀 Project Overview
+## 📌 Overview
 
-Electricity markets are highly volatile due to:
+The **Energy Trading Decision Support System** is an end-to-end analytics platform designed to support electricity market decision-making through:
 
-- Renewable generation uncertainty
+- Electricity demand forecasting
+- Renewable generation analysis
+- Day-ahead market price analytics
+- Imbalance risk assessment
+- Trading signal generation
+- Strategy backtesting
+- Portfolio performance analysis
+
+The project combines **energy market analytics, machine learning, statistical modelling and financial risk management** into an interactive Streamlit application.
+
+The objective is to simulate a real-world **Energy Trading Analyst / Quantitative Analyst workflow**, where market participants need to forecast system conditions, evaluate risks and support trading decisions.
+
+---
+
+# 🎯 Business Problem
+
+Electricity markets are highly dynamic due to:
+
 - Demand fluctuations
-- Market price movements
-- Imbalance settlement costs
-- Intraday trading risks
+- Renewable generation uncertainty
+- Weather dependency
+- Market volatility
+- Grid imbalance costs
+- Price spikes and negative prices
 
-This project develops a decision-support framework that transforms historical energy market data into:
+Energy traders and analysts need tools that can answer:
 
-✅ Load forecasts  
-✅ Market risk indicators  
-✅ Trading recommendations  
-✅ Backtested trading strategies  
-✅ Portfolio performance analytics  
+- How will electricity demand evolve?
+- What is the expected renewable penetration?
+- Is the system exposed to imbalance risk?
+- Are market prices likely to increase or decrease?
+- Which trading decisions have historically generated value?
 
-
-The system evaluates multiple European electricity markets:
-
-- 🇩🇪 Germany
-- 🇫🇷 France
-- 🇮🇹 Italy
-- 🇪🇸 Spain
-- 🇳🇱 Netherlands
+This platform provides a data-driven framework to address these questions.
 
 ---
 
 # 🏗️ System Architecture
 
 
-Energy Market Data
-|
-↓
-Data Processing & Feature Engineering
-|
-↓
-Forecasting Models
-|
-↓
-Risk Assessment Engine
-|
-↓
-Trading Decision Engine
-|
-↓
-Backtesting & PnL Analytics
-|
-↓
-Streamlit Decision Dashboard
+             Energy Market Data
+                     |
+                     |
+                     v
 
+          Data Processing Pipeline
+
+                     |
+    ---------------------------------
+    |               |               |
+    v               v               v
+
+Load Forecasting Price Analytics Risk Engine
+
+    |               |               |
+
+    ---------------------------------
+
+                     |
+
+          Trading Decision Engine
+
+                     |
+
+          Backtesting Framework
+
+                     |
+
+          Streamlit Analytics Dashboard
 
 ---
 
-# 📌 Main Features
+# 🚀 Main Features
 
-## 1. Electricity Load Forecasting
+## 1. ⚡ Load Forecasting Analytics
 
-Machine learning models are used to estimate future electricity demand.
+Forecast electricity demand using machine learning techniques.
 
-Implemented models:
+Capabilities:
 
-- Random Forest
-- XGBoost
-- Statistical forecasting models
-
-
-Generated outputs:
-
-- Forecasted load
-- Model evaluation metrics
+- Historical load analysis
+- Forecast comparison
+- Forecast error calculation
 - Feature importance analysis
 
+Models evaluated:
+
+- Linear Regression
+- Random Forest
+- XGBoost
+- Prophet
+
+
+Example features:
+
+- Load lag variables
+- Rolling statistics
+- Seasonal features
+- Renewable generation
+- Market prices
 
 ---
 
-## 2. Imbalance Risk Analytics
+# 2. 📈 Electricity Market Price Analysis
 
-The system estimates imbalance exposure caused by deviations between expected and actual market conditions.
+Analysis of electricity market behaviour:
 
-Risk factors include:
+- Day-ahead prices
+- Intraday prices
+- Price volatility
+- Price spikes
+- Negative price events
 
-- Load forecast uncertainty
-- Renewable generation variability
-- Market imbalance costs
-- Price movements
+
+The system evaluates market conditions using historical price patterns and statistical indicators.
+
+---
+
+# 3. 🌱 Renewable Generation Analytics
+
+Renewable generation monitoring:
+
+- Wind generation
+- Solar generation
+- Renewable penetration
+- Residual load analysis
+
+
+Key indicators:
+
+
+Residual Load =
+Electricity Demand - Renewable Generation
+
+
+Residual load is a critical driver of electricity price formation.
+
+---
+
+# 4. ⚠️ Imbalance Risk Engine
+
+The imbalance module estimates operational risk caused by differences between expected and actual system conditions.
+
+Risk factors:
+
+- Load forecast error
+- Renewable uncertainty
+- Residual load changes
+- Market volatility
 
 
 Outputs:
 
 - Risk score
-- Risk classification
-- Country comparison
+- Risk category:
 
 
-Example:
-
-
-Low Risk
-Medium Risk
-High Risk
+LOW
+MEDIUM
+HIGH
 
 
 ---
 
-# 3. Trading Decision Engine
+# 5. 💹 Trading Decision Engine
 
-A rule-based trading engine generates market actions based on:
+The platform generates simulated trading recommendations:
 
-- Forecast signals
-- Price deviations
-- Risk indicators
-- Market conditions
-
-
-Possible decisions:
+Signals:
 
 
 BUY
@@ -132,142 +184,93 @@ SELL
 HOLD
 
 
-The framework simulates the workflow of an energy trading analyst evaluating market opportunities.
+
+Based on:
+
+- Market price behaviour
+- Risk conditions
+- Forecast information
+- System fundamentals
+
+
+The goal is not automated trading execution but **decision support**.
 
 ---
 
-# 4. Trading Strategy Backtesting
+# 6. 📊 Strategy Backtesting
 
-Historical trading signals are evaluated through a complete backtesting framework.
+Historical strategy evaluation:
 
-Metrics calculated:
+Metrics:
 
-- Total PnL (€)
+- Total PnL
+- Daily PnL
 - Sharpe Ratio
-- Volatility
-- Maximum Drawdown
-- Number of Trades
-- Win Rate
 - Profit Factor
+- Equity Curve
+- Trading frequency
 
 
-Example performance output:
-
-| Country | Total PnL | Sharpe | Profit Factor |
-|---|---:|---:|---:|
-| Germany | Positive | 0.15 | 1.04 |
-| Italy | Positive | 0.28 | 1.08 |
-| Spain | Positive | 0.37 | 1.10 |
-| France | Negative | -0.16 | 0.94 |
-| Netherlands | Positive | 0.12 | 1.03 |
-
+The framework evaluates whether generated signals could have produced historical value.
 
 ---
 
-# 📊 Streamlit Dashboard
+# 7. 📈 Trade Analytics Dashboard
 
-The project includes an interactive dashboard providing:
+Detailed trading performance analysis:
 
-## Load Forecasting
+Includes:
 
-- Forecast visualization
-- Model comparison
-- Prediction performance
-
-
-## Imbalance Risk
-
-- Risk scores
+- PnL by signal
+- PnL by risk category
+- Hourly performance
+- Best trading hours
+- Worst trading hours
 - Country comparison
-- Exposure analysis
-
-
-## Trading Decisions
-
-- Trading signals
-- Confidence levels
-- Market recommendations
-
-
-## Backtesting Performance
-
-- Portfolio PnL
-- Sharpe ratio
-- Drawdown analysis
-- Strategy comparison
-
-
-## Trade Analytics
-
-- Trade statistics
-- Performance breakdown
-- Country-level evaluation
 
 
 ---
 
-# 🧠 Explainability
-
-Machine learning transparency is provided using:
-
-- Feature importance analysis
-- SHAP-based interpretation
+# 🖥️ Streamlit Application
 
 
-This helps identify which variables influence forecasting and risk predictions.
+The project contains a multi-page interactive dashboard:
 
----
 
-# 🛠️ Technology Stack
+pages/
 
-## Programming
+1_Load_Forecasting.py
+2_Imbalance_Risk.py
+3_Trading_Decisions.py
+4_Market_Comparison.py
+5_Model_Performance.py
+6_Backtesting_Performance.py
+7_Trade_Analytics.py
 
-- Python
 
-## Data Analysis
 
-- Pandas
-- NumPy
+Dashboard sections:
 
-## Machine Learning
-
-- Scikit-learn
-- XGBoost
-
-## Visualization
-
-- Matplotlib
-- Plotly
-- Streamlit
-
-## Model Explainability
-
-- SHAP
-
-## Version Control
-
-- Git / GitHub
+| Page | Function |
+|---|---|
+| Load Forecasting | Demand forecasting analytics |
+| Imbalance Risk | System risk monitoring |
+| Trading Decisions | Market signals |
+| Market Comparison | Country analysis |
+| Model Performance | ML evaluation |
+| Backtesting | Strategy evaluation |
+| Trade Analytics | Trading insights |
 
 ---
 
 # 📂 Project Structure
 
 
+
 Energy-Trading-Decision-Support-System/
 
 │
-├── app.py # Streamlit application
-├── config.py # Configuration
-├── requirements.txt
-│
-├── data/
-│ ├── demo/ # Sample datasets
-│ └── processed/
-│
-├── images/
-│ ├── feature_importance/
-│ ├── ml_results/
-│ └── shap/
+├── app.py
 │
 ├── pages/
 │ ├── 1_Load_Forecasting.py
@@ -278,68 +281,161 @@ Energy-Trading-Decision-Support-System/
 │ ├── 6_Backtesting_Performance.py
 │ └── 7_Trade_Analytics.py
 │
-├── src/
-│ ├── forecasting/
-│ ├── risk/
-│ ├── decision/
-│ ├── backtesting/
-│ ├── analytics/
-│ └── pipeline/
+├── data/
 │
-└── results/
-└── strategy_metrics.json
+│ └── demo/
+│
+├── models/
+│
+├── results/
+│
+├── src/
+│
+├── requirements.txt
+│
+└── README.md
 
 
 ---
 
-# ▶️ Installation
+# 🛠️ Technologies Used
+
+## Programming
+
+- Python
+
+
+## Data Analysis
+
+- Pandas
+- NumPy
+
+
+## Machine Learning
+
+- Scikit-learn
+- XGBoost
+
+
+## Forecasting
+
+- Prophet
+- Statistical modelling techniques
+
+
+## Visualization
+
+- Streamlit
+- Plotly
+
+
+## Statistics
+
+- Time-series analysis
+- Feature engineering
+- Risk metrics
+
+
+---
+
+# 📊 Machine Learning Workflow
+
+
+
+Data Collection
+
+    |
+
+Data Cleaning
+
+    |
+
+Feature Engineering
+
+    |
+
+Model Training
+
+    |
+
+Performance Evaluation
+
+    |
+
+Forecast Generation
+
+    |
+
+Trading Decision Support
+
+
+
+---
+
+# 📈 Example ML Evaluation Metrics
+
+
+| Model | MAE | RMSE | MAPE |
+|-|-|-|-|
+| Linear Regression | 1109 | 1422 | 2.14% |
+| Random Forest | 537 | 739 | 1.04% |
+| XGBoost | 490 | 650 | 0.95% |
+| Prophet | 2820 | 3719 | 5.63% |
+
+
+XGBoost achieved the strongest forecasting performance among tested approaches.
+
+---
+
+# 🌍 Countries Covered
+
+The framework supports:
+
+- 🇩🇪 Germany
+- 🇫🇷 France
+- 🇮🇹 Italy
+- 🇪🇸 Spain
+- 🇳🇱 Netherlands
+
+
+---
+
+# ▶️ Running the Project Locally
+
 
 Clone repository:
 
 ```bash
-git clone https://github.com/panos-karampoulis/Industry-Projects.git
+git clone https://github.com/panos-karampoulis/industry-projects.git
 
 Navigate:
 
 cd Energy-Trading-Decision-Support-System
 
-Create environment:
-
-python -m venv venv
-
-Activate:
-
-Windows:
-
-venv\Scripts\activate
-
 Install dependencies:
 
 pip install -r requirements.txt
-▶️ Run Dashboard
 
-Start Streamlit:
+Run Streamlit:
 
 streamlit run app.py
-📈 Business Applications
+☁️ Deployment
 
-This project demonstrates applications in:
+The dashboard is deployed using:
 
-Energy Trading Analytics
-Market Risk Management
-Renewable Integration
-Portfolio Optimization
-Quantitative Energy Research
+Streamlit Cloud
+GitHub integration
 🔮 Future Improvements
 
-Potential extensions:
+Possible extensions:
 
-Real-time market data ingestion
-Cloud deployment
-Automated forecasting pipeline
-Live trading signals
-Battery Energy Storage System (BESS) optimization
-Probabilistic forecasting
-👤 Author
+Real-time ENTSO-E API integration
+Weather API integration
+Electricity price forecasting models
+Deep learning models (LSTM, Transformers)
+Automated trading optimisation
+Reinforcement learning strategies
+Real-time portfolio monitoring
+👨‍💻 Author
 
 Panagiotis Karampoulis
