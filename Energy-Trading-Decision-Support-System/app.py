@@ -136,60 +136,45 @@ CLOUD_MODE = is_streamlit_cloud()
 @st.cache_data
 def load_features(country):
 
-    """
-    Load feature dataset.
 
-    Local:
-        data/features/
-
-    Cloud:
-        data/demo/
-
-    """
+    real_file = (
+        FEATURE_DIR
+        /
+        f"{country}_features.csv"
+    )
 
 
+    demo_file = (
+        DEMO_DIR
+        /
+        f"{country}_features_sample.csv"
+    )
 
-    if CLOUD_MODE:
 
 
-        file = (
+    if real_file.exists():
 
-            DEMO_DIR
+        file = real_file
 
-            /
+        data_mode = "Local"
 
-            f"{country}_features_sample.csv"
 
-        )
+
+    elif demo_file.exists():
+
+        file = demo_file
+
+        data_mode = "Demo"
+
 
 
     else:
 
-
-        file = (
-
-            FEATURE_DIR
-
-            /
-
-            f"{country}_features.csv"
-
-        )
-
-
-
-
-    if not file.exists():
-
-
         st.error(
-
-            f"Dataset missing: {file}"
-
+            f"No dataset found for {country}"
         )
 
         st.stop()
-
 
 
 
@@ -197,25 +182,21 @@ def load_features(country):
 
 
 
-
     if "timestamp" in df.columns:
 
-
         df["timestamp"] = pd.to_datetime(
-
             df["timestamp"],
-
             utc=True
-
         )
 
 
 
+    st.sidebar.caption(
+        f"Data source: {data_mode}"
+    )
+
+
     return df
-
-
-
-
 
 @st.cache_data
 def load_risk(country):
