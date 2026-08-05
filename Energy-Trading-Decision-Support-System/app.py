@@ -648,7 +648,21 @@ features = load_features(
 )
 
 
+st.write("DEBUG COUNTRY:", country)
 
+st.write(
+    "DEBUG SHAPE:",
+    features.shape
+)
+
+st.write(
+    "DEBUG COLUMNS:",
+    features.columns.tolist()
+)
+
+st.write(
+    features.head()
+)
 
 prices = load_prices(
 
