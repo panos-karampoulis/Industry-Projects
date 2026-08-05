@@ -716,23 +716,25 @@ signals = load_signals()
 market = features.copy()
 
 
-
+st.write("FINAL MARKET COLUMNS")
+st.write(market.columns.tolist())
 
 
 if not prices.empty:
 
 
-    market = market.merge(
-
-        prices,
-
-        on="timestamp",
-
-        how="left"
-
-    )
+    if "day_ahead_price" not in market.columns:
 
 
+        market = market.merge(
+
+            prices,
+
+            on="timestamp",
+
+            how="left"
+
+        )
 
 else:
 
