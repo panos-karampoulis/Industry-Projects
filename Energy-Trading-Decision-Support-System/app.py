@@ -217,6 +217,23 @@ def load_features(country):
 
     df = pd.read_csv(file)
 
+    # Keep only price columns
+
+    keep_columns = [
+        "timestamp",
+        "price_eur_mwh",
+        "day_ahead_price",
+        "intraday_price"
+    ]
+
+
+    df = df[
+        [
+            c for c in keep_columns
+            if c in df.columns
+        ]
+    ]
+
 
 
     if "timestamp" in df.columns:
