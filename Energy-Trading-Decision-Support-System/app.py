@@ -201,39 +201,19 @@ def load_features(country):
 @st.cache_data
 def load_risk(country):
 
-    """
-    Load imbalance risk results.
-
-    Priority:
-    Local results
-    Demo fallback
-    """
-
-
 
     real_file = (
-
         RESULT_DIR
-
         /
-
         f"{country}_imbalance_risk.csv"
-
     )
-
-
 
 
     demo_file = (
-
         DEMO_DIR
-
         /
-
         "imbalance_risk_sample.csv"
-
     )
-
 
 
 
@@ -253,29 +233,30 @@ def load_risk(country):
 
 
 
-
     df = pd.read_csv(file)
-
 
 
 
     if "timestamp" in df.columns:
 
-
         df["timestamp"] = pd.to_datetime(
-
             df["timestamp"],
-
             utc=True
-
         )
 
 
 
+    if "country" in df.columns:
+
+        df = df[
+            df["country"]
+            ==
+            country
+        ]
+
+
+
     return df
-
-
-
 
 
 @st.cache_data
@@ -1158,11 +1139,8 @@ if "residual_load" in market_day.columns:
 
 
 st.subheader(
-
     "⚠️ Imbalance Risk Analytics"
-
 )
-
 
 
 
@@ -1172,11 +1150,8 @@ if not risk.empty:
     risk_day = risk[
 
         risk["timestamp"]
-
         .dt.date
-
         ==
-
         selected_date
 
     ]
@@ -1186,48 +1161,62 @@ if not risk.empty:
     if not risk_day.empty:
 
 
-        fig = px.line(
 
-            risk_day,
-
-            x="timestamp",
-
-            y="risk_score",
-
-            title="Risk Score"
-
-        )
+        col1, col2 = st.columns(2)
 
 
-        st.plotly_chart(
 
-            fig,
-
-            use_container_width=True
-
-        )
+        with col1:
 
 
-        latest_risk = risk_day.iloc[-1]["risk_score"]
+            fig = px.line(
+
+                risk_day,
+
+                x="timestamp",
+
+                y="risk_score",
+
+                title="Imbalance Risk Score"
+
+            )
 
 
-        if latest_risk < 0.33:
+            st.plotly_chart(
+
+                fig,
+
+                use_container_width=True
+
+            )
 
 
-            risk_level = "Low Risk"
+
+        with col2:
 
 
-        elif latest_risk < 0.66:
+            fig = px.bar(
+
+                risk_day,
+
+                x="risk_level",
+
+                title="Risk Level Distribution"
+
+            )
 
 
-            risk_level = "Medium Risk"
+            st.plotly_chart(
+
+                fig,
+
+                use_container_width=True
+
+            )
 
 
-        else:
 
-
-            risk_level = "High Risk"
-
+        latest_risk = risk_day.iloc[-1]
 
 
 
@@ -1235,11 +1224,12 @@ if not risk.empty:
 
             "Current Risk Level",
 
-            risk_level,
+            latest_risk["risk_level"],
 
-            f"{latest_risk:.2f}"
+            f"{latest_risk['risk_score']:.2f}"
 
         )
+
 
 
     else:
@@ -1258,7 +1248,7 @@ else:
 
     st.info(
 
-        "Risk analytics available after pipeline execution"
+        "Risk results available after pipeline execution"
 
     )
 
