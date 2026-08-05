@@ -1,7 +1,9 @@
 # ==========================================================
 # ENERGY TRADING DECISION SUPPORT SYSTEM
-# STREAMLIT DASHBOARD v3
+# STREAMLIT DASHBOARD v4
+# Cloud + Local Compatible Version
 # ==========================================================
+
 
 import streamlit as st
 import pandas as pd
@@ -16,92 +18,223 @@ from datetime import datetime
 
 
 # ==========================================================
+# PAGE CONFIG
+# ==========================================================
+
+
+st.set_page_config(
+
+    page_title="Energy Trading DSS",
+
+    page_icon="⚡",
+
+    layout="wide"
+
+)
+
+
+
+# ==========================================================
 # PATHS
 # ==========================================================
+
 
 BASE_DIR = Path(__file__).resolve().parent
 
 
+
+# Real datasets
+
 FEATURE_DIR = (
+
     BASE_DIR
+
     /
+
     "data"
+
     /
+
     "features"
+
 )
+
 
 
 PRICE_DIR = (
+
     BASE_DIR
+
     /
+
     "data"
+
     /
+
     "processed"
+
 )
+
+
+
+# Demo datasets for Streamlit Cloud
+
+DEMO_DIR = (
+
+    BASE_DIR
+
+    /
+
+    "data"
+
+    /
+
+    "demo"
+
+)
+
 
 
 RESULT_DIR = (
+
     BASE_DIR
+
     /
+
     "results"
+
 )
+
+
+
+MODELS_DIR = (
+
+    BASE_DIR
+
+    /
+
+    "models"
+
+)
+
 
 
 
 PIPELINE = [
+
     sys.executable,
+
     "src/pipeline/run_pipeline.py"
+
 ]
+
 
 
 
 COUNTRIES = [
+
     "germany",
+
     "france",
+
     "italy",
+
     "spain",
+
     "netherlands"
+
 ]
 
 
 
 # ==========================================================
-# PAGE
-# ==========================================================
-
-st.set_page_config(
-    page_title="Energy Trading DSS",
-    page_icon="⚡",
-    layout="wide"
-)
-
-
-
-# ==========================================================
-# LOAD FUNCTIONS
+# DATA LOADING FUNCTIONS
 # ==========================================================
 
 
 @st.cache_data
 def load_features(country):
 
-    file = (
+
+    """
+    Load feature dataset.
+
+    Priority:
+    1. Real local dataset
+    2. Demo dataset for Cloud deployment
+    """
+
+
+
+    real_file = (
+
         FEATURE_DIR
+
         /
+
         f"{country}_features.csv"
+
     )
+
+
+
+    demo_file = (
+
+        DEMO_DIR
+
+        /
+
+        f"{country}_features_sample.csv"
+
+    )
+
+
+
+
+    if real_file.exists():
+
+        file = real_file
+
+
+    elif demo_file.exists():
+
+        file = demo_file
+
+
+    else:
+
+
+        st.error(
+
+            f"No feature dataset found for {country}"
+
+        )
+
+        st.stop()
+
+
 
 
     df = pd.read_csv(file)
 
 
-    df["timestamp"] = pd.to_datetime(
-        df["timestamp"],
-        utc=True
-    )
+
+    if "timestamp" in df.columns:
+
+
+        df["timestamp"] = pd.to_datetime(
+
+            df["timestamp"],
+
+            utc=True
+
+        )
+
 
 
     return df
+
+
 
 
 
@@ -110,45 +243,131 @@ def load_features(country):
 def load_prices(country, market):
 
 
+    """
+    Load market prices.
+
+    Local:
+        data/processed/
+
+    Cloud:
+        demo/features sample fallback
+
+    """
+
+
+
     if market == "Day Ahead":
 
-        file = (
+
+        real_file = (
+
             PRICE_DIR
+
             /
+
             f"{country}_day_ahead_prices.csv"
+
         )
+
 
     else:
 
-        file = (
+
+        real_file = (
+
             PRICE_DIR
+
             /
+
             f"{country}_intraday_prices.csv"
+
         )
+
+
+
+
+    demo_file = (
+
+        DEMO_DIR
+
+        /
+
+        f"{country}_features_sample.csv"
+
+    )
+
+
+
+
+    if real_file.exists():
+
+        file = real_file
+
+
+
+    elif demo_file.exists():
+
+        file = demo_file
+
+
+
+    else:
+
+        return pd.DataFrame()
+
 
 
     df = pd.read_csv(file)
 
 
-    df["timestamp"] = pd.to_datetime(
-        df["timestamp"],
-        utc=True
-    )
 
 
-    df = df.rename(
-        columns={
-            "price_eur_mwh": market
-        }
-    )
+    if "timestamp" in df.columns:
 
 
-    return df[
-        [
-            "timestamp",
-            market
-        ]
-    ]
+        df["timestamp"] = pd.to_datetime(
+
+            df["timestamp"],
+
+            utc=True
+
+        )
+
+
+
+
+    if "price_eur_mwh" in df.columns:
+
+
+        df = df.rename(
+
+            columns={
+
+                "price_eur_mwh": market
+
+            }
+
+        )
+
+
+
+    elif market not in df.columns:
+
+
+        if "day_ahead_price" in df.columns and market=="Day Ahead":
+
+            df[market] = df["day_ahead_price"]
+
+
+        elif "intraday_price" in df.columns and market=="Intraday":
+
+            df[market] = df["intraday_price"]
+
+
+
+    return df
+
+
 
 
 
@@ -157,11 +376,17 @@ def load_prices(country, market):
 @st.cache_data
 def load_risk(country):
 
+
     file = (
+
         RESULT_DIR
+
         /
+
         f"{country}_imbalance_risk.csv"
+
     )
+
 
 
     if not file.exists():
@@ -169,16 +394,26 @@ def load_risk(country):
         return pd.DataFrame()
 
 
+
     df = pd.read_csv(file)
 
 
-    df["timestamp"] = pd.to_datetime(
-        df["timestamp"],
-        utc=True
-    )
+
+    if "timestamp" in df.columns:
+
+
+        df["timestamp"] = pd.to_datetime(
+
+            df["timestamp"],
+
+            utc=True
+
+        )
+
 
 
     return df
+
 
 
 
@@ -189,35 +424,52 @@ def load_signals():
 
 
     file = (
+
         RESULT_DIR
+
         /
+
         "trading_decisions_all_countries.csv"
+
     )
+
+
+
+    if not file.exists():
+
+        return pd.DataFrame()
+
 
 
     df = pd.read_csv(file)
 
 
-    df["timestamp"] = pd.to_datetime(
-        df["timestamp"],
-        utc=True
-    )
+
+    if "timestamp" in df.columns:
+
+
+        df["timestamp"] = pd.to_datetime(
+
+            df["timestamp"],
+
+            utc=True
+
+        )
+
 
 
     return df
-
-
-
-
-
 # ==========================================================
 # SIDEBAR
 # ==========================================================
 
 
 st.sidebar.title(
+
     "⚡ Energy Trading DSS"
+
 )
+
 
 
 
@@ -231,17 +483,71 @@ country = st.sidebar.selectbox(
 
 
 
+
 market_type = st.sidebar.selectbox(
 
     "Price Market",
 
     [
+
         "Day Ahead",
+
         "Intraday"
+
     ]
 
 )
 
+
+
+
+# ==========================================================
+# DATA MODE INFORMATION
+# ==========================================================
+
+
+st.sidebar.divider()
+
+
+
+real_available = (
+
+    FEATURE_DIR
+
+    /
+
+    f"{country}_features.csv"
+
+).exists()
+
+
+
+if real_available:
+
+
+    st.sidebar.success(
+
+        "🟢 Local Data Available"
+
+    )
+
+
+else:
+
+
+    st.sidebar.info(
+
+        "🔵 Demo Data Mode"
+
+    )
+
+
+
+
+
+# ==========================================================
+# PIPELINE REFRESH
+# ==========================================================
 
 
 st.sidebar.divider()
@@ -249,41 +555,83 @@ st.sidebar.divider()
 
 
 if st.sidebar.button(
+
     "🔄 Refresh Pipeline"
+
 ):
 
 
     with st.spinner(
+
         "Running complete pipeline..."
+
     ):
 
 
-        result = subprocess.run(
 
-            PIPELINE,
-
-            cwd=BASE_DIR
-
-        )
+        try:
 
 
-        if result.returncode == 0:
+            result = subprocess.run(
 
+                PIPELINE,
 
-            st.success(
-                "Pipeline completed"
+                cwd=BASE_DIR,
+
+                capture_output=True,
+
+                text=True
+
             )
 
-            st.cache_data.clear()
-
-            st.rerun()
 
 
-        else:
+            if result.returncode == 0:
 
-            st.error(
-                "Pipeline failed"
+
+                st.sidebar.success(
+
+                    "Pipeline completed"
+
+                )
+
+
+
+                st.cache_data.clear()
+
+
+                st.rerun()
+
+
+
+            else:
+
+
+                st.sidebar.error(
+
+                    "Pipeline failed"
+
+                )
+
+
+                st.sidebar.code(
+
+                    result.stderr
+
+                )
+
+
+
+        except Exception as e:
+
+
+            st.sidebar.error(
+
+                str(e)
+
             )
+
+
 
 
 
@@ -294,21 +642,31 @@ if st.sidebar.button(
 
 
 features = load_features(
+
     country
+
 )
+
 
 
 
 prices = load_prices(
+
     country,
+
     market_type
+
 )
+
 
 
 
 risk = load_risk(
+
     country
+
 )
+
 
 
 
@@ -316,26 +674,48 @@ signals = load_signals()
 
 
 
+
+
 # ==========================================================
-# MERGE
+# MERGE MARKET DATA
 # ==========================================================
+
 
 
 market = features.copy()
 
 
 
-# keep historical day ahead from features
 
-market = market.merge(
 
-    prices,
+if not prices.empty:
 
-    on="timestamp",
 
-    how="left"
+    market = market.merge(
 
-)
+        prices,
+
+        on="timestamp",
+
+        how="left"
+
+    )
+
+
+
+else:
+
+
+    market[market_type] = market.get(
+
+        "day_ahead_price",
+
+        0
+
+    )
+
+
+
 
 
 
@@ -345,18 +725,27 @@ market = market.merge(
 
 
 min_date = (
+
     market["timestamp"]
+
     .min()
+
     .date()
+
 )
 
 
 
 max_date = (
+
     market["timestamp"]
+
     .max()
+
     .date()
+
 )
+
 
 
 
@@ -374,52 +763,118 @@ selected_date = st.sidebar.date_input(
 
 
 
+
+
+
+# ==========================================================
+# DAILY FILTER
+# ==========================================================
+
+
 market_day = market[
 
     market["timestamp"]
+
     .dt.date
+
     ==
+
     selected_date
 
 ]
 
 
 
+
+
 if market_day.empty:
+
 
     market_day = market.tail(96)
 
 
 
-signal_day = signals[
 
-    (signals["country"]==country)
-    &
-    (signals["timestamp"].dt.date==selected_date)
 
-]
 
+# ==========================================================
+# SIGNAL FILTER
+# ==========================================================
+
+
+
+if not signals.empty:
+
+
+    signal_day = signals[
+
+        (signals["country"] == country)
+
+        &
+
+        (
+
+            signals["timestamp"]
+
+            .dt.date
+
+            ==
+
+            selected_date
+
+        )
+
+    ]
+
+
+else:
+
+
+    signal_day = pd.DataFrame()
+
+
+
+
+
+
+# ==========================================================
+# LATEST VALUES
+# ==========================================================
 
 
 latest = market_day.iloc[-1]
 
 
 
+
+
 if not signal_day.empty:
+
 
     latest_signal = signal_day.iloc[-1]
 
+
+
 else:
+
 
     latest_signal = {
 
-        "trading_signal":"N/A",
 
-        "confidence":0,
+        "trading_signal": "N/A",
 
-        "risk_score":0
+
+        "confidence": 0,
+
+
+        "risk_score": 0
+
 
     }
+
+
+
+
 
 
 
@@ -429,146 +884,216 @@ else:
 
 
 st.title(
+
     "⚡ Energy Trading Decision Support System"
+
 )
+
 
 
 st.caption(
+
 """
+
 Day Ahead & Intraday Market Analysis |
+
 Load Forecasting |
+
 Renewable Generation |
+
 Imbalance Risk |
+
 Trading Signals
+
 """
+
 )
 
 
 
+
+
+
 # ==========================================================
-# KPI
+# KPI SECTION
 # ==========================================================
+
 
 
 c1,c2,c3,c4,c5 = st.columns(5)
 
 
 
+
+
+
 with c1:
+
+
+    price = latest.get(
+
+        "day_ahead_price",
+
+        0
+
+    )
+
 
     st.metric(
 
         "Day Ahead Price",
 
-        f"{latest['day_ahead_price']:.2f} €/MWh"
+        f"{price:.2f} €/MWh"
 
     )
+
+
+
+
 
 
 
 with c2:
 
+
+    market_price = latest.get(
+
+        market_type,
+
+        0
+
+    )
+
+
     st.metric(
 
         market_type,
 
-        f"{latest.get(market_type,0):.2f} €/MWh"
+        f"{market_price:.2f} €/MWh"
 
     )
+
+
+
+
 
 
 
 with c3:
 
+
+    load = latest.get(
+
+        "load_mw",
+
+        0
+
+    )
+
+
     st.metric(
 
         "Load",
 
-        f"{latest['load_mw']:.0f} MW"
+        f"{load:.0f} MW"
 
     )
+
+
+
 
 
 
 with c4:
 
+
+    renewable = latest.get(
+
+        "renewable_share",
+
+        0
+
+    )
+
+
     st.metric(
 
         "Renewable Share",
 
-        f"{latest['renewable_share']:.1%}"
+        f"{renewable:.1%}"
 
     )
+
+
+
+
 
 
 
 with c5:
 
+
     st.metric(
 
         "Trading Signal",
 
-        latest_signal["trading_signal"]
+        latest_signal.get(
+
+            "trading_signal",
+
+            "N/A"
+
+        )
 
     )
 
 
 
+
+
 st.divider()
 
-
-
 # ==========================================================
-# PRICE
+# PRICE ANALYSIS
 # ==========================================================
 
 
 st.subheader(
-"📈 Market Price"
+
+    "📈 Market Price Analysis"
+
 )
 
 
 
-fig = px.line(
 
-    market_day,
+price_columns = []
 
-    x="timestamp",
 
-    y=[
-        "day_ahead_price",
+
+if "day_ahead_price" in market_day.columns:
+
+    price_columns.append(
+
+        "day_ahead_price"
+
+    )
+
+
+
+if market_type in market_day.columns:
+
+    price_columns.append(
+
         market_type
-    ],
 
-    title="Energy Prices"
-
-)
+    )
 
 
 
-st.plotly_chart(
-    fig,
-    use_container_width=True
-)
 
 
-
-# ==========================================================
-# LOAD
-# ==========================================================
-
-
-st.subheader(
-"⚡ System Fundamentals"
-)
-
-
-
-c1,c2 = st.columns(2)
-
-
-
-with c1:
+if len(price_columns) > 0:
 
 
     fig = px.line(
@@ -577,141 +1102,364 @@ with c1:
 
         x="timestamp",
 
-        y="load_mw",
+        y=price_columns,
 
-        title="Electricity Load"
-
-    )
-
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-
-
-
-with c2:
-
-
-    fig = px.area(
-
-        market_day,
-
-        x="timestamp",
-
-        y=[
-            "wind_generation",
-            "solar_generation",
-            "renewable_generation"
-        ],
-
-        title="Renewable Generation"
+        title="Electricity Market Prices"
 
     )
 
 
     st.plotly_chart(
+
         fig,
+
         use_container_width=True
+
     )
+
+
+else:
+
+
+    st.info(
+
+        "Price data not available"
+
+    )
+
+
 
 
 
 # ==========================================================
-# RISK
+# SYSTEM FUNDAMENTALS
 # ==========================================================
 
 
 st.subheader(
-"⚠️ Imbalance Risk"
+
+    "⚡ System Fundamentals"
+
 )
+
+
+
+
+col1,col2 = st.columns(2)
+
+
+
+
+
+
+with col1:
+
+
+    if "load_mw" in market_day.columns:
+
+
+        fig = px.line(
+
+            market_day,
+
+            x="timestamp",
+
+            y="load_mw",
+
+            title="Electricity Load Forecast"
+
+        )
+
+
+        st.plotly_chart(
+
+            fig,
+
+            use_container_width=True
+
+        )
+
+
+    else:
+
+
+        st.info(
+
+            "Load data unavailable"
+
+        )
+
+
+
+
+
+
+
+with col2:
+
+
+    renewable_columns = []
+
+
+
+    for col in [
+
+        "wind_generation",
+
+        "solar_generation",
+
+        "renewable_generation"
+
+    ]:
+
+
+        if col in market_day.columns:
+
+
+            renewable_columns.append(
+
+                col
+
+            )
+
+
+
+
+
+    if renewable_columns:
+
+
+        fig = px.area(
+
+            market_day,
+
+            x="timestamp",
+
+            y=renewable_columns,
+
+            title="Renewable Generation"
+
+        )
+
+
+        st.plotly_chart(
+
+            fig,
+
+            use_container_width=True
+
+        )
+
+
+    else:
+
+
+        st.info(
+
+            "Renewable data unavailable"
+
+        )
+
+
+
+
+
+
+# ==========================================================
+# IMBALANCE RISK
+# ==========================================================
+
+
+st.subheader(
+
+    "⚠️ Imbalance Risk Analytics"
+
+)
+
+
 
 
 
 if not risk.empty:
 
 
+
     risk_day = risk[
 
-        risk["timestamp"].dt.date
+        risk["timestamp"]
+
+        .dt.date
+
         ==
+
         selected_date
 
     ]
 
 
-    fig = px.line(
 
-        risk_day,
+    if not risk_day.empty:
 
-        x="timestamp",
 
-        y="risk_score",
+        fig = px.line(
 
-        title="Risk Score"
+            risk_day,
+
+            x="timestamp",
+
+            y="risk_score",
+
+            title="Imbalance Risk Score"
+
+        )
+
+
+        st.plotly_chart(
+
+            fig,
+
+            use_container_width=True
+
+        )
+
+
+
+        latest_risk = risk_day.iloc[-1]["risk_score"]
+
+
+
+        if latest_risk < 0.33:
+
+
+            risk_label = "Low Risk"
+
+
+
+        elif latest_risk < 0.66:
+
+
+            risk_label = "Medium Risk"
+
+
+
+        else:
+
+
+            risk_label = "High Risk"
+
+
+
+
+        st.metric(
+
+            "Current Risk Level",
+
+            risk_label,
+
+            f"{latest_risk:.2f}"
+
+        )
+
+
+
+    else:
+
+
+        st.info(
+
+            "No risk data for selected date"
+
+        )
+
+
+
+else:
+
+
+    st.info(
+
+        "Risk results available after running local pipeline"
 
     )
 
 
-    st.plotly_chart(
 
-        fig,
 
-        use_container_width=True
-
-    )
 
 
 
 # ==========================================================
-# SIGNALS
+# TRADING SIGNAL ANALYSIS
 # ==========================================================
 
 
 st.subheader(
-"💹 Trading Decision Engine"
+
+    "💹 Trading Decision Engine"
+
 )
+
+
+
 
 
 
 if not signals.empty:
 
 
+
     country_signals = signals[
 
         signals["country"]
+
         ==
+
         country
 
     ]
 
 
-    fig = px.pie(
 
-        country_signals,
+    if not country_signals.empty:
 
-        names="trading_signal",
 
-        title="Signal Distribution"
+        fig = px.pie(
+
+            country_signals,
+
+            names="trading_signal",
+
+            title=f"{country} Trading Signal Distribution"
+
+        )
+
+
+        st.plotly_chart(
+
+            fig,
+
+            use_container_width=True
+
+        )
+
+
+
+else:
+
+
+    st.info(
+
+        "Trading decisions available after pipeline execution"
 
     )
 
 
-    st.plotly_chart(
-
-        fig,
-
-        use_container_width=True
-
-    )
 
 
 
 
 # ==========================================================
-# FINAL
+# FINAL RECOMMENDATION
 # ==========================================================
 
 
@@ -719,21 +1467,68 @@ st.divider()
 
 
 
-signal = latest_signal["trading_signal"]
+st.subheader(
+
+    "🤖 AI Trading Recommendation"
+
+)
 
 
 
-if signal=="BUY":
 
-    color="green"
 
-elif signal=="SELL":
+signal = latest_signal.get(
 
-    color="red"
+    "trading_signal",
+
+    "N/A"
+
+)
+
+
+
+confidence = latest_signal.get(
+
+    "confidence",
+
+    0
+
+)
+
+
+
+risk_score = latest_signal.get(
+
+    "risk_score",
+
+    0
+
+)
+
+
+
+
+
+if signal == "BUY":
+
+
+    color = "green"
+
+
+
+elif signal == "SELL":
+
+
+    color = "red"
+
+
 
 else:
 
-    color="orange"
+
+    color = "orange"
+
+
 
 
 
@@ -748,17 +1543,17 @@ Recommendation: {signal}
 </h2>
 
 
-Confidence:
+<b>Confidence:</b>
 
-{latest_signal.get("confidence",0):.1f}%
-
-
-<br><br>
+{confidence:.1f}%
 
 
-Risk Score:
+<br>
 
-{latest_signal.get("risk_score",0):.2f}
+
+<b>Risk Score:</b>
+
+{risk_score:.2f}
 
 
 """,
@@ -769,6 +1564,19 @@ unsafe_allow_html=True
 
 
 
+
+
+
+
+# ==========================================================
+# FOOTER
+# ==========================================================
+
+
+st.divider()
+
+
+
 st.caption(
 
 f"""
@@ -776,6 +1584,11 @@ f"""
 Dashboard refresh:
 
 {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+
+Mode:
+
+{"Local Data" if real_available else "Demo Data"}
 
 """
 
