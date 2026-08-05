@@ -213,7 +213,11 @@ def load_features(country):
         st.stop()
 
 
+    st.write("LOADING FEATURE FILE:")
+    st.write(file)
 
+    st.write("FILE SIZE:")
+    st.write(file.stat().st_size)
 
     df = pd.read_csv(file)
 
