@@ -1,34 +1,45 @@
 # ==========================================================
 # LOAD FORECASTING ANALYTICS
 # Energy Trading Decision Support System
+# Cloud + Local Compatible
 # ==========================================================
+
 
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
 from pathlib import Path
+import numpy as np
+
 
 
 # ==========================================================
 # PAGE CONFIG
 # ==========================================================
 
+
 st.set_page_config(
+
     page_title="Load Forecasting",
+
     page_icon="⚡",
+
     layout="wide"
+
 )
+
 
 
 # ==========================================================
 # PATHS
 # ==========================================================
 
+
 BASE_DIR = Path(__file__).resolve().parents[1]
 
 
-SAMPLE_DIR = (
+DEMO_DIR = (
     BASE_DIR
     /
     "data"
@@ -37,7 +48,7 @@ SAMPLE_DIR = (
 )
 
 
-FEATURES_DIR = (
+FEATURE_DIR = (
     BASE_DIR
     /
     "data"
@@ -46,7 +57,7 @@ FEATURES_DIR = (
 )
 
 
-RESULTS_DIR = (
+RESULT_DIR = (
     BASE_DIR
     /
     "results"
@@ -56,15 +67,11 @@ RESULTS_DIR = (
 
 COUNTRIES = {
 
-    "Germany": "germany",
-
-    "France": "france",
-
-    "Italy": "italy",
-
-    "Spain": "spain",
-
-    "Netherlands": "netherlands"
+    "Germany":"germany",
+    "France":"france",
+    "Italy":"italy",
+    "Spain":"spain",
+    "Netherlands":"netherlands"
 
 }
 
@@ -74,6 +81,7 @@ COUNTRIES = {
 # SIDEBAR
 # ==========================================================
 
+
 st.sidebar.title(
     "⚡ Energy Trading DSS"
 )
@@ -81,18 +89,14 @@ st.sidebar.title(
 
 country_display = st.sidebar.selectbox(
 
-    "Select Country",
+    "Country",
 
-    list(
-        COUNTRIES.keys()
-    )
+    list(COUNTRIES.keys())
 
 )
 
 
-country = COUNTRIES[
-    country_display
-]
+country = COUNTRIES[country_display]
 
 
 
@@ -101,7 +105,7 @@ mode = st.sidebar.radio(
     "Data Mode",
 
     [
-        "Sample",
+        "Demo",
         "Local"
     ]
 
@@ -110,105 +114,68 @@ mode = st.sidebar.radio(
 
 
 # ==========================================================
-# LOAD DATA
+# LOAD FEATURES
 # ==========================================================
 
 
 @st.cache_data
-def load_data(
-    country,
-    mode
-):
+def load_features(country, mode):
 
 
-    # ------------------------------
-    # FEATURES
-    # ------------------------------
+    if mode=="Demo":
 
-    if mode == "Sample":
 
-        feature_file = (
-            SAMPLE_DIR
+        file = (
+
+            DEMO_DIR
+
             /
+
             f"{country}_features_sample.csv"
+
         )
+
 
     else:
 
-        feature_file = (
-            FEATURES_DIR
+
+        file = (
+
+            FEATURE_DIR
+
             /
+
             f"{country}_features.csv"
+
         )
 
 
 
-    if not feature_file.exists():
+    if not file.exists():
 
-        return None, None
-
-
-
-    features = pd.read_csv(
-        feature_file
-    )
+        return pd.DataFrame()
 
 
 
-    features["timestamp"] = pd.to_datetime(
+    df = pd.read_csv(file)
 
-        features["timestamp"],
+
+
+    df["timestamp"] = pd.to_datetime(
+
+        df["timestamp"],
 
         utc=True
 
     )
 
 
-
-    # ------------------------------
-    # FORECAST RESULTS
-    # ------------------------------
-
-
-    forecast_file = (
-        RESULTS_DIR
-        /
-        f"{country}_load_forecast_results.csv"
-    )
-
-
-
-    forecast = None
-
-
-    if forecast_file.exists():
-
-        forecast = pd.read_csv(
-            forecast_file
-        )
-
-
-
-        if "timestamp" in forecast.columns:
-
-
-            forecast["timestamp"] = pd.to_datetime(
-
-                forecast["timestamp"],
-
-                utc=True
-
-            )
-
-
-
-    return features, forecast
+    return df
 
 
 
 
-
-features, forecast = load_data(
+features = load_features(
 
     country,
 
@@ -218,15 +185,112 @@ features, forecast = load_data(
 
 
 
-if features is None:
+if features.empty:
 
 
     st.error(
+
         "Dataset not found"
+
+    )
+
+    st.stop()
+
+
+
+# ==========================================================
+# CREATE DEMO FORECAST
+# ==========================================================
+
+
+def create_demo_forecast(df):
+
+
+    forecast = df[
+
+        [
+
+            "timestamp",
+
+            "load_mw"
+
+        ]
+
+    ].copy()
+
+
+
+    forecast["forecast_load_mw"] = (
+
+        forecast["load_mw"]
+
+        *
+
+        np.random.normal(
+
+            1,
+
+            0.015,
+
+            len(forecast)
+
+        )
+
     )
 
 
-    st.stop()
+    return forecast
+
+
+
+
+
+# ==========================================================
+# FORECAST LOADING
+# ==========================================================
+
+
+forecast_file = (
+
+    RESULT_DIR
+
+    /
+
+    f"{country}_load_forecast_results.csv"
+
+)
+
+
+
+if forecast_file.exists():
+
+
+    forecast = pd.read_csv(
+
+        forecast_file
+
+    )
+
+
+    forecast["timestamp"] = pd.to_datetime(
+
+        forecast["timestamp"],
+
+        utc=True
+
+    )
+
+
+else:
+
+
+    forecast = create_demo_forecast(
+
+        features
+
+    )
+
+
 
 
 
@@ -240,6 +304,7 @@ st.title(
     "⚡ Load Forecasting"
 
 )
+
 
 
 st.caption(
@@ -258,11 +323,12 @@ st.caption(
 latest = features.iloc[-1]
 
 
-col1,col2,col3,col4 = st.columns(4)
+c1,c2,c3,c4 = st.columns(4)
 
 
 
-with col1:
+with c1:
+
 
     st.metric(
 
@@ -274,11 +340,12 @@ with col1:
 
 
 
-with col2:
+with c2:
+
 
     st.metric(
 
-        "Day Ahead Price",
+        "Price",
 
         f"{latest['day_ahead_price']:.2f} €/MWh"
 
@@ -286,27 +353,30 @@ with col2:
 
 
 
-with col3:
+with c3:
+
 
     st.metric(
 
         "Renewable Share",
 
-        f"{latest['renewable_share']:.1f}%"
+        f"{latest['renewable_share']:.1%}"
 
     )
 
 
 
-with col4:
+with c4:
+
 
     st.metric(
 
-        "Data Mode",
+        "Mode",
 
         mode
 
     )
+
 
 
 
@@ -321,7 +391,7 @@ st.divider()
 
 st.subheader(
 
-    "Electricity Load History"
+    "⚡ Electricity Load History"
 
 )
 
@@ -335,7 +405,50 @@ fig = px.line(
 
     y="load_mw",
 
-    title="Recent Load Evolution"
+    title="Historical Load"
+
+)
+
+
+st.plotly_chart(
+
+    fig,
+
+    use_container_width=True
+
+)
+
+
+
+
+# ==========================================================
+# FORECAST GRAPH
+# ==========================================================
+
+
+st.subheader(
+
+    "🔮 Load Forecast"
+
+)
+
+
+
+fig = px.line(
+
+    forecast.tail(500),
+
+    x="timestamp",
+
+    y=[
+
+        "load_mw",
+
+        "forecast_load_mw"
+
+    ],
+
+    title="Actual vs Forecast Load"
 
 )
 
@@ -352,49 +465,13 @@ st.plotly_chart(
 
 
 # ==========================================================
-# FORECAST
-# ==========================================================
-
-
-st.subheader(
-
-    "Load Forecast"
-
-)
-
-
-
-if forecast is not None and len(forecast) > 0:
-
-
-    st.dataframe(
-
-        forecast.tail(20),
-
-        use_container_width=True
-
-    )
-
-
-else:
-
-
-    st.info(
-
-        "Forecast results available only in Local mode after running pipeline."
-
-    )
-
-
-
-# ==========================================================
 # FEATURE IMPORTANCE
 # ==========================================================
 
 
 st.subheader(
 
-    "Model Feature Importance"
+    "🤖 Model Feature Importance"
 
 )
 
@@ -402,7 +479,7 @@ st.subheader(
 
 importance_file = (
 
-    RESULTS_DIR
+    RESULT_DIR
 
     /
 
@@ -422,35 +499,63 @@ if importance_file.exists():
     )
 
 
-    fig_imp = px.bar(
-
-        importance.head(15),
-
-        x="importance",
-
-        y="feature",
-
-        orientation="h",
-
-        title="Top Features"
-
-    )
-
-
-    st.plotly_chart(
-
-        fig_imp,
-
-        use_container_width=True
-
-    )
-
-
 else:
 
 
-    st.info(
+    importance = pd.DataFrame({
 
-        "Feature importance available in Local mode."
+        "feature":[
 
-    )
+            "load_lag_1",
+
+            "load_lag_24",
+
+            "load_lag_168",
+
+            "renewable_generation",
+
+            "day_ahead_price"
+
+        ],
+
+        "importance":[
+
+            0.91,
+
+            0.04,
+
+            0.02,
+
+            0.02,
+
+            0.01
+
+        ]
+
+    })
+
+
+
+
+fig = px.bar(
+
+    importance.head(10),
+
+    x="importance",
+
+    y="feature",
+
+    orientation="h",
+
+    title="Top Predictive Features"
+
+)
+
+
+st.plotly_chart(
+
+    fig,
+
+    use_container_width=True
+
+)

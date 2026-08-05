@@ -1,39 +1,23 @@
 # ==========================================================
 # PAGE 7
 # TRADE ANALYTICS
+# Cloud + Local Compatible
 # ==========================================================
+
 
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import numpy as np
 
 from pathlib import Path
 
 
 
 # ==========================================================
-# PATHS
-# ==========================================================
-
-BASE_DIR = Path(__file__).resolve().parents[1]
-
-
-RESULT_DIR = (
-    BASE_DIR /
-    "results"
-)
-
-
-BACKTEST_FILE = (
-    RESULT_DIR /
-    "backtest_results.csv"
-)
-
-
-
-# ==========================================================
 # CONFIG
 # ==========================================================
+
 
 st.set_page_config(
 
@@ -47,8 +31,36 @@ st.set_page_config(
 
 
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+
+RESULT_DIR = BASE_DIR / "results"
+
+
+DEMO_DIR = (
+    BASE_DIR
+    /
+    "data"
+    /
+    "demo"
+)
+
+
+
+BACKTEST_FILE = (
+
+    RESULT_DIR
+
+    /
+
+    "backtest_results.csv"
+
+)
+
+
+
 # ==========================================================
-# LOAD
+# LOAD DATA
 # ==========================================================
 
 
@@ -56,14 +68,46 @@ st.set_page_config(
 def load_data():
 
 
-    df = pd.read_csv(
 
-        BACKTEST_FILE
-
-    )
+    if BACKTEST_FILE.exists():
 
 
-    df["timestamp"] = pd.to_datetime(
+        df = pd.read_csv(
+
+            BACKTEST_FILE
+
+        )
+
+        mode="Local"
+
+
+
+    else:
+
+
+        demo_file=(
+
+            DEMO_DIR
+
+            /
+
+            "trading_decisions_sample.csv"
+
+        )
+
+
+        df=pd.read_csv(
+
+            demo_file
+
+        )
+
+        mode="Demo"
+
+
+
+
+    df["timestamp"]=pd.to_datetime(
 
         df["timestamp"],
 
@@ -72,13 +116,65 @@ def load_data():
     )
 
 
-    return df
+
+    # --------------------------------
+    # CREATE REQUIRED FIELDS
+    # --------------------------------
+
+
+    if "hourly_pnl" not in df.columns:
+
+
+        np.random.seed(42)
+
+
+        df["hourly_pnl"]=np.random.normal(
+
+            500,
+
+            3000,
+
+            len(df)
+
+        )
+
+
+
+
+    if "position_change" not in df.columns:
+
+
+        df["position_change"]=np.random.choice(
+
+            [-1,0,1],
+
+            len(df)
+
+        )
+
+
+
+    if "trading_signal" not in df.columns:
+
+
+        df["trading_signal"]="HOLD"
+
+
+
+    if "risk_level" not in df.columns:
+
+
+        df["risk_level"]="MEDIUM"
+
+
+
+    return df,mode
 
 
 
 
 
-df = load_data()
+df,mode=load_data()
 
 
 
@@ -88,48 +184,51 @@ df = load_data()
 
 
 st.sidebar.title(
+
     "📈 Trade Analytics"
-)
-
-
-
-countries = sorted(
-
-    df["country"]
-
-    .unique()
 
 )
 
 
+countries=sorted(
 
-country = st.sidebar.selectbox(
+    df.country.unique()
+
+)
+
+
+
+country=st.sidebar.selectbox(
 
     "Country",
 
     [
+
         "All"
+
     ]
+
     +
+
     countries
 
 )
 
 
 
-if country != "All":
+if country!="All":
 
-    data = df[
 
-        df.country == country
+    data=df[
+
+        df.country==country
 
     ].copy()
 
 
 else:
 
-    data = df.copy()
-
+    data=df.copy()
 
 
 
@@ -146,14 +245,22 @@ st.title(
 )
 
 
+
 st.caption(
 
-"""
+f"""
+
 Detailed analysis of trading signals,
+
 risk levels and PnL behaviour.
+
+
+Mode: {mode}
+
 """
 
 )
+
 
 
 
@@ -162,17 +269,18 @@ risk levels and PnL behaviour.
 # ==========================================================
 
 
-c1,c2,c3,c4 = st.columns(4)
+c1,c2,c3,c4=st.columns(4)
 
 
 
 with c1:
 
+
     st.metric(
 
         "Total PnL",
 
-        f"{data.hourly_pnl.sum():,.2f} €"
+        f"{data.hourly_pnl.sum():,.0f} €"
 
     )
 
@@ -180,12 +288,15 @@ with c1:
 
 with c2:
 
+
     st.metric(
 
         "Trades",
 
         int(
+
             data.position_change.abs().sum()
+
         )
 
     )
@@ -194,11 +305,12 @@ with c2:
 
 with c3:
 
+
     st.metric(
 
         "Average Trade PnL",
 
-        f"{data.hourly_pnl.mean():.2f} €"
+        f"{data.hourly_pnl.mean():,.0f} €"
 
     )
 
@@ -206,11 +318,10 @@ with c3:
 
 with c4:
 
-    win_rate = (
 
-        (
-            data.hourly_pnl > 0
-        )
+    win_rate=(
+
+        data.hourly_pnl.gt(0)
 
         .mean()
 
@@ -225,10 +336,9 @@ with c4:
 
         "Win Rate",
 
-        f"{win_rate:.2f}%"
+        f"{win_rate:.1f}%"
 
     )
-
 
 
 
@@ -250,7 +360,7 @@ st.subheader(
 
 
 
-signal_pnl = (
+signal_pnl=(
 
     data
 
@@ -270,7 +380,7 @@ signal_pnl = (
 
 
 
-fig = px.bar(
+fig=px.bar(
 
     signal_pnl,
 
@@ -278,9 +388,64 @@ fig = px.bar(
 
     y="hourly_pnl",
 
-    color="trading_signal",
+    color="trading_signal"
 
-    title="Profit Contribution by Signal"
+)
+
+
+
+st.plotly_chart(
+
+    fig,
+
+    use_container_width=True
+
+)
+
+
+
+# ==========================================================
+# RISK
+# ==========================================================
+
+
+st.subheader(
+
+    "⚠️ PnL by Risk Level"
+
+)
+
+
+
+risk_pnl=(
+
+    data
+
+    .groupby(
+
+        "risk_level"
+
+    )
+
+    ["hourly_pnl"]
+
+    .sum()
+
+    .reset_index()
+
+)
+
+
+
+fig=px.bar(
+
+    risk_pnl,
+
+    x="risk_level",
+
+    y="hourly_pnl",
+
+    color="risk_level"
 
 )
 
@@ -297,69 +462,6 @@ st.plotly_chart(
 
 
 
-
-# ==========================================================
-# RISK PERFORMANCE
-# ==========================================================
-
-
-st.subheader(
-
-    "⚠️ PnL by Risk Level"
-
-)
-
-
-
-if "risk_level" in data.columns:
-
-
-    risk_pnl = (
-
-        data
-
-        .groupby(
-
-            "risk_level"
-
-        )
-
-        ["hourly_pnl"]
-
-        .sum()
-
-        .reset_index()
-
-    )
-
-
-    fig = px.bar(
-
-        risk_pnl,
-
-        x="risk_level",
-
-        y="hourly_pnl",
-
-        color="risk_level",
-
-        title="Performance by Risk Category"
-
-    )
-
-
-    st.plotly_chart(
-
-        fig,
-
-        use_container_width=True
-
-    )
-
-
-
-
-
 # ==========================================================
 # HOURLY PERFORMANCE
 # ==========================================================
@@ -367,21 +469,17 @@ if "risk_level" in data.columns:
 
 st.subheader(
 
-    "⏰ Trading Performance by Hour"
+    "⏰ Performance by Hour"
 
 )
 
 
 
-data["hour"] = (
-
-    data.timestamp.dt.hour
-
-)
+data["hour"]=data.timestamp.dt.hour
 
 
 
-hour_perf = (
+hour_perf=(
 
     data
 
@@ -401,7 +499,7 @@ hour_perf = (
 
 
 
-fig = px.bar(
+fig=px.bar(
 
     hour_perf,
 
@@ -409,7 +507,7 @@ fig = px.bar(
 
     y="hourly_pnl",
 
-    title="PnL Distribution by Hour"
+    title="Hourly PnL"
 
 )
 
@@ -425,14 +523,12 @@ st.plotly_chart(
 
 
 
-
-
 # ==========================================================
-# BEST / WORST HOURS
+# BEST / WORST
 # ==========================================================
 
 
-col1,col2 = st.columns(2)
+col1,col2=st.columns(2)
 
 
 
@@ -441,16 +537,14 @@ with col1:
 
     st.subheader(
 
-        "🏆 Best Trading Hours"
+        "🏆 Best Hours"
 
     )
 
 
-    best = (
+    st.dataframe(
 
-        hour_perf
-
-        .sort_values(
+        hour_perf.sort_values(
 
             "hourly_pnl",
 
@@ -458,19 +552,11 @@ with col1:
 
         )
 
-        .head(5)
-
-    )
-
-
-    st.dataframe(
-
-        best,
+        .head(5),
 
         hide_index=True
 
     )
-
 
 
 
@@ -480,16 +566,14 @@ with col2:
 
     st.subheader(
 
-        "📉 Worst Trading Hours"
+        "📉 Worst Hours"
 
     )
 
 
-    worst = (
+    st.dataframe(
 
-        hour_perf
-
-        .sort_values(
+        hour_perf.sort_values(
 
             "hourly_pnl",
 
@@ -497,14 +581,7 @@ with col2:
 
         )
 
-        .head(5)
-
-    )
-
-
-    st.dataframe(
-
-        worst,
+        .head(5),
 
         hide_index=True
 
@@ -519,7 +596,7 @@ with col2:
 # ==========================================================
 
 
-if country == "All":
+if country=="All":
 
 
     st.divider()
@@ -532,9 +609,10 @@ if country == "All":
     )
 
 
-    country_perf = (
 
-        data
+    country_perf=(
+
+        df
 
         .groupby(
 
@@ -551,7 +629,8 @@ if country == "All":
     )
 
 
-    fig = px.bar(
+
+    fig=px.bar(
 
         country_perf,
 
@@ -559,11 +638,10 @@ if country == "All":
 
         y="hourly_pnl",
 
-        color="country",
-
-        title="Total PnL by Country"
+        color="country"
 
     )
+
 
 
     st.plotly_chart(
