@@ -191,14 +191,14 @@ def load_features(country):
 
 
 
-    if real_file.exists():
-
-        file = real_file
-
-
-    elif demo_file.exists():
+    if demo_file.exists():
 
         file = demo_file
+
+
+    elif real_file.exists():
+
+        file = real_file
 
 
     else:
@@ -663,7 +663,12 @@ features = load_features(
     country
 
 )
+st.write("FEATURES DEBUG SHAPE:", features.shape)
 
+st.write(
+    "FEATURES DEBUG COLUMNS:",
+    features.columns.tolist()
+)
 
 st.write("DEBUG COUNTRY:", country)
 
