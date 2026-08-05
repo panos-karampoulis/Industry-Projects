@@ -3,6 +3,12 @@
 ## AI-Based Electricity Market Analytics, Forecasting & Trading Intelligence Platform
 
 ---
+## 🌐 Live Demo
+
+The application is deployed on Streamlit Cloud:
+
+👉 **Energy Trading Decision Support System Dashboard** 
+https://industry-projects-gydcq3c6agfzcnijmaynuv.streamlit.app/
 
 ## 📌 Overview
 
