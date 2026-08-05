@@ -1,0 +1,39 @@
+# Environment
+venv/
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Models
+models/
+
+# Large datasets
+data/raw/
+data/processed/
+data/merged/
+data/features/
+data/forecasts/
+data/market_prices/
+data/risk/
+data/signals/
+data/backtesting/
+
+# Large results
+results/*.csv
+
+# Keep metrics
+!results/strategy_metrics.json
+
+# Temporary
+*.log
+.DS_Store
+
+# Generated experiment outputs
+data/results/
+data/decision/
+
+# Keep demo data
+!data/demo/
+!data/demo/*.csv

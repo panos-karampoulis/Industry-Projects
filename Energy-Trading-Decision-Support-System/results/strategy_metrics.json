@@ -1,0 +1,47 @@
+{
+    "germany": {
+        "total_pnl_eur": 9997.04,
+        "volatility": 280.82,
+        "sharpe_ratio": 0.1542,
+        "max_drawdown_eur": -8997.81,
+        "trades": 10344,
+        "win_rate": 0.4649,
+        "profit_factor": 1.0427
+    },
+    "france": {
+        "total_pnl_eur": -11540.35,
+        "volatility": 314.65,
+        "sharpe_ratio": -0.1589,
+        "max_drawdown_eur": -20885.15,
+        "trades": 11795,
+        "win_rate": 0.4403,
+        "profit_factor": 0.9405
+    },
+    "italy": {
+        "total_pnl_eur": 14272.05,
+        "volatility": 219.59,
+        "sharpe_ratio": 0.2812,
+        "max_drawdown_eur": -2605.84,
+        "trades": 10169,
+        "win_rate": 0.4875,
+        "profit_factor": 1.076
+    },
+    "spain": {
+        "total_pnl_eur": 15300.11,
+        "volatility": 179.67,
+        "sharpe_ratio": 0.3689,
+        "max_drawdown_eur": -4601.13,
+        "trades": 10016,
+        "win_rate": 0.4772,
+        "profit_factor": 1.1006
+    },
+    "netherlands": {
+        "total_pnl_eur": 8860.69,
+        "volatility": 311.34,
+        "sharpe_ratio": 0.1233,
+        "max_drawdown_eur": -13822.01,
+        "trades": 10834,
+        "win_rate": 0.454,
+        "profit_factor": 1.0341
+    }
+}
